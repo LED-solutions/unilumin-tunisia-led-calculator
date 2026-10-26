@@ -56,6 +56,12 @@ Works on any phone, tablet or PC, in the browser. No install, no login.
 
 ---
 
+## Projects in the cloud
+
+Projects, with their locations, places, client details, "prepared by" and subcontractors, are kept in `db.json` on the `data` branch of this repository. Everyone who opens the calculator sees them, on any device, with no login.
+
+To **save** from a device, click **Cloud** in the calculator and paste a GitHub key once (a classic token with only the `public_repo` scope). The key stays in that browser. Photos and patente files are not sent online.
+
 ## Files in this repository
 
 | File | What it is |
