@@ -1,5 +1,11 @@
 # Update log
 
+## v82 · 2026-10-26
+- Projects in the cloud: every project, with its locations, places, client details, "prepared by" and subcontractors, is shared online on GitHub, so anyone who opens the calculator sees them. Saving from a device needs a GitHub key, pasted once (Cloud button).
+- Sale: several places, each with its own screen, module, size, arch and power settings. The page shows all places and their total; the export starts with that summary, then one part per place.
+- The LED module and cabinet lists stay closed and show the chosen one; click to open them.
+- The top bar no longer moves when switching between Sale, Event and Conception.
+
 ## v81 · 2026-10-23
 - Lighting: choose "Total number only" when the rig is big and the types are not needed, or "Detailed by type".
 - Light types in general terms, no model references: beam lights, moving heads BSW, wash and profile, LED PARs, LED PARs with zoom, LED bars.
