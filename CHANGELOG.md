@@ -1,5 +1,9 @@
 # Update log
 
+## v83 · 2026-10-27
+- Client PDFs now have their own main colour (teal), so they are never confused with the full export (blue).
+- PDF file names start with the project name, then the reference without "UTA-".
+
 ## v82 · 2026-10-26
 - Projects in the cloud: every project, with its locations, places, client details, "prepared by" and subcontractors, is shared online on GitHub, so anyone who opens the calculator sees them. Saving from a device needs a GitHub key, pasted once (Cloud button).
 - Sale: several places, each with its own screen, module, size, arch and power settings. The page shows all places and their total; the export starts with that summary, then one part per place.
