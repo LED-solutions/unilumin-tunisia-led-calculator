@@ -1,5 +1,8 @@
 # Update log
 
+## v84 · 2026-10-28
+- Event: new drawing after the event layout, "Screens and stage · dimensions". Front view and side view to scale, with each screen's width and height (in metres and cabinets), its bottom and top height from the ground, and the stage width, depth and height. It is added as a full landscape page after the layout in the Export PDF, for the technicians.
+
 ## v83 · 2026-10-27
 - Client PDFs now have their own main colour (teal), so they are never confused with the full export (blue).
 - PDF file names start with the project name, then the reference without "UTA-".
