@@ -1,5 +1,10 @@
 # Update log
 
+## v87 · 2026-10-28
+- Sale: new products LC1.5 COB (module 320 × 160, P1.53) and Uslim III 1.5 (indoor cabinet P1.56, 500 × 1000 or 500 × 500 mm, power supply and receiving card inside each cabinet), from the Unilumin datasheets.
+- PDF export in French by default.
+- New button "Projects on the cloud": reads the cloud and lists the projects, each marked "cloud" or "this device only".
+
 ## v86 · 2026-10-28
 - Dimensions drawing: the black cloth, white poly or printed bâche under a lifted screen is drawn, with its size and m².
 - In the Export PDF the front view now has a full page of its own, so it is bigger; the side view and the numbers follow on the next page.
