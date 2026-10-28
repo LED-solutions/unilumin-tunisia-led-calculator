@@ -1,5 +1,9 @@
 # Update log
 
+## v86 · 2026-10-28
+- Dimensions drawing: the black cloth, white poly or printed bâche under a lifted screen is drawn, with its size and m².
+- In the Export PDF the front view now has a full page of its own, so it is bigger; the side view and the numbers follow on the next page.
+
 ## v85 · 2026-10-28
 - Each screen chooses how it stands with the stage: from the stage top at its back edge, or from the ground behind the stage (with its own height).
 - Lighting: new choice "Lighting solution (no details)". Sound: "Sound solution" with only the number of speakers and microphones.
