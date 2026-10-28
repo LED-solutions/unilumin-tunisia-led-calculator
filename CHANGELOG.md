@@ -1,5 +1,12 @@
 # Update log
 
+## v85 · 2026-10-28
+- Each screen chooses how it stands with the stage: from the stage top at its back edge, or from the ground behind the stage (with its own height).
+- Lighting: new choice "Lighting solution (no details)". Sound: "Sound solution" with only the number of speakers and microphones.
+- Microphones and cameras can be given as a total only, type to confirm.
+- Podiums always stand on the stage when there is one.
+- Print: new general type "Mur de presse" (press wall).
+
 ## v84 · 2026-10-28
 - Event: new drawing after the event layout, "Screens and stage · dimensions". Front view and side view to scale, with each screen's width and height (in metres and cabinets), its bottom and top height from the ground, and the stage width, depth and height. It is added as a full landscape page after the layout in the Export PDF, for the technicians.
 

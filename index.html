@@ -267,7 +267,7 @@ svg text{font-family:var(--f-mono)}
   </div>
   <button class="btn small" id="themeBtn" type="button" aria-label="Switch light or dark interface">◐ Dark</button>
   <button class="btn small" id="cloudBtn" type="button" data-st="idle" title="Projects shared online"><span class="dot"></span><span id="cloudLbl">Cloud</span></button>
-  <button class="btn small" id="logBtn" type="button">Log · v84</button>
+  <button class="btn small" id="logBtn" type="button">Log · v85</button>
   <button class="btn small" id="clientBtn" type="button" data-for="event fridge wall desk" hidden>Client PDF</button>
   <button class="btn noevent" id="techBtn" type="button" hidden style="display:none">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 9h18M9 9v9M15 9v9"/></svg>
@@ -672,25 +672,35 @@ svg text{font-family:var(--f-mono)}
     <legend>Cameras</legend>
     <label class="check"><input type="checkbox" id="eCamOn"> Cameras requested</label>
     <div class="subopts" id="eCamOpts" hidden>
-    <span class="f" style="font-size:12px;color:var(--muted);font-weight:500">Each camera comes with its operator</span>
-    <div class="row3">
+     <span class="f" style="font-size:12px;color:var(--muted);font-weight:500">Each camera comes with its operator</span>
+     <label class="f">Quantity<select id="eCamMode"><option value="types">By type</option><option value="total">Total number only (type to confirm)</option></select></label>
+     <div class="row2" id="eCamTotW" hidden><label class="f">Number of cameras<input type="number" id="eCamN" value="2" min="1" max="12" step="1"></label></div>
+     <div id="eCamTypesW">
+     <div class="row3">
       <label class="f">Tripod, cabled<input type="number" id="eCamFix" value="0" min="0" max="8" step="1"></label>
       <label class="f">Tripod, wireless<input type="number" id="eCamPtz" value="0" min="0" max="8" step="1"></label>
       <label class="f">Mobile, wireless<input type="number" id="eCamOp" value="0" min="0" max="8" step="1"></label>
     </div>
-    <p class="hint">Tripod cameras turn on their head. Use wireless when the camera is far from the régie. The mobile camera moves freely with its own transmitter.</p>
-    </div>
+     <p class="hint">Tripod cameras turn on their head. Use wireless when the camera is far from the régie. The mobile camera moves freely with its own transmitter.</p>
+     </div>
+     </div>
   </fieldset>
 
   <fieldset data-for="event" class="locfs" hidden>
     <legend>Sound</legend>
     <label class="check"><input type="checkbox" id="eSoundOn" checked> Sound requested</label>
     <div class="subopts" id="eSoundOpts">
-      <div class="row2">
-        <label class="f">Speakers<input type="text" inputmode="numeric" autocomplete="off" id="eSpk" value="2" min="0" max="24" step="1"></label>
-        <label class="f">Wired mics<input type="text" inputmode="numeric" autocomplete="off" id="eMicW" value="0" min="0" max="16" step="1"></label>
-      </div>
-      <div class="row2">
+       <label class="f">Sound<select id="eSoundMode"><option value="detail">Detailed (microphones by type)</option><option value="solution">Sound solution (speakers and total microphones only)</option></select></label>
+       <div class="row2">
+         <label class="f">Speakers<input type="text" inputmode="numeric" autocomplete="off" id="eSpk" value="2" min="0" max="24" step="1"></label>
+         <label class="f" id="eMicModeW">Microphones<select id="eMicMode"><option value="types">By type</option><option value="total">Total only (type to confirm)</option></select></label>
+       </div>
+       <div class="row2" id="eMicTotW" hidden><label class="f">Number of microphones<input type="text" inputmode="numeric" autocomplete="off" id="eMicN" value="2" min="0" max="48" step="1"></label></div>
+       <div id="eMicTypesW">
+       <div class="row2">
+         <label class="f">Wired mics<input type="text" inputmode="numeric" autocomplete="off" id="eMicW" value="0" min="0" max="16" step="1"></label>
+       </div>
+       <div class="row2">
         <label class="f">Wireless mics<input type="text" inputmode="numeric" autocomplete="off" id="eMicWl" value="2" min="0" max="16" step="1"></label>
         <label class="f">Podium mics<input type="text" inputmode="numeric" autocomplete="off" id="eMicPod" value="0" min="0" max="16" step="1"></label>
       </div>
@@ -699,7 +709,9 @@ svg text{font-family:var(--f-mono)}
         <label class="f">Headset mics<input type="text" inputmode="numeric" autocomplete="off" id="eMicH" value="0" min="0" max="16" step="1"></label>
       </div>
       <p class="hint"><b>Click ? when the client wants it but has not given the quantity.</b></p>
-      <p class="hint">Wired = on a stand · Wireless = handheld · Podium = micro pupitre · Lavalier = micro cravate · Headset = micro sur tête.</p>
+       <p class="hint">Wired = on a stand · Wireless = handheld · Podium = micro pupitre · Lavalier = micro cravate · Headset = micro sur tête.</p>
+       </div>
+       <p class="hint" id="eSndSolHint" hidden>Sound solution: only the number of speakers and microphones. The mixer, cables and stands are set later with the client or the subcontractor.</p>
     <div class="subbox" data-sec="sound">
       <span class="f" style="font-size:12px;color:var(--muted);font-weight:600">Subcontractor (sous-traitance) · sound</span>
       <div class="sublist" id="subList_sound"></div>
@@ -730,7 +742,7 @@ svg text{font-family:var(--f-mono)}
     <legend>Lighting</legend>
     <label class="check"><input type="checkbox" id="eLight"> Lighting requested</label>
     <div class="subopts" id="eLightOpts" hidden>
-    <label class="f">Quantity<select id="eLightMode"><option value="types">Detailed by type</option><option value="total">Total number only (types to confirm)</option></select></label>
+    <label class="f">Quantity<select id="eLightMode"><option value="types">Detailed by type</option><option value="total">Total number only (types to confirm)</option><option value="solution">Lighting solution (no details)</option></select></label>
     <div id="eLightTotalW" hidden>
       <div class="row2"><label class="f">Number of lights<input type="text" inputmode="numeric" autocomplete="off" id="eLightN" value="20" min="0" max="200" step="1"></label></div>
     </div>
@@ -1033,7 +1045,7 @@ svg text{font-family:var(--f-mono)}
 </div>
 <div class="toast" id="toast" role="status" hidden></div>
 <datalist id="subNames"></datalist><datalist id="subCompanies"></datalist><datalist id="clientNames"></datalist>
-<dialog id="logDlg" aria-labelledby="logT"><div class="pd-h"><h2 id="logT">Log · versions</h2><button type="button" class="btn small" id="logClose">Close</button></div><div class="pd-list"><div class="logv"><b>v84</b> <span>2026-10-28</span><ul><li>Event: new drawing after the event layout, "Screens and stage · dimensions". Front view and side view to scale, with each screen's width and height (in metres and cabinets), its bottom and top height from the ground, and the stage width, depth and height. It is added as a full landscape page after the layout in the Export PDF, for the technicians.</li></ul></div><div class="logv"><b>v83</b> <span>2026-10-27</span><ul><li>Client PDFs now have their own main colour (teal), so they are never confused with the full export (blue).</li><li>PDF file names start with the project name, then the reference without "UTA-".</li></ul></div><div class="logv"><b>v82</b> <span>2026-10-26</span><ul><li>Projects in the cloud: every project, with its locations, places, client details, "prepared by" and subcontractors, is shared online on GitHub, so anyone who opens the calculator sees them. Saving from a device needs a GitHub key, pasted once (Cloud button).</li><li>Sale: several places, each with its own screen, module, size, arch and power settings. The page shows all places and their total; the export starts with that summary, then one part per place.</li><li>The LED module and cabinet lists stay closed and show the chosen one; click to open them.</li><li>The top bar no longer moves when switching between Sale, Event and Conception.</li></ul></div><div class="logv"><b>v81</b> <span>2026-10-23</span><ul><li>Lighting: choose "Total number only" when the rig is big and the types are not needed, or "Detailed by type".</li><li>Light types in general terms, no model references: beam lights, moving heads BSW, wash and profile, LED PARs, LED PARs with zoom, LED bars.</li><li>The layout draws at most 24 lights so a big rig stays readable; the full number is in the summary.</li></ul></div><div class="logv"><b>v80</b> <span>2026-10-23</span><ul><li>Subcontractors: company, subcontractor name and phone, and a check "handles all of the lighting / sound / LED screens". If not ticked, write what they handle only (for example the beams only).</li><li>Screens on a stage are drawn at the back of the stage, not in the middle.</li><li>Lighting can stand on the ground, half on each side, beams going up and away from the screen.</li><li>New light type: moving head wash.</li></ul></div><div class="logv"><b>v79</b> <span>2026-10-23</span><ul><li>LED arch: black cloth is calculated (back, sides and passage, +10%). With double face you can cover only the inside of the passage. The 360° views show trusses or cloth on each side.</li><li>Event layout: the m² of the printed visual under the screen is shown on the drawing and in the summary.</li></ul></div><div class="logv"><b>v78</b> <span>2026-10-23</span><ul><li>Microphone types (wired, wireless handheld, lavalier, headset, podium) listed with their number in the event layout, the locations summary, the sound engineer line and the export.</li></ul></div><div class="logv"><b>v77</b> <span>2026-10-23</span><ul><li>Cameras in their own section; number and type of cameras shown in the event layout and the export.</li></ul></div><div class="logv"><b>v76</b> <span>2026-10-23</span><ul><li>LED totems: any cabinet size (width, height and pitch you enter).</li></ul></div><div class="logv"><b>v75</b> <span>2026-10-23</span><ul><li>Client name suggests clients already worked with and fills their phone and email.</li><li>Light / dark interface switch.</li><li>Event layout: m² of floor screens shown in the summary.</li></ul></div><div class="logv"><b>v74</b> <span>2026-10-23</span><ul><li>Log section with every version; each downloaded file is named with its version.</li></ul></div><div class="logv"><b>v73</b> <span>2026-10-23</span><ul><li>Event: subcontractors (sous-traitance) for LED screens, sound and lighting, saved list with phones, shown on the first page of the export.</li></ul></div><div class="logv"><b>v72</b> <span>2026-10-22</span><ul><li>Digital desk: Client PDF with shape, size ±10 cm, resolution, LED area, modules, diagonal and power.</li></ul></div><div class="logv"><b>v71</b> <span>2026-10-21</span><ul><li>Each project keeps its own locations and photos; New project starts clean.</li></ul></div><div class="logv"><b>v70</b> <span>2026-10-21</span><ul><li>Several locations: all locations together page; no régie diagram with Taurus playback or totems only; layout, arch, then reference photos.</li></ul></div><div class="logv"><b>v69</b> <span>2026-10-21</span><ul><li>Print: papier peint type, ? for size and quantity.</li></ul></div><div class="logv"><b>v67–68</b> <span>2026-10-21</span><ul><li>LED totems without a main screen, any count, on the ground; generic 500 × 500 cabinet.</li></ul></div><div class="logv"><b>v64–66</b> <span>2026-10-21</span><ul><li>Event locations (espaces) with own settings and photos; shared stock; total packing list; LED screens and régie checkboxes.</li></ul></div><div class="logv"><b>v62–63</b> <span>2026-10-21</span><ul><li>Printed walls (bâche, polyane); no-LED events; all-in-one 82", presentoirs, kiosk, digital desks; printed visual under totems.</li></ul></div><div class="logv"><b>v61</b> <span>2026-10-21</span><ul><li>Patente and placement photos kept per project; unique reference numbers.</li></ul></div><div class="logv"><b>v59–60</b> <span>2026-10-21</span><ul><li>Unknown quantities (?) in sound and lighting with ? buttons.</li></ul></div><div class="logv"><b>v56–58</b> <span>2026-10-21</span><ul><li>Intervention sheet PTP-FR-01 (one page); system references with versions; one-page packing list.</li></ul></div><div class="logv"><b>v53–55</b> <span>2026-10-21</span><ul><li>Export: landscape wiring and translation pages, bigger What to bring; supplier box; one three-phase breaker for all screens.</li></ul></div><div class="logv"><b>v48–52</b> <span>2026-10-21</span><ul><li>Event: Taurus simple playback, live translation, LED totems, arch 360° views, lighting placement, staff, old projects with references.</li></ul></div><div class="logv"><b>v43–47</b> <span>2026-10-19</span><ul><li>Sale: Usurface III 10 (10,000 nits); two buttons Client / Export PDF with all graphs; wide screens split in strips.</li></ul></div><div class="logv"><b>v1–42</b> <span>2026-10</span><ul><li>Sale, Event, Digital desk and Digital fridge calculators, PDFs, 3D views, arch, mounting options.</li></ul></div></div></dialog>
+<dialog id="logDlg" aria-labelledby="logT"><div class="pd-h"><h2 id="logT">Log · versions</h2><button type="button" class="btn small" id="logClose">Close</button></div><div class="pd-list"><div class="logv"><b>v85</b> <span>2026-10-28</span><ul><li>Each screen chooses how it stands with the stage: from the stage top at its back edge, or from the ground behind the stage (with its own height).</li><li>Lighting: new choice "Lighting solution (no details)". Sound: "Sound solution" with only the number of speakers and microphones.</li><li>Microphones and cameras can be given as a total only, type to confirm.</li><li>Podiums always stand on the stage when there is one.</li><li>Print: new general type "Mur de presse" (press wall).</li></ul></div><div class="logv"><b>v84</b> <span>2026-10-28</span><ul><li>Event: new drawing after the event layout, "Screens and stage · dimensions". Front view and side view to scale, with each screen's width and height (in metres and cabinets), its bottom and top height from the ground, and the stage width, depth and height. It is added as a full landscape page after the layout in the Export PDF, for the technicians.</li></ul></div><div class="logv"><b>v83</b> <span>2026-10-27</span><ul><li>Client PDFs now have their own main colour (teal), so they are never confused with the full export (blue).</li><li>PDF file names start with the project name, then the reference without "UTA-".</li></ul></div><div class="logv"><b>v82</b> <span>2026-10-26</span><ul><li>Projects in the cloud: every project, with its locations, places, client details, "prepared by" and subcontractors, is shared online on GitHub, so anyone who opens the calculator sees them. Saving from a device needs a GitHub key, pasted once (Cloud button).</li><li>Sale: several places, each with its own screen, module, size, arch and power settings. The page shows all places and their total; the export starts with that summary, then one part per place.</li><li>The LED module and cabinet lists stay closed and show the chosen one; click to open them.</li><li>The top bar no longer moves when switching between Sale, Event and Conception.</li></ul></div><div class="logv"><b>v81</b> <span>2026-10-23</span><ul><li>Lighting: choose "Total number only" when the rig is big and the types are not needed, or "Detailed by type".</li><li>Light types in general terms, no model references: beam lights, moving heads BSW, wash and profile, LED PARs, LED PARs with zoom, LED bars.</li><li>The layout draws at most 24 lights so a big rig stays readable; the full number is in the summary.</li></ul></div><div class="logv"><b>v80</b> <span>2026-10-23</span><ul><li>Subcontractors: company, subcontractor name and phone, and a check "handles all of the lighting / sound / LED screens". If not ticked, write what they handle only (for example the beams only).</li><li>Screens on a stage are drawn at the back of the stage, not in the middle.</li><li>Lighting can stand on the ground, half on each side, beams going up and away from the screen.</li><li>New light type: moving head wash.</li></ul></div><div class="logv"><b>v79</b> <span>2026-10-23</span><ul><li>LED arch: black cloth is calculated (back, sides and passage, +10%). With double face you can cover only the inside of the passage. The 360° views show trusses or cloth on each side.</li><li>Event layout: the m² of the printed visual under the screen is shown on the drawing and in the summary.</li></ul></div><div class="logv"><b>v78</b> <span>2026-10-23</span><ul><li>Microphone types (wired, wireless handheld, lavalier, headset, podium) listed with their number in the event layout, the locations summary, the sound engineer line and the export.</li></ul></div><div class="logv"><b>v77</b> <span>2026-10-23</span><ul><li>Cameras in their own section; number and type of cameras shown in the event layout and the export.</li></ul></div><div class="logv"><b>v76</b> <span>2026-10-23</span><ul><li>LED totems: any cabinet size (width, height and pitch you enter).</li></ul></div><div class="logv"><b>v75</b> <span>2026-10-23</span><ul><li>Client name suggests clients already worked with and fills their phone and email.</li><li>Light / dark interface switch.</li><li>Event layout: m² of floor screens shown in the summary.</li></ul></div><div class="logv"><b>v74</b> <span>2026-10-23</span><ul><li>Log section with every version; each downloaded file is named with its version.</li></ul></div><div class="logv"><b>v73</b> <span>2026-10-23</span><ul><li>Event: subcontractors (sous-traitance) for LED screens, sound and lighting, saved list with phones, shown on the first page of the export.</li></ul></div><div class="logv"><b>v72</b> <span>2026-10-22</span><ul><li>Digital desk: Client PDF with shape, size ±10 cm, resolution, LED area, modules, diagonal and power.</li></ul></div><div class="logv"><b>v71</b> <span>2026-10-21</span><ul><li>Each project keeps its own locations and photos; New project starts clean.</li></ul></div><div class="logv"><b>v70</b> <span>2026-10-21</span><ul><li>Several locations: all locations together page; no régie diagram with Taurus playback or totems only; layout, arch, then reference photos.</li></ul></div><div class="logv"><b>v69</b> <span>2026-10-21</span><ul><li>Print: papier peint type, ? for size and quantity.</li></ul></div><div class="logv"><b>v67–68</b> <span>2026-10-21</span><ul><li>LED totems without a main screen, any count, on the ground; generic 500 × 500 cabinet.</li></ul></div><div class="logv"><b>v64–66</b> <span>2026-10-21</span><ul><li>Event locations (espaces) with own settings and photos; shared stock; total packing list; LED screens and régie checkboxes.</li></ul></div><div class="logv"><b>v62–63</b> <span>2026-10-21</span><ul><li>Printed walls (bâche, polyane); no-LED events; all-in-one 82", presentoirs, kiosk, digital desks; printed visual under totems.</li></ul></div><div class="logv"><b>v61</b> <span>2026-10-21</span><ul><li>Patente and placement photos kept per project; unique reference numbers.</li></ul></div><div class="logv"><b>v59–60</b> <span>2026-10-21</span><ul><li>Unknown quantities (?) in sound and lighting with ? buttons.</li></ul></div><div class="logv"><b>v56–58</b> <span>2026-10-21</span><ul><li>Intervention sheet PTP-FR-01 (one page); system references with versions; one-page packing list.</li></ul></div><div class="logv"><b>v53–55</b> <span>2026-10-21</span><ul><li>Export: landscape wiring and translation pages, bigger What to bring; supplier box; one three-phase breaker for all screens.</li></ul></div><div class="logv"><b>v48–52</b> <span>2026-10-21</span><ul><li>Event: Taurus simple playback, live translation, LED totems, arch 360° views, lighting placement, staff, old projects with references.</li></ul></div><div class="logv"><b>v43–47</b> <span>2026-10-19</span><ul><li>Sale: Usurface III 10 (10,000 nits); two buttons Client / Export PDF with all graphs; wide screens split in strips.</li></ul></div><div class="logv"><b>v1–42</b> <span>2026-10</span><ul><li>Sale, Event, Digital desk and Digital fridge calculators, PDFs, 3D views, arch, mounting options.</li></ul></div></div></dialog>
 <dialog id="projDlg" aria-labelledby="projDlgT">
   <div class="pd-h"><h2 id="projDlgT">Old projects</h2><button type="button" class="btn small" id="projClose" aria-label="Close">Close</button></div>
   <input type="search" id="projSearch" placeholder="Search name, client or reference" aria-label="Search projects">
@@ -2574,11 +2586,11 @@ const DISP=[{k:"aio",id:"eAio",st:"sAio",en:'All-in-one 82" with its stand',fr:'
   {k:"kiosk",id:"eKiosk",st:"sKiosk",en:"Android kiosk (touch screen)",fr:"Borne Android (tactile)",short:{en:"Android kiosk",fr:"borne Android"},w:950},
   {k:"deskF",id:"eDeskF",st:"sDeskF",en:"Digital desk, flex",fr:"Desk digital flex",short:{en:"digital desk flex",fr:"desk digital flex"},w:1350},
   {k:"deskC",id:"eDeskC",st:"sDeskC",en:"Digital desk, corner",fr:"Desk digital corner",short:{en:"digital desk corner",fr:"desk digital corner"},w:1350}];
-const PRINT_T={bache:{en:"Bâche",fr:"Bâche"},poly:{en:"Polyane",fr:"Polyane"},paper:{en:"Wallpaper (papier peint)",fr:"Papier peint"}};
+const PRINT_T={press:{en:"Press wall (mur de presse)",fr:"Mur de presse"},bache:{en:"Bâche",fr:"Bâche"},poly:{en:"Polyane",fr:"Polyane"},paper:{en:"Wallpaper (papier peint)",fr:"Papier peint"}};
 const PRINT_POS={left:{en:"left of the screen",fr:"à gauche de l'écran"},right:{en:"right of the screen",fr:"à droite de l'écran"},alone:{en:"alone (no screen)",fr:"seul (sans écran)"}};
 // "?" = size or quantity not given yet: a placeholder is used for the drawing, shown as "?"
 function readPrints(){try{const a=JSON.parse($("ePrintsJSON").value||"[]");return Array.isArray(a)?a.map(x=>{const wU=x.w==="?",hU=x.h==="?",nU=x.n==="?";
-  return {type:["poly","paper"].includes(x.type)?x.type:"bache",wU,hU,nU,w:wU?3:Math.max(0.5,Math.min(40,+x.w||1)),h:hU?2.5:Math.max(0.5,Math.min(15,+x.h||1)),n:nU?1:clampInt(+x.n||1,1,20),pos:["left","right","alone"].includes(x.pos)?x.pos:"right"};}):[];}catch(e){return [];}}
+  return {type:["poly","paper","press"].includes(x.type)?x.type:"bache",wU,hU,nU,w:wU?3:Math.max(0.5,Math.min(40,+x.w||1)),h:hU?2.5:Math.max(0.5,Math.min(15,+x.h||1)),n:nU?1:clampInt(+x.n||1,1,20),pos:["left","right","alone"].includes(x.pos)?x.pos:"right"};}):[];}catch(e){return [];}}
 const prDim=(pr,L="en")=>`${pr.wU?"?":fmtL(pr.w,pr.w%1?1:0,L)} × ${pr.hU?"?":fmtL(pr.h,pr.h%1?1:0,L)} m`;
 const prUnk=pr=>pr.wU||pr.hU||pr.nU;
 const prM2=(pr,L="en")=>prUnk(pr)?"? m²":m2txt(pr.w*pr.h*pr.n,L);
@@ -2587,7 +2599,7 @@ function drawPrintForm(){const a=readPrints();
   const q=(x,k,lab,step,mx)=>`<label class="f">${lab}<span class="qwrap"><input type="text" inputmode="decimal" autocomplete="off" data-pk="${k}" value="${x[k+"U"]?"?":x[k]}"><button type="button" class="qbtn" data-pq="${k}" aria-pressed="${!!x[k+"U"]}" title="Not given by the client yet">?</button></span></label>`;
   $("ePrints").innerHTML=a.map((x,i)=>`<div class="escreen" data-pi="${i}">
     <div class="eshead"><b style="font-size:13px">${prDim(x)} · ${prM2(x)}</b>${a.length>1?`<button type="button" class="x" data-pdel="${i}" aria-label="Remove this printed wall">×</button>`:""}</div>
-    <div class="row2"><label class="f">Type<select data-pk="type"><option value="bache" ${x.type==="bache"?"selected":""}>Bâche (on a truss frame)</option><option value="poly" ${x.type==="poly"?"selected":""}>Polyane (on a frame)</option><option value="paper" ${x.type==="paper"?"selected":""}>Papier peint (glued on the wall)</option></select></label>
+    <div class="row2"><label class="f">Type<select data-pk="type"><option value="bache" ${x.type==="bache"?"selected":""}>Bâche (on a truss frame)</option><option value="poly" ${x.type==="poly"?"selected":""}>Polyane (on a frame)</option><option value="paper" ${x.type==="paper"?"selected":""}>Papier peint (glued on the wall)</option><option value="press" ${x.type==="press"?"selected":""}>Mur de presse (press wall, general)</option></select></label>
       <label class="f">Placement<select data-pk="pos">${Object.entries(PRINT_POS).map(([k,v])=>`<option value="${k}" ${x.pos===k?"selected":""}>${v.en}</option>`).join("")}</select></label></div>
     <div class="row3">${q(x,"w","Width (m)")}${q(x,"h","Height (m)")}${q(x,"n","How many")}</div>
   </div>`).join("")+`<p class="hint">Click ? when the client has not given the size or the quantity yet.</p>`;}
@@ -2672,7 +2684,8 @@ function drawScreenForm(){
     </div>
     <p class="hint esz">${szHint(s)}</p>
     ${s.prod==="rcx"?`<label class="check"><input type="checkbox" data-k="floor" ${s.floor?"checked":""}> Floor screen (people can walk or sit on it)</label>`:""}
-    ${s.floor&&s.prod==="rcx"?"":`<div class="row2">
+    ${!s.floor&&$("eStage").checked?`<label class="f">With the stage<select data-k="base"><option value="stage" ${(s.base||"stage")==="stage"?"selected":""}>Starts at the stage top (back edge of the stage)</option><option value="ground" ${s.base==="ground"?"selected":""}>Starts from the ground (behind the stage)</option></select></label>`:""}
+    ${s.floor&&s.prod==="rcx"||(!s.floor&&$("eStage").checked&&(s.base||"stage")==="stage")?"":`<div class="row2">
       <label class="f">Bottom of the screen<select data-k="elev"><option value="0" ${s.elev==0?"selected":""}>On the ground</option><option value="500" ${s.elev==500?"selected":""}>Lifted 50 cm</option><option value="800" ${s.elev==800?"selected":""}>Lifted 80 cm</option><option value="1000" ${s.elev==1000?"selected":""}>Lifted 1 m</option></select></label>
       <label class="f">Below the screen<select data-k="skirt" ${s.elev==0?"disabled":""}>${Object.entries(SKIRTS).map(([k,v])=>`<option value="${k}" ${k===s.skirt?"selected":""}>${v.en}</option>`).join("")}</select></label>
     </div>`}
@@ -2694,6 +2707,7 @@ $("eScreens").addEventListener("input",e=>{
 });
 $("eScreens").addEventListener("change",e=>{if(e.target.matches("select,input[type=checkbox]"))e.stopPropagation();});
 $("eScreens").addEventListener("click",e=>{const d=e.target.closest("[data-del]");if(!d)return;ESCREENS.splice(+d.dataset.del,1);saveScreens();drawScreenForm();renderEvent();});
+$("eStage").addEventListener("change",()=>drawScreenForm());
 $("eAddScreen").addEventListener("click",()=>{ESCREENS.push({name:ESCREENS.length===1?"Side screen":`Screen ${ESCREENS.length+1}`,prod:"ugm",cols:4,rows:6,elev:500,skirt:"black",floor:false});saveScreens();drawScreenForm();renderEvent();});
 
 function readEvent(){
@@ -2708,10 +2722,10 @@ function readEvent(){
     regie:$("eRegieOn").checked,
     // no régie: Taurus player on its own, no PC, presentation or cameras
     simple:$("eSimple").checked||!$("eRegieOn").checked,backup:$("eBackup").checked&&!$("eSimple").checked&&$("eRegieOn").checked,obs:$("eRegieOn").checked&&$("eObs").checked,pres:$("eRegieOn").checked&&$("ePres").checked,
-    camOn:$("eCamOn").checked,camFix:$("eCamOn").checked?clampInt(num("eCamFix",0),0,8):0,camFw:$("eCamOn").checked?clampInt(num("eCamPtz",0),0,8):0,camMob:$("eCamOn").checked?clampInt(num("eCamOp",0),0,8):0,
+    camOn:$("eCamOn").checked,camAny:$("eCamOn").checked&&$("eCamMode").value==="total"?clampInt(num("eCamN",2),1,12):0,camFix:$("eCamOn").checked&&$("eCamMode").value!=="total"?clampInt(num("eCamFix",0),0,8):0,camFw:$("eCamOn").checked&&$("eCamMode").value!=="total"?clampInt(num("eCamPtz",0),0,8):0,camMob:$("eCamOn").checked&&$("eCamMode").value!=="total"?clampInt(num("eCamOp",0),0,8):0,
     sound:$("eSoundOn").checked,
-    unk,spk:snd(qn("eSpk","spk",2,24)),micW:snd(qn("eMicW","micW",0,16)),micWl:snd(qn("eMicWl","micWl",2,16)),micH:snd(qn("eMicH","micH",0,16)),
-    micPod:snd(qn("eMicPod","micPod",0,16)),micLav:snd(qn("eMicLav","micLav",0,16)),
+    unk,spk:snd(qn("eSpk","spk",2,24)),...(()=>{const sol=$("eSoundMode").value==="solution",tot=sol||$("eMicMode").value==="total",z=v=>tot?0:v;
+      return {soundSol:sol,micAny:tot?snd(qn("eMicN","micAny",2,48)):0,micW:z(snd(qn("eMicW","micW",0,16))),micWl:z(snd(qn("eMicWl","micWl",2,16))),micH:z(snd(qn("eMicH","micH",0,16))),micPod:z(snd(qn("eMicPod","micPod",0,16))),micLav:z(snd(qn("eMicLav","micLav",0,16)))};})(),
     tr:(()=>{const on=$("eSoundOn").checked&&$("eTrOn").checked,n=clampInt(num("eTrN",60),1,3000),langs=TR_LANGS.filter(l=>$("eTr"+l.k).checked).map(l=>l.k);const hp=opt("eTrHp");
       const bo=opt("eTrBooths");
       return {on:on&&langs.length>0,n,langs,hp:hp==null?n:clampInt(hp,0,3000),hpSet:hp!=null,boothsIn:bo==null?null:clampInt(bo,1,12),per:clampInt(num("eTrPer",2),1,6)};})(),
@@ -2737,7 +2751,7 @@ function screenDimSVG(r,pal,L="en"){
   const E=r.E,fr=L==="fr",row=rowItems(r),scr=row.filter(x=>!x.print),gap=900;if(!scr.length&&!E.stage)return null;
   const stW=E.stage?E.stW*1000:0,stH=E.stage?Math.round(E.stH*1000):0,stD=E.stage?E.stD*1000:0;
   const rowW=row.reduce((a,x)=>a+x.W,0)+Math.max(0,row.length-1)*gap;let x=-rowW/2;const pos=[];for(const it of row){if(!it.print)pos.push({sc:it,x});x+=it.W+gap;}
-  const left=Math.min(-stW/2,...pos.map(p=>p.x)),right=Math.max(stW/2,...pos.map(p=>p.x+p.sc.W)),top=Math.max(stH,...pos.map(p=>p.sc.elev+p.sc.H));
+  const sX=r.stX||0,left=Math.min(sX-stW/2,...pos.map(p=>p.x)),right=Math.max(sX+stW/2,...pos.map(p=>p.x+p.sc.W)),top=Math.max(stH,...pos.map(p=>p.sc.elev+p.sc.H));
   const span=Math.max(right-left,3000),u=Math.max(span,top*1.6)/50,m=v=>fmtL(v/1000,2,L)+" m";
   const ink=pal.ink,mut=pal.muted,acc=pal.accent;
   const ln=(x1,y1,x2,y2,c=mut,w=1,d="")=>`<line x1="${f1(x1)}" y1="${f1(y1)}" x2="${f1(x2)}" y2="${f1(y2)}" stroke="${c}" stroke-width="${w}" vector-effect="non-scaling-stroke"${d?` stroke-dasharray="${d}"`:""}/>`;
@@ -2749,12 +2763,12 @@ function screenDimSVG(r,pal,L="en"){
   let s=`<defs><linearGradient id="dimG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1d3bb8"/><stop offset=".55" stop-color="#6a2fd1"/><stop offset="1" stop-color="#13a0a6"/></linearGradient></defs>`;
   // ---- front view ----
   s+=ln(left-u*6,0,right+u*6,0,ink,1.6);
-  if(E.stage){s+=`<rect x="${f1(-stW/2)}" y="${f1(-stH)}" width="${f1(stW)}" height="${f1(stH)}" fill="#2a2c33" stroke="${ink}" stroke-width="1" vector-effect="non-scaling-stroke"/>`;
-    s+=tx(0,-stH/2+u*0.35,fr?"ESTRADE":"STAGE",{fill:"#e5e7ee",b:true,fs:Math.min(u,stH*0.4)});
-    s+=dimH(-stW/2,stW/2,u*2.6,0,(fr?"Estrade ":"Stage ")+m(stW));
+  if(E.stage){s+=`<rect x="${f1(sX-stW/2)}" y="${f1(-stH)}" width="${f1(stW)}" height="${f1(stH)}" fill="#2a2c33" stroke="${ink}" stroke-width="1" vector-effect="non-scaling-stroke"/>`;
+    s+=tx(sX,-stH/2+u*0.35,fr?"ESTRADE":"STAGE",{fill:"#e5e7ee",b:true,fs:Math.min(u,stH*0.4)});
+    s+=dimH(sX-stW/2,sX+stW/2,u*2.6,0,(fr?"Estrade ":"Stage ")+m(stW));
   }
   pos.forEach(({sc,x},k)=>{const yb=-sc.elev,yt=yb-sc.H,cw=sc.P.w,ch=sc.P.h;
-    if(sc.elev>0&&!(E.stage&&x<stW/2&&x+sc.W>-stW/2&&sc.elev<=stH)){for(const px of [x+sc.W*0.12,x+sc.W*0.88])s+=ln(px,yb,px,0,mut,0.8,"6 4");}
+    if(sc.elev>0&&!(E.stage&&x<sX+stW/2&&x+sc.W>sX-stW/2&&sc.elev<=stH)){for(const px of [x+sc.W*0.12,x+sc.W*0.88])s+=ln(px,yb,px,0,mut,0.8,"6 4");}
     s+=`<rect x="${f1(x)}" y="${f1(yt)}" width="${f1(sc.W)}" height="${f1(sc.H)}" fill="url(#dimG)" stroke="#0a0a0c" stroke-width="1.4" vector-effect="non-scaling-stroke"/>`;
     let g="";for(let c=1;c<sc.cols;c++)g+=`M${f1(x+c*cw)} ${f1(yt)}V${f1(yb)}`;for(let q=1;q<sc.rows;q++)g+=`M${f1(x)} ${f1(yt+q*ch)}H${f1(x+sc.W)}`;
     s+=`<path d="${g}" stroke="rgba(255,255,255,.35)" stroke-width="0.6" vector-effect="non-scaling-stroke" fill="none"/>`;
@@ -2764,10 +2778,10 @@ function screenDimSVG(r,pal,L="en"){
     // width on top, height on the right, bottom and top levels from the ground on the left
     s+=dimH(x,x+sc.W,yt-u*1.8,yt,`${m(sc.W)} · ${sc.cols} ${fr?"caissons":"cab."}`);
     s+=dimV(x+sc.W+u*1.8,yt,yb,x+sc.W,`${m(sc.H)} · ${sc.rows} ${fr?"caissons":"cab."}`);
-    if(E.stage&&sc.elev>stH&&x<stW/2&&x+sc.W>-stW/2)s+=tx(x+sc.W/2,yb+u*1.2,(fr?"au-dessus de l'estrade : ":"above the stage: ")+m(sc.elev-stH),{fs:u*0.8,fill:mut});});
+    if(E.stage&&sc.elev>stH&&x<sX+stW/2&&x+sc.W>sX-stW/2)s+=tx(x+sc.W/2,yb+u*1.2,(fr?"au-dessus de l'estrade : ":"above the stage: ")+m(sc.elev-stH),{fs:u*0.8,fill:mut});});
   // heights from the ground: one level line per height, marked on the left like an elevation drawing
   const lv=new Map(),addL=(h,x,t,c)=>{const k=Math.round(h);const o=lv.get(k)||{h:k,x,t:[],c};o.x=Math.min(o.x,x);o.t.push(t);if(c==="#0e9f6e")o.c=c;lv.set(k,o);};
-  if(E.stage)addL(stH,-stW/2,fr?"dessus de l'estrade":"stage top","#d97706");
+  if(E.stage)addL(stH,sX-stW/2,fr?"dessus de l'estrade":"stage top","#d97706");
   for(const {sc,x} of pos){if(sc.elev>0)addL(sc.elev,x,`${sc.name} · ${fr?"bas":"bottom"}`,"#d97706");addL(sc.elev+sc.H,x,`${sc.name} · ${fr?"haut":"top"}`,"#0e9f6e");}
   const mk=left-u*2.2,lvs=[...lv.values()].sort((a,b)=>a.h-b.h);let lastY=Infinity;
   s+=tx(mk,u*1.6,"± 0.00 m "+(fr?"(sol)":"(ground)"),{a:"end",fs:u*0.95,b:true});
@@ -2779,19 +2793,20 @@ function screenDimSVG(r,pal,L="en"){
   // ---- side view ----
   // drawn under the front view, so the page is filled
   // with a stage: under the front view, so the page is filled; without: beside it
-  const oy=E.stage?top+u*15:0,s0=s.length,sx=E.stage?-stW/2:right+u*12,dep=E.stage?stD:1500,cab=100,trD=300;
+  const oy=E.stage?top+u*15:0,s0=s.length,sx=E.stage?sX-stW/2:right+u*12,dep=E.stage?stD:1500,cab=100,trD=300;
   s+=tx(sx,-top-u*6.2,fr?"VUE DE CÔTÉ":"SIDE VIEW",{a:"start",b:true,fs:u*1.1});
   s+=tx(sx,-top-u*4.6,fr?"public à gauche, écran au fond":"audience on the left, screen at the back",{a:"start",fs:u*0.8,fill:mut});
   s+=ln(sx-u*4,0,sx+dep+cab+trD+u*8,0,ink,1.6);
   const main=pos.map(p=>p.sc).sort((a,b)=>b.W*b.H-a.W*a.H)[0];
   if(E.stage){s+=`<rect x="${f1(sx)}" y="${f1(-stH)}" width="${f1(stD)}" height="${f1(stH)}" fill="#2a2c33" stroke="${ink}" stroke-width="1" vector-effect="non-scaling-stroke"/>`;
     s+=dimH(sx,sx+stD,u*2.6,0,(fr?"profondeur ":"depth ")+m(stD));s+=dimV(sx-u*2.2,-stH,0,sx,"h "+m(stH));}
-  if(main){const bx=sx+(E.stage?stD:dep*0.6),yb=-main.elev,yt=yb-main.H;
+  // on the stage: the screen and its truss stand on the stage top at the back edge; from the ground: behind the stage
+  if(main){const onSt=E.stage&&main.elevSet!=null,bx=onSt?sx+stD-cab-trD-60:sx+(E.stage?stD:dep*0.6),yb=-main.elev,yt=yb-main.H,gY=onSt?-stH:0;
     s+=`<rect x="${f1(bx)}" y="${f1(yt)}" width="${cab}" height="${f1(main.H)}" fill="url(#dimG)" stroke="#0a0a0c" stroke-width="1" vector-effect="non-scaling-stroke"/>`;
-    s+=`<rect x="${f1(bx+cab+40)}" y="${f1(yt)}" width="${trD}" height="${f1(-yt)}" fill="none" stroke="${mut}" stroke-width="1" vector-effect="non-scaling-stroke"/>`;
-    let g="";for(let y=yt;y<-1;y+=trD)g+=`M${f1(bx+cab+40)} ${f1(y)}L${f1(bx+cab+40+trD)} ${f1(Math.min(0,y+trD))}`;s+=`<path d="${g}" stroke="${mut}" stroke-width="0.7" vector-effect="non-scaling-stroke" fill="none"/>`;
-    s+=tx(bx+cab+40+trD/2,u*1.3,"truss",{fs:u*0.7,fill:mut});
-    const rx=bx+cab+trD+u*3.2;
+    s+=`<rect x="${f1(bx+cab+40)}" y="${f1(yt)}" width="${trD}" height="${f1(gY-yt)}" fill="none" stroke="${mut}" stroke-width="1" vector-effect="non-scaling-stroke"/>`;
+    let g="";for(let y=yt;y<gY-1;y+=trD)g+=`M${f1(bx+cab+40)} ${f1(y)}L${f1(bx+cab+40+trD)} ${f1(Math.min(gY,y+trD))}`;s+=`<path d="${g}" stroke="${mut}" stroke-width="0.7" vector-effect="non-scaling-stroke" fill="none"/>`;
+    s+=tx(bx+cab+40+trD/2,gY+u*1.3,"truss",{fs:u*0.7,fill:onSt?"#e5e7ee":mut});
+    const rx=Math.max(bx+cab+trD+u*3.2,E.stage?sx+stD+u*2:0);
     if(main.elev>0)s+=dimV(rx,yb,0,bx+cab,(fr?"bas ":"bottom ")+m(main.elev),"#d97706");
     s+=dimV(rx+u*3.4,yt,yb,bx+cab,m(main.H));s+=dimV(rx+u*6.8,yt,0,bx+cab,(fr?"haut ":"top ")+m(main.elev+main.H),"#0e9f6e");
     s+=tx(bx+cab/2,yt-u*0.8,main.name,{fs:u*0.8,b:true});}
@@ -2799,7 +2814,7 @@ function screenDimSVG(r,pal,L="en"){
   const R=Math.max(right+u*6,sx+dep+cab+trD+u*16);
   // ---- the numbers, one line per screen ----
   let ty=(E.stage?oy:0)+u*6.4;const lines=[...pos.map(({sc})=>`${sc.name}: ${m(sc.W)} × ${m(sc.H)} (${sc.cols} × ${sc.rows} ${fr?"caissons":"cabinets"} ${sc.P.name} ${sc.P.w} × ${sc.P.h} mm, ${m2txt(sc.area,L)}) · ${fr?"bas à":"bottom at"} ${m(sc.elev)} · ${fr?"haut à":"top at"} ${m(sc.elev+sc.H)} ${fr?"du sol":"from the ground"}`),
-    ...(E.stage?[`${fr?"Estrade":"Stage"}: ${m(stW)} × ${m(stD)}, ${fr?"hauteur":"height"} ${m(stH)}${fr?" · l'écran est au fond de l'estrade":" · the screen stands at the back of the stage"}`]:[]),
+    ...(E.stage?[`${fr?"Estrade":"Stage"}: ${m(stW)} × ${m(stD)}, ${fr?"hauteur":"height"} ${m(stH)}${(()=>{const mn=pos.map(p=>p.sc).find(x=>!x.isTot);return !mn?"":mn.elevSet!=null?(fr?" · l'écran est posé sur l'estrade, au bord arrière":" · the screen stands on the stage, at its back edge"):(fr?" · l'écran part du sol, derrière l'estrade":" · the screen stands on the ground behind the stage");})()}`]:[]),
     ...r.screens.filter(x=>x.floor).map(sc=>`${sc.name}: ${fr?"écran au sol":"floor screen"} ${m(sc.W)} × ${m(sc.H)} (${sc.cols} × ${sc.rows} ${fr?"caissons":"cabinets"})`)];
   for(const t of lines){s+=tx(L0,ty,"•  "+t,{a:"start",fs:u*0.95});ty+=u*1.6;}
   return {vb:[L0,-top-u*8,R-L0,top+u*8+ty],body:s};}
@@ -2832,11 +2847,18 @@ function computeEvent(E,I){
   r.printTxt=L=>r.printUnk?(r.printM2?`${m2txt(r.printM2,L)} + ?`:"? m²"):m2txt(r.printM2,L);
   if(r.printUnk)r.flags.push(["warn","Print to confirm with the client: size or quantity shown as \"?\" (drawn with a placeholder size for now)."]);
   // a screen behind the stage starts at the stage top, so the stage never hides it
+  r.stX=0;
   if(E.stage){const row=rowItems(r),gap=900,stW=E.stW*1000,stH=Math.round(E.stH*1000);
     let x=-(row.reduce((a,sc)=>a+sc.W,0)+Math.max(0,row.length-1)*gap)/2;
+    // the stage stands centred under the main screen
+    {let xx=x;for(const sc of row){if(!sc.print&&!sc.isTot&&!sc.floor){r.stX=xx+sc.W/2;break;}xx+=sc.W+gap;}}
     for(const sc of row){const a=x,b=x+sc.W;x+=sc.W+gap;if(sc.print)continue;
-      if(b>-stW/2&&a<stW/2&&sc.elev<stH){sc.elevSet=sc.elev;sc.elev=stH;
-        r.flags.push(["concept",`${sc.name} starts at ${fmt(stH/1000,2)} m, the top of the stage, so the stage does not hide it.`]);}}}
+      if(!(b>r.stX-stW/2&&a<r.stX+stW/2))continue;
+      // on the stage: the screen starts at the stage top, at its back edge; from the ground: it keeps its own height behind the stage
+      if((sc.base||"stage")!=="ground"||sc.isTot&&sc.elev<stH){sc.elevSet=sc.elev;sc.elev=stH;
+        r.flags.push(["concept",`${sc.name} starts at ${fmt(stH/1000,2)} m, the top of the stage, at its back edge.`]);}
+      else if(sc.elev<stH)r.flags.push(["warn",`${sc.name} starts from the ground: its lowest ${fmt((stH-sc.elev)/1000,2)} m is hidden behind the stage (${fmt(stH/1000,2)} m high).`]);
+      else r.flags.push(["concept",`${sc.name} starts from the ground behind the stage, bottom at ${fmt(sc.elev/1000,2)} m.`]);}}
   // truss supports: one at each end, never more than trussSp apart
   for(const sc of r.screens){if(sc.floor){sc.sup=0;continue;}
     sc.sup=Math.max(2,Math.ceil(sc.W/(E.trussSp*1000)-1e-9)+1);sc.supStep=sc.W/(sc.sup-1);sc.supH=sc.elev+sc.H;}
@@ -2915,14 +2937,14 @@ function computeEvent(E,I){
   r.totems=r.screens.filter(s=>s.isTot);r.noLed=!r.screens.length;
   r.scrP=r.screens.reduce((a,sc)=>a+(sc.pMax||0),0);r.scrE3=feeder(r.scrP||1,3,I);
   // sound card
-  r.camCount=E.camFix+E.camFw+E.camMob;
+  r.camCount=E.camFix+E.camFw+E.camMob+(E.camAny||0);
   r.podMics=E.podMic?E.podium:0;
   r.gooseN=r.podMics+E.micPod;
-  r.micsN=E.micW+E.micWl+E.micH+E.micLav+r.gooseN;
-  {const U=E.unk||{},mk=["micW","micWl","micH","micLav","micPod"],known=mk.filter(k=>!U[k]).reduce((a,k)=>a+E[k],0)+r.podMics,anyM=mk.some(k=>U[k]);
+  r.micsN=E.micW+E.micWl+E.micH+E.micLav+r.gooseN+(E.micAny||0);
+  {const U=E.unk||{},mk=["micW","micWl","micH","micLav","micPod","micAny"],known=mk.filter(k=>!U[k]).reduce((a,k)=>a+E[k],0)+r.podMics,anyM=mk.some(k=>U[k]);
     r.micsTxt=anyM?(known?`${known}+?`:"?"):String(r.micsN);r.unkMic=anyM;
     const lk=[...LIGHTS.map(l=>l.k),"lightN"],lknown=lk.filter(k=>!U[k]).reduce((a,k)=>a+E[k],0),anyL=E.light&&lk.some(k=>U[k]);
-    r.lightTxt=anyL?(lknown?`${lknown}+?`:"?"):String(E.nl);r.unkLight=anyL;r.unkSpk=!!U.spk;r.unkSound=anyM||!!U.spk;
+    r.lightTxt=E.lightMode==="solution"?"✓":anyL?(lknown?`${lknown}+?`:"?"):String(E.nl);r.unkLight=anyL;r.unkSpk=!!U.spk;r.unkSound=anyM||!!U.spk;
     const NM={spk:"speakers",micW:"wired mics",micWl:"wireless mics",micH:"headset mics",micLav:"lavalier mics",micPod:"podium mics",beam:"beams",par:"LED PARs",mov:"moving heads"},todo=Object.keys(NM).filter(k=>U[k]).map(k=>NM[k]);
     if(todo.length)r.flags.push(["warn",`Quantity to confirm with the client: ${todo.join(", ")}. Shown as "?" and counted as 1 for now.`]);}
   r.audioIn=r.micsN+(E.obs?2:0)+(E.pres?2:0)+(r.camCount?2:0);
@@ -2936,7 +2958,7 @@ function computeEvent(E,I){
   r.staff=[];
   if(!r.proc.taurus&&r.screens.length)r.staff.push({k:"screen",en:"Screen operator",fr:"Opérateur écran",full:{en:"Screen operator (régie écran)",fr:"Opérateur régie écran"},sub:{en:`régie · ${r.proc.m}`,fr:`régie · ${r.proc.m}`}});
   if(r.micsN>2||r.unkMic)r.staff.push({k:"sound",en:"Sound engineer",fr:"Ingénieur son",sub:{en:`${r.micsTxt} mics (${micTypes(r,"en")})`,fr:`${r.micsTxt} micros (${micTypes(r,"fr")})`}});
-  if(E.light&&(E.nl))r.staff.push({k:"light",en:"Lighting operator",fr:"Opérateur lumière",sub:{en:`${r.lightTxt} lights · DMX`,fr:`${r.lightTxt} projecteurs · DMX`}});
+  if(E.light&&(E.nl))r.staff.push({k:"light",en:"Lighting operator",fr:"Opérateur lumière",sub:{en:`${lightQty(r,"en")} · DMX`,fr:`${lightQty(r,"fr")} · DMX`}});
   r.kit=eventKit(r);
   return r;
 }
@@ -2958,6 +2980,8 @@ function eventKit(r){
   add("screens","tvret",'Return TV 65" with its stand (supplier)','Écran de retour TV 65" avec pied (fournisseur)',r.retSup,"",{supplier:true});
   for(const d of r.disp){add("screens",d.k,`${d.en} (our stock)`,`${d.fr} (notre stock)`,d.own);add("screens",d.k,`${d.en} (supplier)`,`${d.fr} (fournisseur)`,d.sup,"",{supplier:true});}
   for(const pr of E.prints){const dim=prDim(pr),dimF=prDim(pr,"fr"),u=pr.nU?{unk:true}:{};
+    if(pr.type==="press"){add("print","print_press",`Press wall (mur de presse) ${dim}, ${PRINT_POS[pr.pos].en}`,`Mur de presse ${dimF}, ${PRINT_POS[pr.pos].fr}`,pr.n,"",{note:prM2(pr),m2:prM2(pr),...u});
+      add("print","frame",`Press wall structure with its feet ${dim}`,`Structure du mur de presse avec ses pieds ${dimF}`,pr.n,"",u);continue;}
     add("print","print_"+pr.type,pr.type==="paper"?`Printed wallpaper (papier peint) ${dim}, ${PRINT_POS[pr.pos].en}`:`Printed ${PRINT_T[pr.type].en.toLowerCase()} ${dim}, ${PRINT_POS[pr.pos].en}`,pr.type==="paper"?`Papier peint imprimé ${dimF}, ${PRINT_POS[pr.pos].fr}`:`${PRINT_T[pr.type].fr} imprimée ${dimF}, ${PRINT_POS[pr.pos].fr}`,pr.n,"",{note:prM2(pr),m2:prM2(pr),...u});
     if(pr.type==="paper"){add("print","glue","Wallpaper glue and fitting kit (needs a smooth, clean wall)","Colle et kit de pose papier peint (mur lisse et propre)",1);continue;}
     if(pr.type==="bache"){add("print","truss",`Truss frame for the bâche ${dim}`,`Cadre truss pour la bâche ${dimF}`,pr.n,"",u);add("print","ties","Bungee cords and eyelet fixings (set)","Sandows et fixations œillets (lot)",pr.n,"",u);}
@@ -2997,6 +3021,7 @@ function eventKit(r){
   if(E.pres){add("regie","laptop","Presentation laptop","PC portable présentation",1);add("regie","capture","Video capture card","Carte de capture vidéo",1);add("regie","hdmi","HDMI cable (laptop)","Câble HDMI (portable)",1);add("regie","laser","Wireless laser presenter","Télécommande laser sans fil",1);}
   if(E.ret)add("regie","hdmi",'HDMI cable to return TV','Câble HDMI vers écran de retour',E.ret);
   if(r.camCount){
+    add("cams","camany","Camera with tripod (type to confirm)","Caméra avec trépied (type à confirmer)",E.camAny||0);
     add("cams","cam","Camera on rotating tripod, cabled","Caméra sur trépied rotatif, câblée",E.camFix);
     add("cams","ptz","Camera on rotating tripod, wireless","Caméra sur trépied rotatif, sans fil",E.camFw);
     add("cams","camop","Mobile camera, wireless (handheld)","Caméra mobile sans fil (à l'épaule)",E.camMob);
@@ -3014,10 +3039,12 @@ function eventKit(r){
   add("sound","wmic","Wireless microphone + receiver","Micro sans fil + récepteur",E.micWl);
   add("sound","headset","Headset microphone + bodypack","Micro serre-tête + émetteur",E.micH);
   add("sound","lav","Lavalier microphone (micro cravate) + bodypack","Micro cravate + émetteur",E.micLav);
+  add("sound","micany","Microphone (type to confirm)","Micro (type à confirmer)",E.micAny||0);
   add("sound","goose","Podium gooseneck microphone (micro pupitre)","Micro pupitre col de cygne",r.gooseN);
   add("sound","micstand","Gooseneck mic base / clamp","Embase / pince micro col de cygne",r.gooseN);
-  if(r.audioIn||E.spk)add("sound","soundcard",`Sound card / mixer, ${r.mixerCh} inputs, ${r.audioOut} outputs${r.unkSound?" (to confirm)":""}`,`Carte son / console, ${r.mixerCh} entrées, ${r.audioOut} sorties${r.unkSound?" (à confirmer)":""}`,1);
-  add("sound","xlr","XLR cable","Câble XLR",E.micW+E.micWl+E.micH+E.micLav+r.gooseN+E.spk);
+  if(E.soundSol&&(r.audioIn||E.spk))add("sound","sndsol","Sound solution: mixer, cables and stands to set with the client","Solution son : console, câbles et pieds à définir avec le client",1);
+  else if(r.audioIn||E.spk)add("sound","soundcard",`Sound card / mixer, ${r.mixerCh} inputs, ${r.audioOut} outputs${r.unkSound?" (to confirm)":""}`,`Carte son / console, ${r.mixerCh} entrées, ${r.audioOut} sorties${r.unkSound?" (à confirmer)":""}`,1);
+  if(!E.soundSol)add("sound","xlr","XLR cable","Câble XLR",E.micW+E.micWl+E.micH+E.micLav+r.gooseN+(E.micAny||0)+E.spk);
   if(r.tr){const T=r.tr,ln=T.langs.map(k=>trName(k,"en")).join(", "),lnF=T.langs.map(k=>trName(k,"fr")).join(", ");
     add("trans","booth","Interpreter booth","Cabine d'interprète",T.booths,"",{note:ln});
     add("trans","interp",`Interpreter (staff, ${T.per} per booth)`,`Interprète (personnel, ${T.per} par cabine)`,T.interp);
@@ -3025,11 +3052,12 @@ function eventKit(r){
     add("trans","tx","Translation transmitter, one channel per language","Émetteur de traduction, un canal par langue",1,"",{note:`${T.booths} ${T.booths>1?"channels":"channel"}`});
     add("trans","hp","Receiver + headphones (listeners)","Récepteur + casque (auditeurs)",T.hp,"",{note:`${T.n} people · ${ln}`});
     add("trans","xlr","Audio feed cable (mixer → booths)","Câble audio (console → cabines)",T.booths);}
-  if(E.light){if(E.lightMode==="total")add("light","fixture","Lighting fixture (types to confirm with the client)","Projecteur (types à confirmer avec le client)",E.lightN);for(const l of LIGHTS)add("light",l.kit,l.en,l.fr,E[l.k]);
-    const fx=E.nl;add("light","dmx","DMX controller","Console DMX",fx?1:0);add("light","dmxc","DMX cable","Câble DMX",fx);
-    if(fx){if(E.lightPos==="totems"){add("light","truss","Lighting truss totem 3 m","Totem truss lumière 3 m",E.lightTot,"",{note:`${Math.ceil(fx/E.lightTot)} lights max per totem`});add("light","base","Truss totem base plate","Embase de totem truss",E.lightTot);}
+  if(E.light){if(E.lightMode==="solution")add("light","lightsol","Lighting solution: fixtures, DMX and cables to set with the client","Solution lumière : projecteurs, DMX et câbles à définir avec le client",1);
+    if(E.lightMode==="total")add("light","fixture","Lighting fixture (types to confirm with the client)","Projecteur (types à confirmer avec le client)",E.lightN);for(const l of LIGHTS)add("light",l.kit,l.en,l.fr,E[l.k]);
+    const fx=E.nl,sol=E.lightMode==="solution";if(!sol){add("light","dmx","DMX controller","Console DMX",fx?1:0);add("light","dmxc","DMX cable","Câble DMX",fx);}
+    if(fx){if(E.lightPos==="totems"){add("light","truss","Lighting truss totem 3 m","Totem truss lumière 3 m",E.lightTot,"",sol?{}:{note:`${Math.ceil(fx/E.lightTot)} lights max per totem`});add("light","base","Truss totem base plate","Embase de totem truss",E.lightTot);}
       else if(E.lightPos==="truss"){const m=r.main,w=Math.ceil(((m?m.W:4000)+1600)/1000);add("light","truss",`Lighting truss beam ${w} m, on top of the main screen truss`,`Poutre truss lumière ${w} m, sur la structure de l'écran principal`,1);}
-      if(E.lightPos!=="ground")add("light","clamp","Light clamp + safety cable","Crochet + élingue de sécurité",fx);}}
+      if(E.lightPos!=="ground"&&!sol)add("light","clamp","Light clamp + safety cable","Crochet + élingue de sécurité",fx);}}
   for(const p of r.staff)add("staff","op",`${(p.full||p).en}, during the whole event`,`${(p.full||p).fr}, pendant tout l'événement`,1);
   {const U=E.unk||{},map={speaker:U.spk,stand:U.spk,mic:U.micW,micstand:U.micW||U.micPod,wmic:U.micWl,headset:U.micH,lav:U.micLav,goose:U.micPod,xlr:r.unkSound,...Object.fromEntries(LIGHTS.map(l=>[l.kit,U[l.k]])),fixture:U.lightN,dmxc:r.unkLight,clamp:r.unkLight};
     for(const k of K)if((k.cat==="sound"||k.cat==="light")&&map[k.icon])k.unk=true;}
@@ -3059,7 +3087,7 @@ function eventSceneSVG(r,pal,L="en",client=false){
   const row=rowItems(r),floors=r.screens.filter(s=>s.floor);
   const gap=900,stW=E.stage?E.stW*1000:0,stH=E.stage?E.stH*1000:0;
   const rowW=row.reduce((a,s)=>a+s.W,0)+Math.max(0,row.length-1)*gap;
-  const half=Math.max(rowW,stW,2000)/2;
+  const sX=r.stX||0,half=Math.max(rowW,stW+2*Math.abs(sX),2000)/2;
   const u=Math.max(half*2,3000)/60;
   let s="";
   const rc=(x,y,w,h,f,st="none",sw=0,ex="")=>`<rect x="${f1(x)}" y="${f1(y)}" width="${f1(w)}" height="${f1(h)}" fill="${f}" stroke="${st}" stroke-width="${sw}" vector-effect="non-scaling-stroke" ${ex}/>`;
@@ -3085,6 +3113,14 @@ function eventSceneSVG(r,pal,L="en",client=false){
   for(const sc of row){
     if(sc.print){// printed wall on its frame
       const pw=sc.W,ph=sc.H,ft=Math.min(140,pw*0.04);
+      if(sc.type==="press"){s+=rc(x,-ph,pw,ph,"#f4f5f8","rgb(90,94,104)",1.2,sc.unk?'stroke-dasharray="40 30"':"");
+        const cw=Math.max(300,pw/Math.max(3,Math.round(pw/600))),chh=Math.max(250,cw*0.55);let k=0;
+        for(let yy=-ph+chh*0.3;yy<-chh*0.6;yy+=chh,k++)for(let xx=x+(k%2?cw/2:0)+cw*0.15;xx<x+pw-cw*0.6;xx+=cw)s+=`<rect x="${f1(xx)}" y="${f1(yy)}" width="${f1(cw*0.7)}" height="${f1(chh*0.5)}" rx="20" fill="${k%2?"#c7d2fe":"#bfdbfe"}"/>`;
+        s+=rc(x-200,-50,400,50,"rgb(60,62,70)")+rc(x+pw-200,-50,400,50,"rgb(60,62,70)");
+        const fs=Math.min(u*1.05,pw/10,ph/4);s+=rc(x+pw/2-fs*5.2,-ph/2-fs*1.2,fs*10.4,fs*2.6,"rgba(15,23,42,.85)","none",0,'rx="12"');
+        s+=tx(x+pw/2,-ph/2-fs*0.1,fr?"MUR DE PRESSE":"PRESS WALL",{fs,fill:"#ffffff",b:true});
+        s+=tx(x+pw/2,-ph/2+fs*1.05,sc.unk?`${sc.wU?"?":fmtL(pw/1000,pw%1000?1:0,L)} × ${sc.hU?"?":fmtL(ph/1000,ph%1000?1:0,L)} m · ${fr?"à confirmer":"to confirm"}`:`${fmtL(pw/1000,pw%1000?1:0,L)} × ${fmtL(ph/1000,ph%1000?1:0,L)} m · ${m2txt(sc.area,L)}`,{fs:fs*0.72,fill:"rgba(255,255,255,.9)"});
+        x+=pw+gap;continue;}
       s+=rc(x,-ph,pw,ph,sc.type==="bache"?"url(#printG)":sc.type==="paper"?"url(#paperG)":"url(#polyG)","rgb(90,94,104)",1.2,sc.unk?'stroke-dasharray="40 30"':"");
       if(sc.type==="bache"){for(let ex=x+150;ex<x+pw;ex+=500){s+=`<circle cx="${f1(ex)}" cy="${f1(-ph+80)}" r="22" fill="#d6d9e2"/><circle cx="${f1(ex)}" cy="-80" r="22" fill="#d6d9e2"/>`;}
         s+=rc(x-ft,-ph-ft,ft,ph+ft,"none",pal.muted,1)+rc(x+pw,-ph-ft,ft,ph+ft,"none",pal.muted,1)+rc(x-ft,-ph-ft,pw+2*ft,ft,"none",pal.muted,1);}
@@ -3097,7 +3133,7 @@ function eventSceneSVG(r,pal,L="en",client=false){
       x+=pw+gap;continue;}
     const yb=-sc.elev,yt=yb-sc.H,s0=s.length;
     // a screen on the stage stands at the back of it, behind the stage top
-    const lift=E.stage&&x<stW/2&&x+sc.W>-stW/2?lipD:0;
+    const lift=E.stage&&x<sX+stW/2&&x+sc.W>sX-stW/2?lipD:0;
     if(sc.elev>0){
       if(sc.skirt==="truss"){for(let i=0;i<sc.sup;i++){const lx=Math.min(x+sc.W-300,Math.max(x,x+i*sc.supStep-150));s+=rc(lx,yb,300,sc.elev,"none",pal.muted,1);for(let y=yb;y<-1;y+=300)s+=`<path d="M${f1(lx)} ${f1(y)}L${f1(lx+300)} ${f1(Math.min(0,y+300))}" stroke="${pal.muted}" stroke-width="0.8" vector-effect="non-scaling-stroke"/>`;}
         s+=rc(x,-120,sc.W,120,"none",pal.muted,1);}
@@ -3122,13 +3158,13 @@ function eventSceneSVG(r,pal,L="en",client=false){
   }
   // stage in front
   if(E.stage){const cp=E.carpet==="none"?[70,72,80]:CARPET[E.carpet];
-    s+=rc(-stW/2,-stH,stW,stH,"rgb(22,22,26)","rgb(90,94,104)",1);
-    s+=rc(-stW/2,-stH,stW,Math.min(60,stH*0.15),rgbs(cp,1.3));
-    s+=`<path d="M${f1(-stW/2)} ${f1(-stH)}L${f1(-stW/2+stW*0.06)} ${f1(-stH-lipD)}H${f1(stW/2-stW*0.06)}L${f1(stW/2)} ${f1(-stH)}Z" fill="${rgbs(cp,1.1)}" stroke="rgb(90,94,104)" stroke-width="0.8" vector-effect="non-scaling-stroke"/>`;
-    s+=tx(0,-stH/2+u*0.35,fr?`Estrade ${fmtL(E.stW,1,L)} × ${fmtL(E.stD,1,L)} m, h ${fmtL(E.stH,2,L)} m`:`Stage ${fmtL(E.stW,1,L)} × ${fmtL(E.stD,1,L)} m, h ${fmtL(E.stH,2,L)} m`,{fs:Math.min(u*0.9,stH*0.35),fill:"#d6d9e2"});}
+    s+=rc(sX-stW/2,-stH,stW,stH,"rgb(22,22,26)","rgb(90,94,104)",1);
+    s+=rc(sX-stW/2,-stH,stW,Math.min(60,stH*0.15),rgbs(cp,1.3));
+    s+=`<path d="M${f1(sX-stW/2)} ${f1(-stH)}L${f1(sX-stW/2+stW*0.06)} ${f1(-stH-lipD)}H${f1(sX+stW/2-stW*0.06)}L${f1(sX+stW/2)} ${f1(-stH)}Z" fill="${rgbs(cp,1.1)}" stroke="rgb(90,94,104)" stroke-width="0.8" vector-effect="non-scaling-stroke"/>`;
+    s+=tx(sX,-stH/2+u*0.35,fr?`Estrade ${fmtL(E.stW,1,L)} × ${fmtL(E.stD,1,L)} m, h ${fmtL(E.stH,2,L)} m`:`Stage ${fmtL(E.stW,1,L)} × ${fmtL(E.stD,1,L)} m, h ${fmtL(E.stH,2,L)} m`,{fs:Math.min(u*0.9,stH*0.35),fill:"#d6d9e2"});}
   // mics on the stage
   const stageTop=E.stage?-stH-lipD*0.45:0;
-  const micN=E.micW;for(let i=0;i<micN;i++){const mx=(i-(micN-1)/2)*600;s+=`<line x1="${f1(mx)}" y1="${f1(stageTop)}" x2="${f1(mx)}" y2="${f1(stageTop-1400)}" stroke="rgb(70,72,80)" stroke-width="2" vector-effect="non-scaling-stroke"/><circle cx="${f1(mx)}" cy="${f1(stageTop-1440)}" r="40" fill="rgb(40,42,48)"/>`;}
+  const micN=E.micW;for(let i=0;i<micN;i++){const mx=sX+(i-(micN-1)/2)*600;s+=`<line x1="${f1(mx)}" y1="${f1(stageTop)}" x2="${f1(mx)}" y2="${f1(stageTop-1400)}" stroke="rgb(70,72,80)" stroke-width="2" vector-effect="non-scaling-stroke"/><circle cx="${f1(mx)}" cy="${f1(stageTop-1440)}" r="40" fill="rgb(40,42,48)"/>`;}
   // totems closest to the screens, speakers furthest out
   const side0=half+450;
   for(let i=0;i<E.totem;i++){const sd=i%2?1:-1,k=Math.floor(i/2),cx=sd*(side0+TOTEM.w/2+k*1000),tx0=cx-TOTEM.w/2;
@@ -3145,8 +3181,9 @@ function eventSceneSVG(r,pal,L="en",client=false){
   for(let i=0;i<E.spk;i++){const sd=i%2?1:-1,k=Math.floor(i/2),sx=sd*(side+k*700);spkX.push(sx);
     s+=`<line x1="${f1(sx)}" y1="0" x2="${f1(sx)}" y2="-1500" stroke="rgb(70,72,80)" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M${f1(sx-250)} 0L${f1(sx)} -500L${f1(sx+250)} 0" fill="none" stroke="rgb(70,72,80)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`+rc(sx-220,-2100,440,650,"rgb(28,29,34)","rgb(100,104,116)",0.8,'rx="30"')+`<circle cx="${f1(sx)}" cy="-1700" r="150" fill="rgb(50,52,60)"/>`;}
   // podiums stand in front of the speakers (left first, then right)
-  for(let i=0;i<E.podium;i++){const px=spkX.length?spkX[i%spkX.length]+(Math.floor(i/spkX.length))*(spkX[i%spkX.length]<0?-800:800):(E.stage?-stW/2+700:-side)+i*900;
-    const pb=spkX.length?0:stageTop;
+  // with a stage, the podiums always stand on it, at the front left
+  for(let i=0;i<E.podium;i++){const px=E.stage?Math.min(sX+stW/2-500,sX-stW/2+650+i*950):spkX.length?spkX[i%spkX.length]+(Math.floor(i/spkX.length))*(spkX[i%spkX.length]<0?-800:800):-side+i*900;
+    const pb=E.stage?-stH-90:spkX.length?0:stageTop;
     s+=`<path d="M${f1(px-350)} ${f1(pb)}L${f1(px-300)} ${f1(pb-1150)}H${f1(px+300)}L${f1(px+350)} ${f1(pb)}Z" fill="url(#ledG)" stroke="rgb(10,10,12)" stroke-width="1" vector-effect="non-scaling-stroke"/>`+rc(px-380,pb-1200,760,60,"rgb(20,20,24)");
     if(E.podMic)s+=`<path d="M${f1(px+180)} ${f1(pb-1200)}Q${f1(px+180)} ${f1(pb-1480)} ${f1(px+20)} ${f1(pb-1560)}" fill="none" stroke="rgb(60,62,70)" stroke-width="2.5" vector-effect="non-scaling-stroke"/><ellipse cx="${f1(px)}" cy="${f1(pb-1570)}" rx="55" ry="38" fill="rgb(30,31,36)"/>`;}
   const tside=side;
@@ -3203,7 +3240,7 @@ function eventSceneSVG(r,pal,L="en",client=false){
   {const fl=r.screens.filter(x=>x.floor);if(fl.length)chips.push(["screen",m2txt(fl.reduce((a,x)=>a+x.area,0),L),fr?`écran${fl.length>1?"s":""} au sol`:`floor screen${fl.length>1?"s":""}`]);}
   {const ta=TOTEM.w*TOTEM.h/1e6;if(E.totem)chips.push(["totem",String(E.totem),fr?`totem${E.totem>1?"s":""} digital${E.totem>1?"s":""} · ${m2txt(ta,L)} ${E.totem>1?"chacun":""}`.trim():`digital totem${E.totem>1?"s":""} · ${m2txt(ta,L)}${E.totem>1?" each":""}`]);}
   if(E.podium)chips.push(["podium",String(E.podium),fr?`pupitre${E.podium>1?"s":""} digital${E.podium>1?"s":""}`:`digital podium${E.podium>1?"s":""}`]);
-  if(E.spk)chips.push(["speaker",String(qv(E,"spk")),fr?`enceinte${E.spk>1?"s":""}`:`speaker${E.spk>1?"s":""}`]);
+  if(E.spk)chips.push(["speaker",String(qv(E,"spk")),(fr?`enceinte${E.spk>1?"s":""}`:`speaker${E.spk>1?"s":""}`)+(E.soundSol?(fr?" · solution son":" · sound solution"):"")]);
   if(E.fr360)chips.push(["fr360",String(E.fr360),fr?`frigo${E.fr360>1?"s":""} digital${E.fr360>1?"s":""} 360°`:`360° digital fridge${E.fr360>1?"s":""}`]);
   for(const d of r.disp)chips.push([d.k,String(d.n),d.short[L]+(d.n>1&&!fr?"s":"")]);
   {const sk=skirtPrint(r);if(sk.n)chips.push(["print",m2txt(sk.m2,L),fr?`visuel imprimé sous l'écran${sk.n>1?` · ${sk.n} écrans`:""}`:`printed visual under the screen${sk.n>1?`s · ${sk.n}`:""}`]);}
@@ -3212,7 +3249,7 @@ function eventSceneSVG(r,pal,L="en",client=false){
   if(r.arch)chips.push(["arch",String(r.arch.n),fr?`arche${r.arch.n>1?"s":""} LED`:`LED arch${r.arch.n>1?"es":""}`+(r.arch.cloth.total?(fr?` · tissu ${m2txt(r.arch.cloth.total,L)}`:` · cloth ${m2txt(r.arch.cloth.total,L)}`):"")]);
   if(r.totems.length)chips.push(["totem",String(r.totems.length),fr?`totems LED · ${m2txt(r.totems[0].area,L)} chacun`:`LED totems · ${m2txt(r.totems[0].area,L)} each`]);
   {const nl=E.light?E.nl:0;if(nl)chips.push(["light",r.lightTxt,(fr?"lumières · ":"lights · ")+lightTypes(E,L)+(E.lightPos==="totems"?(fr?` · ${E.lightTot} totems`:` · ${E.lightTot} totems`):E.lightPos==="ground"?(fr?" · au sol":" · on the ground"):(fr?" · sur truss":" · on truss"))]);}
-  if(r.camCount)chips.push(["camera",String(r.camCount),(fr?`caméra${r.camCount>1?"s":""} · `:`camera${r.camCount>1?"s":""} · `)+[E.camFix&&`${E.camFix} ${fr?"trépied câblé":"tripod cabled"}`,E.camFw&&`${E.camFw} ${fr?"trépied sans fil":"tripod wireless"}`,E.camMob&&`${E.camMob} ${fr?"mobile sans fil":"mobile wireless"}`].filter(Boolean).join(", ")]);
+  if(r.camCount)chips.push(["camera",String(r.camCount),(fr?`caméra${r.camCount>1?"s":""} · `:`camera${r.camCount>1?"s":""} · `)+camTypes(E,fr?"fr":"en")]);
   if(r.tr)chips.push(["trans",fmtL(r.tr.n,0,L),fr?`pers. traduites · ${r.tr.langs.join("/")}`:`people translated · ${r.tr.langs.join("/")}`]);
   if(mics)chips.push(["mic",r.micsTxt,(fr?`micro${mics>1?"s":""} · `:`microphone${mics>1?"s":""} · `)+micTypes(r,L)]);
   const span=gx*2+400;let chh=u*4.6;
@@ -3274,15 +3311,20 @@ const LIGHTS=[
   {k:"parz",id:"eParZ",kit:"parz",d:"par",en:"LED PAR with zoom",fr:"PAR LED avec zoom",sh:"PAR zoom",shF:"PAR zoom"},
   {k:"bar",id:"eBar",kit:"bar",d:"par",en:"LED bar",fr:"Barre à LED",sh:"LED bars",shF:"barres LED"}];
 const LIGHT_IDS=[...LIGHTS.map(l=>l.id),"eLightN"];
-function readLights(qn){const total=$("eLightMode").value==="total",o={lightMode:total?"total":"types",lightN:total?qn("eLightN","lightN",20,500):0};
-  for(const l of LIGHTS)o[l.k]=total?0:qn(l.id,l.k,0,200);o.nl=o.lightN+LIGHTS.reduce((a,l)=>a+o[l.k],0);return o;}
+function readLights(qn){const md=$("eLightMode").value,total=md==="total",sol=md==="solution",o={lightMode:sol?"solution":total?"total":"types",lightN:total?qn("eLightN","lightN",20,500):0};
+  for(const l of LIGHTS)o[l.k]=total||sol?0:qn(l.id,l.k,0,200);o.nl=sol?1:o.lightN+LIGHTS.reduce((a,l)=>a+o[l.k],0);return o;}
+// "12 lights", or "lighting solution" when no detail is given
+function lightQty(r,L="en"){const fr=L==="fr";return r.E.lightMode==="solution"?(fr?"solution lumière":"lighting solution"):`${r.lightTxt} ${fr?"projecteurs":"lights"}`;}
 // the fixtures drawn on the layout (at most 24, so a big rig stays readable)
-function lightFx(E){const a=E.lightMode==="total"?Array.from({length:E.lightN},(_,i)=>["beam","mov","par"][i%3]):LIGHTS.flatMap(l=>Array(E[l.k]).fill(l.d));return a.slice(0,24);}
-function lightTypes(E,L="en",long=false){const fr=L==="fr";if(E.lightMode==="total")return fr?"types à confirmer":"types to confirm";
+function lightFx(E){if(E.lightMode==="solution")return ["beam","mov","par","beam","mov","par","beam","mov"];const a=E.lightMode==="total"?Array.from({length:E.lightN},(_,i)=>["beam","mov","par"][i%3]):LIGHTS.flatMap(l=>Array(E[l.k]).fill(l.d));return a.slice(0,24);}
+function lightTypes(E,L="en",long=false){const fr=L==="fr";if(E.lightMode==="solution")return fr?"solution lumière, détails à définir":"lighting solution, details to define";if(E.lightMode==="total")return fr?"types à confirmer":"types to confirm";
   return LIGHTS.filter(l=>E[l.k]).map(l=>`${qv(E,l.k)} ${long?(fr?l.fr:l.en):(fr?l.shF:l.sh)}`).join(", ");}
+// cameras by type, or "type to confirm" when only the total was given
+function camTypes(E,L="en"){const fr=L==="fr";if(E.camAny)return fr?"type à confirmer":"type to confirm";
+  return [E.camFix&&`${E.camFix} ${fr?"trépied câblé":"tripod cabled"}`,E.camFw&&`${E.camFw} ${fr?"trépied sans fil":"tripod wireless"}`,E.camMob&&`${E.camMob} ${fr?"mobile sans fil":"mobile wireless"}`].filter(Boolean).join(", ");}
 // printed visuals on the cloth under lifted screens
 function skirtPrint(r){const l=r.screens.filter(s=>!s.floor&&s.elev>0&&s.skirt==="print");return {n:l.length,m2:l.reduce((a,s)=>a+s.W*s.elev/1e6,0)};}
-function micTypes(r,L="en"){const E=r.E,fr=L==="fr";return [E.micW&&`${qv(E,"micW")} ${fr?"filaire":"wired"}`,E.micWl&&`${qv(E,"micWl")} ${fr?"main sans fil":"wireless handheld"}`,E.micLav&&`${qv(E,"micLav")} ${fr?"cravate":"lavalier"}`,E.micH&&`${qv(E,"micH")} ${fr?"serre-tête":"headset"}`,r.gooseN&&`${(E.unk&&E.unk.micPod?(r.podMics?r.podMics+"+?":"?"):r.gooseN)} ${fr?"pupitre":"podium"}`].filter(Boolean).join(", ");}
+function micTypes(r,L="en"){const E=r.E,fr=L==="fr";return [E.micAny&&(r.gooseN?`${qv(E,"micAny")} ${fr?"type à confirmer":"type to confirm"}`:(fr?"type à confirmer":"type to confirm")),E.micW&&`${qv(E,"micW")} ${fr?"filaire":"wired"}`,E.micWl&&`${qv(E,"micWl")} ${fr?"main sans fil":"wireless handheld"}`,E.micLav&&`${qv(E,"micLav")} ${fr?"cravate":"lavalier"}`,E.micH&&`${qv(E,"micH")} ${fr?"serre-tête":"headset"}`,r.gooseN&&`${(E.unk&&E.unk.micPod?(r.podMics?r.podMics+"+?":"?"):r.gooseN)} ${fr?"pupitre":"podium"}`].filter(Boolean).join(", ");}
 function needsRegie(r){const E=r.E;return (!r.noLed&&!r.proc.taurus)||r.camCount>0||!!(E.sound&&(E.spk||r.micsN))||!!(E.light&&(E.nl))||!!r.tr;}
 function translationSVG(r,pal,L="en"){
   const T=r.tr,fr=L==="fr";if(!T)return {vb:[0,0,10,10],body:""};
@@ -3342,7 +3384,7 @@ function eventRegieSVG(r,pal,L="en"){
   const N=(id,c,y,title,sub,kind)=>{nodes.push({id,x:col[c],y,title,sub,kind});};
   let y0=0;
   if(E.pres){N("lap",0,y0,fr?"PC portable":"Laptop",fr?"présentation + laser":"presentation + laser","laptop");N("cap1",1,y0,fr?"Carte de capture":"Capture card","HDMI → USB","capture");edges.push(["lap","cap1","HDMI"]);y0+=90;}
-  if(r.camCount){const parts=[E.camFix&&`${E.camFix} ${fr?"trépied câblé":"tripod cabled"}`,E.camFw&&`${E.camFw} ${fr?"trépied sans fil":"tripod wireless"}`,E.camMob&&`${E.camMob} ${fr?"mobile sans fil":"mobile wireless"}`].filter(Boolean).join(", ");
+  if(r.camCount){const parts=camTypes(E,fr?"fr":"en");
     N("cams",0,y0,`${r.camCount} ${fr?"caméra":"camera"}${r.camCount>1?"s":""}`,parts,"cam");N("mix",1,y0,fr?"Mélangeur HDMI":"HDMI mixer",`${Math.max(4,r.camCount)} ${fr?"entrées":"inputs"}`,"mixer");
     N("cap2",1,y0+90,fr?"Carte de capture":"Capture card","HDMI → USB","capture");N("pcc",2,y0+90,fr?"PC caméras":"Camera PC",fr?"+ écran":"+ monitor","pc");
     edges.push(["cams","mix","HDMI"],["mix","cap2","HDMI"],["cap2","pcc","USB"]);y0+=180;}
@@ -3367,7 +3409,7 @@ function eventRegieSVG(r,pal,L="en"){
     if(mics)edges.push(["mics","snd","XLR"]);edges.push(["pc","snd",fr?"audio":"audio"]);}
   if(E.spk){N("spk",4,ay,`${qv(E,"spk")} ${fr?"enceintes":"speakers"}`,fr?"sur pieds":"on stands","speaker");edges.push(["snd","spk","XLR"]);}
   if(r.tr){N("trans",4,ay+(E.spk?90:0),fr?"Traduction":"Translation",`${r.tr.booths} ${fr?"cabine(s)":"booth(s)"} · ${fmtL(r.tr.hp,0,L)} ${fr?"casques":"headphones"}`,"booth");edges.push(["snd","trans",fr?"audio":"audio"]);}
-  if(E.light&&(E.nl)){const ly=ay+90+(r.tr&&E.spk?90:0);N("dmx",2,ly,fr?"Console DMX":"DMX controller","","dmx");N("lights",4,ly,`${r.lightTxt} ${fr?"projecteurs":"lights"}`,lightTypes(E,L),"beam");edges.push(["dmx","lights","DMX"]);}
+  if(E.light&&(E.nl)){const ly=ay+90+(r.tr&&E.spk?90:0);N("dmx",2,ly,fr?"Console DMX":"DMX controller","","dmx");N("lights",4,ly,lightQty(r,L),E.lightMode==="solution"?(fr?"détails à définir":"details to define"):lightTypes(E,L),"beam");edges.push(["dmx","lights","DMX"]);}
   let staffY=null;
   if(r.staff.length){staffY=Math.max(...nodes.map(n=>n.y))+NH+70;
     r.staff.forEach((p,i)=>N("staff"+i,[3,2,4][i]??i,staffY,fr?p.fr:p.en,p.sub[L],"op"));
@@ -3457,13 +3499,13 @@ function kitIcon(k){
     case "stand":return `<path d="M50 10V70M50 70L22 92M50 70L78 92M50 70V92" stroke="${m}" stroke-width="4"/>`;
     case "mic":return `<circle cx="50" cy="22" r="13" fill="${l}"/><path d="M50 35V88" stroke="${d}" stroke-width="9" stroke-linecap="round"/>`;
     case "micstand":return `<path d="M50 10L50 88M50 88L28 94M50 88L72 94M50 22L76 12" stroke="${m}" stroke-width="4"/>`;
-    case "wmic":return `<circle cx="42" cy="22" r="13" fill="${l}"/><path d="M42 35V86" stroke="${d}" stroke-width="9" stroke-linecap="round"/><path d="M64 30Q74 40 64 50M70 24Q86 40 70 56" stroke="${b}" stroke-width="3" fill="none"/>`;
+    case "micany":case "wmic":return `<circle cx="42" cy="22" r="13" fill="${l}"/><path d="M42 35V86" stroke="${d}" stroke-width="9" stroke-linecap="round"/><path d="M64 30Q74 40 64 50M70 24Q86 40 70 56" stroke="${b}" stroke-width="3" fill="none"/>`;
     case "headset":return `<path d="M26 54Q26 16 50 16Q74 16 74 54" stroke="${d}" stroke-width="6" fill="none"/>`+R(20,50,12,20,d,4)+R(68,50,12,20,d,4)+`<path d="M26 66Q36 80 54 76" stroke="${d}" stroke-width="3" fill="none"/><circle cx="56" cy="76" r="4" fill="${l}"/>`;
     case "soundcard":return R(8,34,84,32,d,4)+[0,1,2,3,4].map(i=>`<circle cx="${20+i*15}" cy="46" r="4" fill="${l}"/>`).join("")+R(18,56,64,4,"#22c55e",2);
     case "xlr":return `<path d="M20 70C40 90 60 20 80 30" stroke="#d97706" stroke-width="5" fill="none"/><circle cx="16" cy="72" r="9" fill="${l}"/><circle cx="84" cy="28" r="9" fill="${l}"/>`;
     case "bsw":case "beam":return `<path d="M30 20V44H70V20" stroke="${d}" stroke-width="5" fill="none"/>`+R(32,40,36,28,d,6)+`<path d="M44 68L30 96H70L56 68Z" fill="rgba(80,140,255,.45)"/>`+R(34,86,0,0,d);
     case "bar":return R(8,38,84,24,d,6)+[20,35,50,65,80].map(x=>`<circle cx="${x}" cy="50" r="5" fill="#f59e0b"/>`).join("")+`<path d="M20 38V28H80V38" stroke="${m}" stroke-width="4" fill="none"/>`;
-    case "fixture":case "parz":case "par":return R(26,24,48,48,d,10)+`<circle cx="50" cy="48" r="16" fill="#f59e0b"/>`+`<path d="M30 24V14H70V24" stroke="${m}" stroke-width="4" fill="none"/>`;
+    case "lightsol":case "fixture":case "parz":case "par":return R(26,24,48,48,d,10)+`<circle cx="50" cy="48" r="16" fill="#f59e0b"/>`+`<path d="M30 24V14H70V24" stroke="${m}" stroke-width="4" fill="none"/>`;
     case "moving":case "profile":return R(30,76,40,14,d,3)+`<path d="M34 76V44M66 76V44" stroke="${d}" stroke-width="5"/>`+`<circle cx="50" cy="46" r="18" fill="${d}"/><circle cx="50" cy="46" r="8" fill="#ec4899"/>`;
     case "dmx":return R(8,30,84,40,d,4)+[0,1,2,3,4,5].map(i=>R(16+i*12,36,6,26,m,2)+R(15+i*12,40+(i*7)%18,8,6,l,1)).join("");
     case "clamp":return `<path d="M30 20H70V44H58V32H42V60" stroke="${m}" stroke-width="6" fill="none"/><circle cx="42" cy="70" r="10" fill="none" stroke="${d}" stroke-width="5"/><path d="M60 50Q80 70 60 90" stroke="${l}" stroke-width="3" fill="none"/>`;
@@ -3517,7 +3559,9 @@ function datesRows(E,L){
 let LASTE=null;
 function renderEvent(){
   const I=readInputs(),E=readEvent(),r=computeEvent(E,I);LASTE=r;
-  $("eLightOpts").hidden=!E.light;$("eLightTotalW").hidden=E.lightMode!=="total";$("eLightTypesW").hidden=E.lightMode==="total";$("eCamOpts").hidden=!E.camOn;$("eRegieOpts").hidden=!E.regie;$("eRegieVX").hidden=!!r.proc.taurus;$("eRegieOffHint").hidden=E.regie;$("eScrOpts").hidden=E.noScreen;$("ePrintOpts").hidden=!$("ePrintOn").checked;
+  $("eLightOpts").hidden=!E.light;$("eLightTotalW").hidden=E.lightMode!=="total";$("eLightTypesW").hidden=E.lightMode!=="types";
+  {const sol=$("eSoundMode").value==="solution",tot=sol||$("eMicMode").value==="total";$("eMicModeW").hidden=sol;$("eMicTotW").hidden=!tot;$("eMicTypesW").hidden=tot;$("eSndSolHint").hidden=!sol;
+    const ct=$("eCamMode").value==="total";$("eCamTotW").hidden=!ct;$("eCamTypesW").hidden=ct;}$("eCamOpts").hidden=!E.camOn;$("eRegieOpts").hidden=!E.regie;$("eRegieVX").hidden=!!r.proc.taurus;$("eRegieOffHint").hidden=E.regie;$("eScrOpts").hidden=E.noScreen;$("ePrintOpts").hidden=!$("ePrintOn").checked;
   {const h=$("ePrintHint");h.innerHTML=r.prints.length?`<b>${r.prints.length} printed wall${r.prints.length>1?"s":""}${E.prints.some(p=>p.nU)?" (+?)":""} · ${r.printTxt("en")}</b>`:"Next to the screen, or alone when the client wants only printed walls.";}
   for(const d of DISP){const h=$(d.id+"Hint");if(h)h.textContent=E.dstock[d.k]==null?"":`· ${E.dstock[d.k]} in stock`;}$("eLightTotW").hidden=E.lightPos!=="totems";
   {const fx=E.nl;$("eLightHint").innerHTML=E.lightPos==="totems"?`<b>${E.lightTot} truss totems, 3 m high</b>, up to ${Math.ceil(fx/E.lightTot)||0} lights each, half on each side of the stage.`:E.lightPos==="ground"?"Lights stand on the floor, half on each side of the stage, pointing up and away from the screen. No truss needed.":"Lights hang on a truss fixed on top of the main screen structure.";}$("aOpts").hidden=!$("aOn").checked;$("eDispOpts").hidden=!$("eDispOn").checked;$("eStageOpts").hidden=!E.stage;$("eSoundOpts").hidden=!E.sound;$("eTrOpts").hidden=!$("eTrOn").checked;$("eLTotOpts").hidden=!E.ltot.on;$("eLTotCus").hidden=E.ltot.prod!=="cus";$("eLTotSkW").hidden=E.ltot.elev===0;$("eBackup").disabled=E.simple;
@@ -3595,7 +3639,8 @@ const BASIS={en:{label:"from the label",entered:"entered value",indoor:"estimate
   fr:{label:"selon l'étiquette",entered:"valeur saisie",indoor:"estimation intérieur 350 W/m²",outdoor:"estimation extérieur 672 W/m²",lw186:"LW1.86, 416 × 624 px = 0,90 m² × 391 W/m²",fr360:"estimation, cylindre LED ≈ 1,95 m² × 350 W/m² + 150 W froid",tv65:"estimation, TV 65\" ≈ 200 W"}};
 const SRC={en:{own:"Our stock",unilumin:"Unilumin (UGM P3.9 500 × 500)",other:"Other supplier",generic:"Generic cabinets, not from our stock"},fr:{own:"Notre stock",unilumin:"Unilumin (UGM P3.9 500 × 500)",other:"Autre fournisseur",generic:"Caissons génériques, hors de notre stock"}};
 function placeTxt(s,L){const fr=L==="fr";if(s.floor)return (fr?"Écran au sol, 10 cm d'épaisseur, plexiglas sur chaque caisson":"Floor screen, 10 cm thick, plexiglass on every cabinet")+(s.sofas?(fr?` · place pour ≈ ${s.sofas} canapé${s.sofas>1?"s":""} VIP (1 personne chacun, non inclus)`:` · room for ≈ ${s.sofas} VIP sofa${s.sofas>1?"s":""} (1 person each, not included)`):"");
-  if(s.elevSet!=null)return fr?`Sur la hauteur de l'estrade, bas à ${fmtL(s.elev/1000,2,L)} m`:`At stage height, bottom at ${fmtL(s.elev/1000,2,L)} m`;
+  if(s.elevSet!=null)return fr?`Au niveau du dessus de l'estrade (bord arrière), bas à ${fmtL(s.elev/1000,2,L)} m`:`At the stage top (back edge), bottom at ${fmtL(s.elev/1000,2,L)} m`;
+  if(s.base==="ground"&&s.elev>0)return (fr?`Depuis le sol derrière l'estrade, bas à ${fmtL(s.elev/1000,2,L)} m, `:`From the ground behind the stage, bottom at ${fmtL(s.elev/1000,2,L)} m, `)+SKIRTS[s.skirt][L].toLowerCase();
   if(!s.elev)return fr?"Posé au sol":"On the ground";
   if(s.rcxLift)return fr?"Au sol, rehaussé de 5 cm (pieds RCX)":"On the ground, lifted 5 cm (RCX feet)";
   return (fr?`Levé à ${fmtL(s.elev/1000,1,L)} m, `:`Lifted ${fmtL(s.elev/1000,1,L)} m, `)+SKIRTS[s.skirt][L].toLowerCase();}
@@ -3702,12 +3747,13 @@ async function buildEventPDF(r,L="en",tech=false){
     ...(skirtPrint(r).n?[[fr?"Visuel imprimé sous l'écran":"Printed visual under the screen",`${m2txt(skirtPrint(r).m2,L)} (${r.screens.filter(s=>!s.floor&&s.elev>0&&s.skirt==="print").map(s=>`${s.name} ${fmtL(s.W/1000,2,L)} × ${fmtL(s.elev/1000,2,L)} m`).join(", ")})`]]:[]),
     ...(r.prints.length?[[fr?"Impression":"Print",E.prints.map(pr=>`${prN(pr)} × ${PRINT_T[pr.type][L]} ${prDim(pr,L)} (${PRINT_POS[pr.pos][L]})`).join(", ")+` · ${r.printTxt(L)}`]]:[]),
     ...(r.disp.length?[[fr?"Autres afficheurs":"Other displays",r.disp.map(d=>`${d.n} × ${d.short[L]}`).join(", ")]]:[]),
-    ...(r.camCount?[[fr?"Caméras":"Cameras",`${r.camCount} (${[E.camFix&&`${E.camFix} ${fr?"trépied câblé":"tripod cabled"}`,E.camFw&&`${E.camFw} ${fr?"trépied sans fil":"tripod wireless"}`,E.camMob&&`${E.camMob} ${fr?"mobile sans fil":"mobile wireless"}`].filter(Boolean).join(", ")}) · ${fr?"1 cadreur par caméra":"1 operator per camera"}`]]:[]),
+    ...(r.camCount?[[fr?"Caméras":"Cameras",`${r.camCount} (${camTypes(E,fr?"fr":"en")}) · ${fr?"1 cadreur par caméra":"1 operator per camera"}`]]:[]),
     [fr?"Estrade":"Stage",E.stage?`${f(E.stW,1)} × ${f(E.stD,1)} m, h ${f(E.stH,2)} m · ${E.carpet==="none"?(fr?"sans moquette":"no carpet"):(fr?"moquette ":"carpet ")+(fr?{black:"noire",red:"rouge",blue:"bleue",grey:"grise"}[E.carpet]:E.carpet)}`:(fr?"Non":"No")],
-    [fr?"Microphones":"Microphones",!E.sound||!r.micsN?(fr?"Aucun":"None"):`${r.micsTxt} (${micTxt}) · ${fr?`carte son ${r.mixerCh} entrées`:`${r.mixerCh}-input sound card`}`],
+    ...(E.sound&&E.soundSol?[[fr?"Son":"Sound",fr?"Solution son : enceintes et micros, console et câbles à définir":"Sound solution: speakers and microphones, mixer and cables to define"]]:[]),
+    [fr?"Microphones":"Microphones",!E.sound||!r.micsN?(fr?"Aucun":"None"):`${r.micsTxt} (${micTxt})${E.soundSol?"":" · "+(fr?`carte son ${r.mixerCh} entrées`:`${r.mixerCh}-input sound card`)}`],
     [fr?"Enceintes":"Speakers",!E.sound||!E.spk?(fr?"Aucune":"None"):`${qv(E,"spk")} ${fr?"sur pieds":"on stands"}`],
     [fr?"Traduction simultanée":"Live translation",r.tr?(fr?`${fmtL(r.tr.n,0,L)} personnes · ${r.tr.langs.map(k=>trName(k,L)).join(", ")} · ${r.tr.booths} cabine(s), ${r.tr.interp} interprètes · ${fmtL(r.tr.hp,0,L)} casques`:`${fmt(r.tr.n)} people · ${r.tr.langs.map(k=>trName(k,L)).join(", ")} · ${r.tr.booths} booth(s), ${r.tr.interp} interpreters · ${fmt(r.tr.hp)} headphones`):(fr?"Non":"No")],
-    [fr?"Lumière":"Lighting",nl?`${r.lightTxt} (${lightTypes(E,L,true)}) · ${E.lightPos==="totems"?(fr?`${E.lightTot} totems truss`:`${E.lightTot} truss totems`):(E.lightPos==="ground"?(fr?"au sol":"on the ground"):(fr?"truss au-dessus de l'écran":"truss above the main screen"))}`:(fr?"Non":"No")],
+    [fr?"Lumière":"Lighting",nl?`${E.lightMode==="solution"?(fr?"Solution lumière (détails à définir)":"Lighting solution (details to define)"):`${r.lightTxt} (${lightTypes(E,L,true)})`} · ${E.lightPos==="totems"?(fr?`${E.lightTot} totems truss`:`${E.lightTot} truss totems`):(E.lightPos==="ground"?(fr?"au sol":"on the ground"):(fr?"truss au-dessus de l'écran":"truss above the main screen"))}`:(fr?"Non":"No")],
     ...(r.staff.length||r.camCount?[[fr?"Personnel sur place":"Staff on site",[...r.staff.map(p=>(p.full||p)[L==="fr"?"fr":"en"]),...(r.camCount?[`${r.camCount} ${fr?"cadreur(s)":"camera operator(s)"}`]:[])].join(", ")]]:[]),
   ].map(x=>x.map(pdfTxt))});
   // visuals
@@ -5255,7 +5301,7 @@ function locEquip(r,L){const fr=L==="fr",E=r.E,f=(n,d)=>fmtL(n,d,L),o=[];
   if(E.fr360)o.push(`${E.fr360} × ${fr?"frigo 360°":"360° fridge"}`);if(E.ret)o.push(`${E.ret} × ${fr?"écran de retour 65\"":"return TV 65\""}`);
   if(E.stage)o.push(`${fr?"Estrade":"Stage"} ${f(E.stW,1)} × ${f(E.stD,1)} m`);
   if(E.sound&&(E.spk||r.micsN))o.push(fr?`Son : ${qv(E,"spk")} enceintes, ${r.micsTxt} micros (${micTypes(r,L)})`:`Sound: ${qv(E,"spk")} speakers, ${r.micsTxt} mics (${micTypes(r,L)})`);
-  if(E.light&&(E.nl))o.push(fr?`Lumière : ${r.lightTxt} projecteurs`:`Lighting: ${r.lightTxt} lights`);
+  if(E.light&&(E.nl))o.push(fr?`Lumière : ${lightQty(r,L)}`:`Lighting: ${lightQty(r,L)}`);
   if(r.tr)o.push(fr?`Traduction : ${r.tr.n} personnes`:`Translation: ${r.tr.n} people`);
   if(!r.noLed)o.push(`${fr?"Régie":"Control room"}: NovaStar ${r.proc.m}${r.proc.n>1?` × ${r.proc.n}`:""}`);
   return o.length?o:[fr?"Rien de défini pour l'instant":"Nothing defined yet"];}
@@ -5268,9 +5314,9 @@ function locTotals(rs,L){const fr=L==="fr",f=(n,d)=>fmtL(n,d,L);
   if(pm2||pU)rows.push([fr?"Impression totale":"Total print",pU?(pm2?`${m2txt(pm2,L)} + ?`:"? m²"):m2txt(pm2,L)]);
   const dl=[...DISP.filter(d=>dsum[d.k]).map(d=>`${dsum[d.k]} × ${d.short[L]}`),sum("totem")&&`${sum("totem")} × UDAI totem`,sum("podium")&&`${sum("podium")} × ${fr?"pupitre":"podium"}`,sum("fr360")&&`${sum("fr360")} × ${fr?"frigo 360°":"360° fridge"}`,sum("ret")&&`${sum("ret")} × ${fr?"écran de retour":"return TV"}`].filter(Boolean);
   if(dl.length)rows.push([fr?"Autres afficheurs":"Other displays",dl.join(", ")]);
-  const mics=rs.reduce((a,r)=>a+(r.E.sound?r.micsN:0),0),spk=rs.reduce((a,r)=>a+(r.E.sound?r.E.spk:0),0),lights=rs.reduce((a,r)=>a+(r.E.light?r.E.nl:0),0);
+  const mics=rs.reduce((a,r)=>a+(r.E.sound?r.micsN:0),0),spk=rs.reduce((a,r)=>a+(r.E.sound?r.E.spk:0),0),lights=rs.reduce((a,r)=>a+(r.E.light&&r.E.lightMode!=="solution"?r.E.nl:0),0),lSol=rs.some(r=>r.E.light&&r.E.lightMode==="solution");
   if(mics||spk)rows.push([fr?"Son":"Sound",`${spk} ${fr?"enceintes":"speakers"} · ${mics}${unkM?"+?":""} ${fr?"micros":"mics"}`]);
-  if(lights)rows.push([fr?"Lumière":"Lighting",`${lights}${unkL?"+?":""} ${fr?"projecteurs":"lights"}`]);
+  if(lights||lSol)rows.push([fr?"Lumière":"Lighting",[lights&&`${lights}${unkL?"+?":""} ${fr?"projecteurs":"lights"}`,lSol&&(fr?"solution lumière":"lighting solution")].filter(Boolean).join(" + ")]);
   if(procs.length)rows.push([fr?"Régies":"Control rooms",procs.join(" · ")]);
   return rows;}
 // one packing list for the whole event: same items added up, with where they go
@@ -5281,7 +5327,7 @@ function mergeKits(rs,L){const m=new Map(),order=Object.keys(KIT_CATS);
   return a.sort((x,y)=>order.indexOf(x.cat)-order.indexOf(y.cat));}
 
 /* ---------- persistence (per viewer) ---------- */
-const FIELDS=["pCid","sPlacesJSON","sPlaceCur","eCusW","eCusH","eCusP","eSub_led","eSub_sound","eSub_light","eLTotP","eLTotN","pStd","wStd","eLocsJSON","eLocCur","eLTotSk","ePrintsJSON","eAio","ePresF","ePresC","eKiosk","eDeskF","eDeskC","sAio","sPresF","sPresC","sKiosk","sDeskF","sDeskC","pVer","eLightPos","eLightTot","eTrBooths","eTrPer","aBack","eMicPod","eMicLav","eTrN","eTrHp","eLTotW","eLTotH","eLTotE","sMount","sLegs","sALW","sAH","sABH","sAOW","eFr360","eRet","sFr360","wFr360","sRet","wRet","aProd","aN","aLegW","aLegH","aBeamH","aOpenW","liftM","fOpenRad","fCorner","fLit","fModel","fW","fD","fH","fDoors","fPos","fPow","fKg","fCols","fTop","fSide","fBase","fVent","eDevis","eDevisT","eTrussStep","eLoc","eStart","eEnd","eIn","eInT","eOut","eOutT","eStW","eStD","eStH","eCarpet","eCamFix","eCamPtz","eCamOp","eSpk","eMicW","eMicWl","eMicH","eBeam","ePar","eMov","eBsw","eProfile","eParZ","eBar","eLightN","eLightMode","eTotem","ePodium","sRcx2","sRcxRep","pRcx","wRcx","sUgm","pUgm","wUgm","sUgd","pUgd","wUgd","sTotem","wTotem","sPodium","wPodium","dRim","cArea","cPos","cModel","cSockets","cRjMode","cRj","cLan","cHdmi","cUsb","dN","dRows","dS","dBez","dRear","dWellH","dCasters","dFrameKg","dBoardKg","dPsuKg","cardSplit","cableLen","drop","pName","pClient","pPhone","pEmail","pRef","pDate","pBy","wM","hM","round","nC","nR","supply","pf","margin","curve","psuW","psuName","cardW","cardH","portPx","maxMods"];
+const FIELDS=["eCamMode","eCamN","eSoundMode","eMicMode","eMicN","pCid","sPlacesJSON","sPlaceCur","eCusW","eCusH","eCusP","eSub_led","eSub_sound","eSub_light","eLTotP","eLTotN","pStd","wStd","eLocsJSON","eLocCur","eLTotSk","ePrintsJSON","eAio","ePresF","ePresC","eKiosk","eDeskF","eDeskC","sAio","sPresF","sPresC","sKiosk","sDeskF","sDeskC","pVer","eLightPos","eLightTot","eTrBooths","eTrPer","aBack","eMicPod","eMicLav","eTrN","eTrHp","eLTotW","eLTotH","eLTotE","sMount","sLegs","sALW","sAH","sABH","sAOW","eFr360","eRet","sFr360","wFr360","sRet","wRet","aProd","aN","aLegW","aLegH","aBeamH","aOpenW","liftM","fOpenRad","fCorner","fLit","fModel","fW","fD","fH","fDoors","fPos","fPow","fKg","fCols","fTop","fSide","fBase","fVent","eDevis","eDevisT","eTrussStep","eLoc","eStart","eEnd","eIn","eInT","eOut","eOutT","eStW","eStD","eStH","eCarpet","eCamFix","eCamPtz","eCamOp","eSpk","eMicW","eMicWl","eMicH","eBeam","ePar","eMov","eBsw","eProfile","eParZ","eBar","eLightN","eLightMode","eTotem","ePodium","sRcx2","sRcxRep","pRcx","wRcx","sUgm","pUgm","wUgm","sUgd","pUgd","wUgd","sTotem","wTotem","sPodium","wPodium","dRim","cArea","cPos","cModel","cSockets","cRjMode","cRj","cLan","cHdmi","cUsb","dN","dRows","dS","dBez","dRear","dWellH","dCasters","dFrameKg","dBoardKg","dPsuKg","cardSplit","cableLen","drop","pName","pClient","pPhone","pEmail","pRef","pDate","pBy","wM","hM","round","nC","nR","supply","pf","margin","curve","psuW","psuName","cardW","cardH","portPx","maxMods"];
 function save(){try{locStore();if(appMode()==="wall")sPlStore();const s={};FIELDS.forEach(f=>s[f]=$(f).value);s.rot=$("rot").checked;s.mode=document.querySelector('input[name=mode]:checked').value;s.prod=document.querySelector('input[name=prod]:checked').value;s.mount=document.querySelector('input[name=psuMount]:checked').value;s.app=appMode();s.dprod=(document.querySelector('input[name=dprod]:checked')||{}).value;["dShelf","dDrawer","dDoor","dLogo","cSwitch","cInlet","eStage","eBackup","eObs","ePres","eLight","fLeftOn","fRightOn","fAdsOn","fOpenRound","aOn","aPass","ePodMic","sAOn","sADbl","eSimple","eSoundOn","eTrOn","eTrEN","eTrFR","eTrZH","eTrAR","eLTot","eDispOn","eScreenOn","ePrintOn","eRegieOn","eCamOn"].forEach(k=>s[k]=$(k).checked);localStorage.setItem("ledcalc.v1",JSON.stringify(s));projKeep(s);}catch(e){}}
 function load(){try{const s=JSON.parse(localStorage.getItem("ledcalc.v1")||"null");if(!s)return;
   if(s.pUgm==="3.91")s.pUgm="3.9";if(s.pUgd==="3.91")s.pUgd="3.9";FIELDS.forEach(f=>{if(s[f]!=null)$(f).value=s[f]});$("rot").checked=!!s.rot;
@@ -5296,7 +5342,7 @@ $("pDate").value=new Date().toISOString().slice(0,10);
 const LOC_DEFAULT=locSnap(),LOC_DEFAULT_PRINTS=$("ePrintsJSON").value;
 load();drawPrintForm();drawSubs();drawLocBar();drawSPlBar();
 // "?" button next to each sound and lighting quantity: quantity unknown
-for(const id of ["eSpk","eMicW","eMicWl","eMicPod","eMicLav","eMicH","eBeam","eBsw","eMov","eProfile","ePar","eParZ","eBar","eLightN"]){const inp=$(id),w=document.createElement("span");w.className="qwrap";inp.parentNode.insertBefore(w,inp);w.appendChild(inp);
+for(const id of ["eSpk","eMicW","eMicWl","eMicPod","eMicLav","eMicH","eMicN","eBeam","eBsw","eMov","eProfile","ePar","eParZ","eBar","eLightN"]){const inp=$(id),w=document.createElement("span");w.className="qwrap";inp.parentNode.insertBefore(w,inp);w.appendChild(inp);
   const b=document.createElement("button");b.type="button";b.className="qbtn";b.textContent="?";b.title="Quantity not given by the client yet";b.setAttribute("aria-label","Quantity unknown");w.appendChild(b);
   const sync=()=>b.setAttribute("aria-pressed",inp.value.trim()==="?"?"true":"false");sync();inp.addEventListener("input",sync);
   b.addEventListener("click",()=>{inp.value=inp.value.trim()==="?"?"0":"?";sync();inp.dispatchEvent(new Event("input",{bubbles:true}));});
