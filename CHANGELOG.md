@@ -1,5 +1,9 @@
 # Update log
 
+## v90 · 2026-11-02
+- Fix: the Digital desk and Digital fridge drawings of the power supplies work again (broken since v87).
+- Client PDF: new page "Resolutions for your visuals" with every product the client gets: quantity, size, the resolution to use and the format. Products played by a Taurus player under 500 px are given doubled, same ratio. Prints are given at real size in cm.
+
 ## v89 · 2026-11-02
 - Clients list: a button under Client name opens all the clients, with search. Edit the name, phone or email (the client's projects follow), add a client, or delete one. Changes are shared on the cloud.
 
