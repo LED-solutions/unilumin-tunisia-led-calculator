@@ -1,5 +1,8 @@
 # Update log
 
+## v88 · 2026-11-02
+- Event, other displays: new product "Square desk (old design)" with one LED front face 1 × 1 m, with its stock in Rental stock.
+
 ## v87 · 2026-10-28
 - Sale: new products LC1.5 COB (module 320 × 160, P1.53) and Uslim III 1.5 (indoor cabinet P1.56, 500 × 1000 or 500 × 500 mm, power supply and receiving card inside each cabinet), from the Unilumin datasheets.
 - PDF export in French by default.
