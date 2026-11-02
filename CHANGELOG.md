@@ -1,5 +1,8 @@
 # Update log
 
+## v89 · 2026-11-02
+- Clients list: a button under Client name opens all the clients, with search. Edit the name, phone or email (the client's projects follow), add a client, or delete one. Changes are shared on the cloud.
+
 ## v88 · 2026-11-02
 - Event, other displays: new product "Square desk (old design)" with one LED front face 1 × 1 m, with its stock in Rental stock.
 
