@@ -1,5 +1,8 @@
 # Update log
 
+## v92 · 2026-11-02
+- New "✍ Signature" button: when on, the Client PDF ends with a "Validation du client" page (project, reference, client, approval sentence, boxes for name, position, date, place, signature and stamp). The full export is unchanged.
+
 ## v91 · 2026-11-02
 - Event uses the iKi com logo, on the page and in the PDFs. Click the logo to switch to Unilumin Tunisia and back; the PDFs follow. Sale and Conception keep Unilumin Tunisia.
 - Wide screens (16:9 desktop): the page uses the full width, with a panel fixed on the right showing the key figures (moved there from the top of the page), the points to check, shortcuts to every part of the page, and the PDF buttons.
