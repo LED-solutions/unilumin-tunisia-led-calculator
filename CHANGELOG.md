@@ -1,5 +1,8 @@
 # Update log
 
+## v93 · 2026-11-03
+- Sale: new module LC1.86P (indoor, fixed, 320 × 160 × 16 mm, P1.86, 172 × 86 px, 450–500 cd/m², 300 W/m² max, 90 W/m² typical, 0.43 kg), from the Unilumin datasheet.
+
 ## v92 · 2026-11-02
 - New "✍ Signature" button: when on, the Client PDF ends with a "Validation du client" page (project, reference, client, approval sentence, boxes for name, position, date, place, signature and stamp). The full export is unchanged.
 
