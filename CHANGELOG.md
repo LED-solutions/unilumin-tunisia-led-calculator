@@ -1,100 +1,103 @@
-# Update log
+# Changelog
 
-## v93 · 2026-11-03
+## v94 — 2026-11-03
+- Event Client PDF: live translation shows the number of translators, the number of people who get the translation and the languages (also for each location).
+
+## v93 — 2026-11-03
 - Sale: new module LC1.86P (indoor, fixed, 320 × 160 × 16 mm, P1.86, 172 × 86 px, 450–500 cd/m², 300 W/m² max, 90 W/m² typical, 0.43 kg), from the Unilumin datasheet. Standard version: 3840 Hz refresh.
 
-## v92 · 2026-11-02
+## v92 — 2026-11-02
 - New "✍ Signature" button: when on, the Client PDF ends with a "Validation du client" page (project, reference, client, approval sentence, boxes for name, position, date, place, signature and stamp). The full export is unchanged.
 
-## v91 · 2026-11-02
+## v91 — 2026-11-02
 - Event uses the iKi com logo, on the page and in the PDFs. Click the logo to switch to Unilumin Tunisia and back; the PDFs follow. Sale and Conception keep Unilumin Tunisia.
 - Wide screens (16:9 desktop): the page uses the full width, with a panel fixed on the right showing the key figures (moved there from the top of the page), the points to check, shortcuts to every part of the page, and the PDF buttons.
 
-## v90 · 2026-11-02
+## v90 — 2026-11-02
 - Fix: the Digital desk and Digital fridge drawings of the power supplies work again (broken since v87).
 - Client PDF: new page "Resolutions for your visuals" with every product the client gets: quantity, size, the resolution to use and the format. Products played by a Taurus player under 500 px are given doubled, same ratio. Prints are given at real size in cm.
 
-## v89 · 2026-11-02
+## v89 — 2026-11-02
 - Clients list: a button under Client name opens all the clients, with search. Edit the name, phone or email (the client's projects follow), add a client, or delete one. Changes are shared on the cloud.
 
-## v88 · 2026-11-02
+## v88 — 2026-11-02
 - Event, other displays: new product "Square desk (old design)" with one LED front face 1 × 1 m, with its stock in Rental stock.
 
-## v87 · 2026-10-28
+## v87 — 2026-10-28
 - Sale: new products LC1.5 COB (module 320 × 160, P1.53) and Uslim III 1.5 (indoor cabinet P1.56, 500 × 1000 or 500 × 500 mm, power supply and receiving card inside each cabinet), from the Unilumin datasheets.
 - PDF export in French by default.
 - New button "Projects on the cloud": reads the cloud and lists the projects, each marked "cloud" or "this device only".
 
-## v86 · 2026-10-28
+## v86 — 2026-10-28
 - Dimensions drawing: the black cloth, white poly or printed bâche under a lifted screen is drawn, with its size and m².
 - In the Export PDF the front view now has a full page of its own, so it is bigger; the side view and the numbers follow on the next page.
 
-## v85 · 2026-10-28
+## v85 — 2026-10-28
 - Each screen chooses how it stands with the stage: from the stage top at its back edge, or from the ground behind the stage (with its own height).
 - Lighting: new choice "Lighting solution (no details)". Sound: "Sound solution" with only the number of speakers and microphones.
 - Microphones and cameras can be given as a total only, type to confirm.
 - Podiums always stand on the stage when there is one.
 - Print: new general type "Mur de presse" (press wall).
 
-## v84 · 2026-10-28
+## v84 — 2026-10-28
 - Event: new drawing after the event layout, "Screens and stage · dimensions". Front view and side view to scale, with each screen's width and height (in metres and cabinets), its bottom and top height from the ground, and the stage width, depth and height. It is added as a full landscape page after the layout in the Export PDF, for the technicians.
 
-## v83 · 2026-10-27
+## v83 — 2026-10-27
 - Client PDFs now have their own main colour (teal), so they are never confused with the full export (blue).
 - PDF file names start with the project name, then the reference without "UTA-".
 
-## v82 · 2026-10-26
+## v82 — 2026-10-26
 - Projects in the cloud: every project, with its locations, places, client details, "prepared by" and subcontractors, is shared online on GitHub, so anyone who opens the calculator sees them. Saving from a device needs a GitHub key, pasted once (Cloud button).
 - Sale: several places, each with its own screen, module, size, arch and power settings. The page shows all places and their total; the export starts with that summary, then one part per place.
 - The LED module and cabinet lists stay closed and show the chosen one; click to open them.
 - The top bar no longer moves when switching between Sale, Event and Conception.
 
-## v81 · 2026-10-23
+## v81 — 2026-10-23
 - Lighting: choose "Total number only" when the rig is big and the types are not needed, or "Detailed by type".
 - Light types in general terms, no model references: beam lights, moving heads BSW, wash and profile, LED PARs, LED PARs with zoom, LED bars.
 - The layout draws at most 24 lights so a big rig stays readable; the full number is in the summary.
 
-## v80 · 2026-10-23
+## v80 — 2026-10-23
 - Subcontractors: company, subcontractor name and phone, and a check "handles all of the lighting / sound / LED screens". If not ticked, write what they handle only (for example the beams only).
 - Screens on a stage are drawn at the back of the stage, not in the middle.
 - Lighting can stand on the ground, half on each side, beams going up and away from the screen.
 - New light type: moving head wash.
 
-## v79 · 2026-10-23
+## v79 — 2026-10-23
 - LED arch: black cloth is calculated (back, sides and passage, +10%). With double face you can cover only the inside of the passage. The 360° views show trusses or cloth on each side.
 - Event layout: the m² of the printed visual under the screen is shown on the drawing and in the summary.
 
-## v78 · 2026-10-23
+## v78 — 2026-10-23
 - Microphone types (wired, wireless handheld, lavalier, headset, podium) listed with their number in the event layout, the locations summary, the sound engineer line and the export.
 
-## v77 · 2026-10-23
+## v77 — 2026-10-23
 - Cameras in their own section; number and type of cameras shown in the event layout and the export.
 
-## v76 · 2026-10-23
+## v76 — 2026-10-23
 - LED totems: any cabinet size (width, height and pitch you enter).
 
-## v75 · 2026-10-23
+## v75 — 2026-10-23
 - Client name suggests clients already worked with and fills their phone and email.
 - Light / dark interface switch.
 - Event layout: m² of floor screens shown in the summary.
 
-## v74 · 2026-10-23
+## v74 — 2026-10-23
 - Log section with every version; each downloaded file is named with its version.
 
-## v73 · 2026-10-23
+## v73 — 2026-10-23
 - Event: subcontractors (sous-traitance) for LED screens, sound and lighting, saved list with phones, shown on the first page of the export.
 
-## v72 · 2026-10-22
+## v72 — 2026-10-22
 - Digital desk: Client PDF with shape, size ±10 cm, resolution, LED area, modules, diagonal and power.
 
-## v71 · 2026-10-21
+## v71 — 2026-10-21
 - Each project keeps its own locations and photos; New project starts clean.
 
-## v70 · 2026-10-21
+## v70 — 2026-10-21
 - Several locations: all locations together page; no régie diagram with Taurus playback or totems only; layout, arch, then reference photos.
 
-## v69 · 2026-10-21
+## v69 — 2026-10-21
 - Print: papier peint type, ? for size and quantity.
 
-## v61 · 2026-10-21
+## v61 — 2026-10-21
 - Patente and placement photos kept per project; unique reference numbers.
