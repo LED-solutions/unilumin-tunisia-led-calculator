@@ -1,5 +1,10 @@
 # Changelog
 
+## v95 — 2026-11-06
+- Stage: new check "Dimensions unknown": the size shows as "to confirm" in the summary, the packing list (?) and the PDFs; the drawings use the entered size as a placeholder.
+- Stage colour (skirt / jupe de scène): black, white, grey, red, blue, wood or any other colour with its name. The drawings use it and the packing list adds the skirt (front and sides, in m).
+- Carpet: "Other colour" with a colour picker and a name.
+
 ## v94 — 2026-11-03
 - Event Client PDF: live translation shows the number of translators, the number of people who get the translation and the languages (also for each location).
 
@@ -99,5 +104,32 @@
 ## v69 — 2026-10-21
 - Print: papier peint type, ? for size and quantity.
 
+## v67–68 — 2026-10-21
+- LED totems without a main screen, any count, on the ground; generic 500 × 500 cabinet.
+
+## v64–66 — 2026-10-21
+- Event locations (espaces) with own settings and photos; shared stock; total packing list; LED screens and régie checkboxes.
+
+## v62–63 — 2026-10-21
+- Printed walls (bâche, polyane); no-LED events; all-in-one 82", presentoirs, kiosk, digital desks; printed visual under totems.
+
 ## v61 — 2026-10-21
 - Patente and placement photos kept per project; unique reference numbers.
+
+## v59–60 — 2026-10-21
+- Unknown quantities (?) in sound and lighting with ? buttons.
+
+## v56–58 — 2026-10-21
+- Intervention sheet PTP-FR-01 (one page); system references with versions; one-page packing list.
+
+## v53–55 — 2026-10-21
+- Export: landscape wiring and translation pages, bigger What to bring; supplier box; one three-phase breaker for all screens.
+
+## v48–52 — 2026-10-21
+- Event: Taurus simple playback, live translation, LED totems, arch 360° views, lighting placement, staff, old projects with references.
+
+## v43–47 — 2026-10-19
+- Sale: Usurface III 10 (10,000 nits); two buttons Client / Export PDF with all graphs; wide screens split in strips.
+
+## v1–42 — 2026-10
+- Sale, Event, Digital desk and Digital fridge calculators, PDFs, 3D views, arch, mounting options.
