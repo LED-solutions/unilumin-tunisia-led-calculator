@@ -1,5 +1,9 @@
 # Changelog
 
+## v96 — 2026-11-06
+- Conception: new "LED totem". Made of LED modules or cabinets (all the Sale products), single face or double face, size in metres or columns × rows. 4 swivel casters with brakes, a steel base, and a NovaStar Taurus inside (TB30, TB50 or TB60, picked for the pixels and ports, or chosen by hand).
+- It shows the 3D views front and back, the front, side and back drawings with dimensions, power, PSUs, receiving cards, weight and casters, the bill of materials, and checks (socket, stability, casters, player size). Client PDF and Export PDF, with the resolutions page.
+
 ## v95 — 2026-11-06
 - Stage: new check "Dimensions unknown": the size shows as "to confirm" in the summary, the packing list (?) and the PDFs; the drawings use the entered size as a placeholder.
 - Stage colour (skirt / jupe de scène): black, white, grey, red, blue, wood or any other colour with its name. The drawings use it and the packing list adds the skirt (front and sides, in m).

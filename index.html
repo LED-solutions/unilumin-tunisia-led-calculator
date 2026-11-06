@@ -271,6 +271,7 @@ svg text{font-family:var(--f-mono)}
       <div class="seg mprod">
         <input type="radio" name="app" id="appDesk" value="desk"><label for="appDesk">Digital desk</label>
         <input type="radio" name="app" id="appFridge" value="fridge"><label for="appFridge">Digital fridge</label>
+        <input type="radio" name="app" id="appTotem" value="totem"><label for="appTotem">LED totem</label>
       </div>
     </div>
   </div>
@@ -282,9 +283,9 @@ svg text{font-family:var(--f-mono)}
   </div>
   <button class="btn small" id="themeBtn" type="button" aria-label="Switch light or dark interface">◐ Dark</button>
   <button class="btn small" id="cloudBtn" type="button" data-st="idle" title="Projects shared online"><span class="dot"></span><span id="cloudLbl">Cloud</span></button>
-  <button class="btn small" id="logBtn" type="button">Log · v95</button>
+  <button class="btn small" id="logBtn" type="button">Log · v96</button>
   <button class="btn small" id="signBtn" type="button" aria-pressed="false" title="Adds a page where the client signs to approve the document (Client PDF only)">✍ Signature: off</button>
-  <button class="btn small" id="clientBtn" type="button" data-for="event fridge wall desk" hidden>Client PDF</button>
+  <button class="btn small" id="clientBtn" type="button" data-for="event fridge wall desk totem" hidden>Client PDF</button>
   <button class="btn noevent" id="techBtn" type="button" hidden style="display:none">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 9h18M9 9v9M15 9v9"/></svg>
     Technical PDF
@@ -397,6 +398,50 @@ svg text{font-family:var(--f-mono)}
       </select>
     </label>
     <label class="f">Ventilation gap behind the fridge (mm)<input type="number" id="fVent" value="80" min="30" step="10"></label>
+  </fieldset>
+
+  <fieldset data-for="totem" hidden>
+    <legend>Totem LED</legend>
+    <div id="tprodList"></div>
+    <p class="hint">Modules (320 × 160) or cabinets. Cabinets have their power supply and receiving card inside.</p>
+  </fieldset>
+
+  <fieldset data-for="totem" hidden>
+    <legend>Totem size</legend>
+    <label class="f">Faces<select id="tFaces"><option value="1">Single face (closed back, Taurus behind the LED)</option><option value="2">Double face (back to back, Taurus between the faces)</option></select></label>
+    <div class="row2">
+      <label class="f">LED width (m)<input type="number" id="tW" value="0.64" min="0.16" step="0.01"></label>
+      <label class="f">LED height (m)<input type="number" id="tH" value="1.92" min="0.16" step="0.01"></label>
+    </div>
+    <div class="row2">
+      <label class="f">Columns (across)<input type="number" id="tC" value="2" min="1" max="40" step="1"></label>
+      <label class="f">Rows (down)<input type="number" id="tR" value="12" min="1" max="60" step="1"></label>
+    </div>
+    <p class="hint">Type the size in metres (rounded to whole modules or cabinets) or give the columns × rows: each one follows the other.</p>
+    <p class="hint" id="tSizeHint"></p>
+  </fieldset>
+
+  <fieldset data-for="totem" hidden>
+    <legend>Player and connections</legend>
+    <label class="f">Taurus inside<select id="tModel"><option value="auto">Recommended (TB30, TB50 or TB60)</option><option value="TB30">TB30 · 1 output · 650,000 px</option><option value="TB50">TB50 · 2 outputs · 1,300,000 px</option><option value="TB60">TB60 · 4 outputs · 2,300,000 px</option></select></label>
+    <label class="check"><input type="checkbox" id="tLan" checked> RJ45 network socket on the panel</label>
+    <label class="check"><input type="checkbox" id="tHdmi"> HDMI input on the panel (TB50 / TB60)</label>
+  </fieldset>
+
+  <fieldset data-for="totem" hidden>
+    <legend>Totem structure</legend>
+    <div class="row2">
+      <label class="f">Frame edge around the LED (mm)<input type="number" id="tBez" value="20" min="0" max="150" step="5"></label>
+      <label class="f">Space behind the LED (mm)<input type="number" id="tBack" value="90" min="40" step="5"></label>
+    </div>
+    <label class="f">Casters (4, swivel with brakes)
+      <select id="tCast"><option value="auto">Recommended for the weight</option><option value="50">Ø 50 mm</option><option value="75">Ø 75 mm</option><option value="100">Ø 100 mm</option><option value="125">Ø 125 mm</option><option value="160">Ø 160 mm</option></select>
+    </label>
+    <div class="row2">
+      <label class="f">Base depth (mm)<input type="number" id="tBaseD" value="" min="0" step="10" placeholder="auto"></label>
+      <label class="f">Frame (kg/m² of face)<input type="number" id="tFrameKg" value="12" min="0" step="0.5"></label>
+    </div>
+    <p class="hint" id="tCastHint"></p>
   </fieldset>
 
   <fieldset data-for="wall">
@@ -956,6 +1001,32 @@ svg text{font-family:var(--f-mono)}
   </div>
   <section class="sheet"><div class="sheet-h"><h2>Notes</h2></div><div class="notes" id="fnotes"></div></section>
 </div>
+<div data-for="totem" hidden>
+  <div class="flag concept"><b>Conceptual design.</b> This is a concept to present the idea. The final product may be different, especially in exact dimensions.</div>
+  <div id="tflags"></div>
+  <section class="strip" id="tkpis" aria-label="Totem summary"></section>
+  <section class="sheet">
+    <div class="sheet-h"><h2>LED totem</h2><span class="meta" id="tIsoMeta"></span></div>
+    <div class="isos"><figure><div id="tIsoF"></div><figcaption>Front</figcaption></figure><figure><div id="tIsoB"></div><figcaption>Back</figcaption></figure></div>
+  </section>
+  <section class="sheet">
+    <div class="sheet-h"><h2>Front, side and back</h2><span class="meta">Dimensions in mm</span></div>
+    <div class="draw" id="tViews"></div>
+  </section>
+  <section class="sheet">
+    <div class="sheet-h"><h2>Power supplies and receiving cards</h2><span class="meta" id="tPsuMeta"></span></div>
+    <div class="isos"><figure><div class="draw" id="tPsu"></div><figcaption>Power supplies</figcaption></figure><figure><div class="draw" id="tCard"></div><figcaption>Receiving cards and ports</figcaption></figure></div>
+  </section>
+  <div class="tables">
+    <section class="sheet"><div class="sheet-h"><h2>Totem</h2></div><table class="kv" id="tTot"></table></section>
+    <section class="sheet"><div class="sheet-h"><h2>Power</h2></div><table class="kv" id="tTPower"></table></section>
+  </div>
+  <div class="tables">
+    <section class="sheet"><div class="sheet-h"><h2>Weight</h2></div><table class="kv" id="tTWeight"></table></section>
+    <section class="sheet"><div class="sheet-h"><h2>Bill of materials</h2></div><div class="tbl-wrap"><table class="bom" id="tTBom"></table></div></section>
+  </div>
+  <section class="sheet"><div class="sheet-h"><h2>Notes</h2></div><div class="notes" id="tnotes"></div></section>
+</div>
 <div data-for="desk" hidden>
   <div id="dflags"></div>
   <section class="strip" id="dkpis" aria-label="Desk summary"></section>
@@ -1079,7 +1150,7 @@ svg text{font-family:var(--f-mono)}
 </div>
 <div class="toast" id="toast" role="status" hidden></div>
 <datalist id="subNames"></datalist><datalist id="subCompanies"></datalist><datalist id="clientNames"></datalist>
-<dialog id="logDlg" aria-labelledby="logT"><div class="pd-h"><h2 id="logT">Log · versions</h2><button type="button" class="btn small" id="logClose">Close</button></div><div class="pd-list"><div class="logv"><b>v95</b> <span>2026-11-06</span><ul><li>Stage: new check "Dimensions unknown": the size shows as "to confirm" in the summary, the packing list (?) and the PDFs; the drawings use the entered size as a placeholder.</li><li>Stage colour (skirt / jupe de scène): black, white, grey, red, blue, wood or any other colour with its name. The drawings use it and the packing list adds the skirt (front and sides, in m).</li><li>Carpet: "Other colour" with a colour picker and a name.</li></ul></div><div class="logv"><b>v94</b> <span>2026-11-03</span><ul><li>Event Client PDF: live translation shows the number of translators, the number of people who get the translation and the languages (also for each location).</li></ul></div><div class="logv"><b>v93</b> <span>2026-11-03</span><ul><li>Sale: new module LC1.86P (indoor, fixed, 320 × 160 × 16 mm, P1.86, 172 × 86 px, 450–500 cd/m², 300 W/m² max, 90 W/m² typical, 0.43 kg), from the Unilumin datasheet. Standard version: 3840 Hz refresh.</li></ul></div><div class="logv"><b>v92</b> <span>2026-11-02</span><ul><li>New "✍ Signature" button: when on, the Client PDF ends with a "Validation du client" page (project, reference, client, approval sentence, boxes for name, position, date, place, signature and stamp). The full export is unchanged.</li></ul></div><div class="logv"><b>v91</b> <span>2026-11-02</span><ul><li>Event uses the iKi com logo, on the page and in the PDFs. Click the logo to switch to Unilumin Tunisia and back; the PDFs follow. Sale and Conception keep Unilumin Tunisia.</li><li>Wide screens (16:9 desktop): the page uses the full width, with a panel fixed on the right showing the key figures (moved there from the top of the page), the points to check, shortcuts to every part of the page, and the PDF buttons.</li></ul></div><div class="logv"><b>v90</b> <span>2026-11-02</span><ul><li>Fix: the Digital desk and Digital fridge drawings of the power supplies work again (broken since v87).</li><li>Client PDF: new page "Resolutions for your visuals" with every product the client gets: quantity, size, the resolution to use and the format. Products played by a Taurus player under 500 px are given doubled, same ratio. Prints are given at real size in cm.</li></ul></div><div class="logv"><b>v89</b> <span>2026-11-02</span><ul><li>Clients list: a button under Client name opens all the clients, with search. Edit the name, phone or email (the client's projects follow), add a client, or delete one. Changes are shared on the cloud.</li></ul></div><div class="logv"><b>v88</b> <span>2026-11-02</span><ul><li>Event, other displays: new product "Square desk (old design)" with one LED front face 1 × 1 m, with its stock in Rental stock.</li></ul></div><div class="logv"><b>v87</b> <span>2026-10-28</span><ul><li>Sale: new products LC1.5 COB (module 320 × 160, P1.53) and Uslim III 1.5 (indoor cabinet P1.56, 500 × 1000 or 500 × 500 mm, power supply and receiving card inside each cabinet), from the Unilumin datasheets.</li><li>PDF export in French by default.</li><li>New button "Projects on the cloud": reads the cloud and lists the projects, each marked "cloud" or "this device only".</li></ul></div><div class="logv"><b>v86</b> <span>2026-10-28</span><ul><li>Dimensions drawing: the black cloth, white poly or printed bâche under a lifted screen is drawn, with its size and m².</li><li>In the Export PDF the front view now has a full page of its own, so it is bigger; the side view and the numbers follow on the next page.</li></ul></div><div class="logv"><b>v85</b> <span>2026-10-28</span><ul><li>Each screen chooses how it stands with the stage: from the stage top at its back edge, or from the ground behind the stage (with its own height).</li><li>Lighting: new choice "Lighting solution (no details)". Sound: "Sound solution" with only the number of speakers and microphones.</li><li>Microphones and cameras can be given as a total only, type to confirm.</li><li>Podiums always stand on the stage when there is one.</li><li>Print: new general type "Mur de presse" (press wall).</li></ul></div><div class="logv"><b>v84</b> <span>2026-10-28</span><ul><li>Event: new drawing after the event layout, "Screens and stage · dimensions". Front view and side view to scale, with each screen's width and height (in metres and cabinets), its bottom and top height from the ground, and the stage width, depth and height. It is added as a full landscape page after the layout in the Export PDF, for the technicians.</li></ul></div><div class="logv"><b>v83</b> <span>2026-10-27</span><ul><li>Client PDFs now have their own main colour (teal), so they are never confused with the full export (blue).</li><li>PDF file names start with the project name, then the reference without "UTA-".</li></ul></div><div class="logv"><b>v82</b> <span>2026-10-26</span><ul><li>Projects in the cloud: every project, with its locations, places, client details, "prepared by" and subcontractors, is shared online on GitHub, so anyone who opens the calculator sees them. Saving from a device needs a GitHub key, pasted once (Cloud button).</li><li>Sale: several places, each with its own screen, module, size, arch and power settings. The page shows all places and their total; the export starts with that summary, then one part per place.</li><li>The LED module and cabinet lists stay closed and show the chosen one; click to open them.</li><li>The top bar no longer moves when switching between Sale, Event and Conception.</li></ul></div><div class="logv"><b>v81</b> <span>2026-10-23</span><ul><li>Lighting: choose "Total number only" when the rig is big and the types are not needed, or "Detailed by type".</li><li>Light types in general terms, no model references: beam lights, moving heads BSW, wash and profile, LED PARs, LED PARs with zoom, LED bars.</li><li>The layout draws at most 24 lights so a big rig stays readable; the full number is in the summary.</li></ul></div><div class="logv"><b>v80</b> <span>2026-10-23</span><ul><li>Subcontractors: company, subcontractor name and phone, and a check "handles all of the lighting / sound / LED screens". If not ticked, write what they handle only (for example the beams only).</li><li>Screens on a stage are drawn at the back of the stage, not in the middle.</li><li>Lighting can stand on the ground, half on each side, beams going up and away from the screen.</li><li>New light type: moving head wash.</li></ul></div><div class="logv"><b>v79</b> <span>2026-10-23</span><ul><li>LED arch: black cloth is calculated (back, sides and passage, +10%). With double face you can cover only the inside of the passage. The 360° views show trusses or cloth on each side.</li><li>Event layout: the m² of the printed visual under the screen is shown on the drawing and in the summary.</li></ul></div><div class="logv"><b>v78</b> <span>2026-10-23</span><ul><li>Microphone types (wired, wireless handheld, lavalier, headset, podium) listed with their number in the event layout, the locations summary, the sound engineer line and the export.</li></ul></div><div class="logv"><b>v77</b> <span>2026-10-23</span><ul><li>Cameras in their own section; number and type of cameras shown in the event layout and the export.</li></ul></div><div class="logv"><b>v76</b> <span>2026-10-23</span><ul><li>LED totems: any cabinet size (width, height and pitch you enter).</li></ul></div><div class="logv"><b>v75</b> <span>2026-10-23</span><ul><li>Client name suggests clients already worked with and fills their phone and email.</li><li>Light / dark interface switch.</li><li>Event layout: m² of floor screens shown in the summary.</li></ul></div><div class="logv"><b>v74</b> <span>2026-10-23</span><ul><li>Log section with every version; each downloaded file is named with its version.</li></ul></div><div class="logv"><b>v73</b> <span>2026-10-23</span><ul><li>Event: subcontractors (sous-traitance) for LED screens, sound and lighting, saved list with phones, shown on the first page of the export.</li></ul></div><div class="logv"><b>v72</b> <span>2026-10-22</span><ul><li>Digital desk: Client PDF with shape, size ±10 cm, resolution, LED area, modules, diagonal and power.</li></ul></div><div class="logv"><b>v71</b> <span>2026-10-21</span><ul><li>Each project keeps its own locations and photos; New project starts clean.</li></ul></div><div class="logv"><b>v70</b> <span>2026-10-21</span><ul><li>Several locations: all locations together page; no régie diagram with Taurus playback or totems only; layout, arch, then reference photos.</li></ul></div><div class="logv"><b>v69</b> <span>2026-10-21</span><ul><li>Print: papier peint type, ? for size and quantity.</li></ul></div><div class="logv"><b>v67–68</b> <span>2026-10-21</span><ul><li>LED totems without a main screen, any count, on the ground; generic 500 × 500 cabinet.</li></ul></div><div class="logv"><b>v64–66</b> <span>2026-10-21</span><ul><li>Event locations (espaces) with own settings and photos; shared stock; total packing list; LED screens and régie checkboxes.</li></ul></div><div class="logv"><b>v62–63</b> <span>2026-10-21</span><ul><li>Printed walls (bâche, polyane); no-LED events; all-in-one 82", presentoirs, kiosk, digital desks; printed visual under totems.</li></ul></div><div class="logv"><b>v61</b> <span>2026-10-21</span><ul><li>Patente and placement photos kept per project; unique reference numbers.</li></ul></div><div class="logv"><b>v59–60</b> <span>2026-10-21</span><ul><li>Unknown quantities (?) in sound and lighting with ? buttons.</li></ul></div><div class="logv"><b>v56–58</b> <span>2026-10-21</span><ul><li>Intervention sheet PTP-FR-01 (one page); system references with versions; one-page packing list.</li></ul></div><div class="logv"><b>v53–55</b> <span>2026-10-21</span><ul><li>Export: landscape wiring and translation pages, bigger What to bring; supplier box; one three-phase breaker for all screens.</li></ul></div><div class="logv"><b>v48–52</b> <span>2026-10-21</span><ul><li>Event: Taurus simple playback, live translation, LED totems, arch 360° views, lighting placement, staff, old projects with references.</li></ul></div><div class="logv"><b>v43–47</b> <span>2026-10-19</span><ul><li>Sale: Usurface III 10 (10,000 nits); two buttons Client / Export PDF with all graphs; wide screens split in strips.</li></ul></div><div class="logv"><b>v1–42</b> <span>2026-10</span><ul><li>Sale, Event, Digital desk and Digital fridge calculators, PDFs, 3D views, arch, mounting options.</li></ul></div></div></dialog>
+<dialog id="logDlg" aria-labelledby="logT"><div class="pd-h"><h2 id="logT">Log · versions</h2><button type="button" class="btn small" id="logClose">Close</button></div><div class="pd-list"><div class="logv"><b>v96</b> <span>2026-11-06</span><ul><li>Conception: new "LED totem". Made of LED modules or cabinets (all the Sale products), single face or double face, size in metres or columns × rows. 4 swivel casters with brakes, a steel base, and a NovaStar Taurus inside (TB30, TB50 or TB60, picked for the pixels and ports, or chosen by hand).</li><li>It shows the 3D views front and back, the front, side and back drawings with dimensions, power, PSUs, receiving cards, weight and casters, the bill of materials, and checks (socket, stability, casters, player size). Client PDF and Export PDF, with the resolutions page.</li></ul></div><div class="logv"><b>v95</b> <span>2026-11-06</span><ul><li>Stage: new check "Dimensions unknown": the size shows as "to confirm" in the summary, the packing list (?) and the PDFs; the drawings use the entered size as a placeholder.</li><li>Stage colour (skirt / jupe de scène): black, white, grey, red, blue, wood or any other colour with its name. The drawings use it and the packing list adds the skirt (front and sides, in m).</li><li>Carpet: "Other colour" with a colour picker and a name.</li></ul></div><div class="logv"><b>v94</b> <span>2026-11-03</span><ul><li>Event Client PDF: live translation shows the number of translators, the number of people who get the translation and the languages (also for each location).</li></ul></div><div class="logv"><b>v93</b> <span>2026-11-03</span><ul><li>Sale: new module LC1.86P (indoor, fixed, 320 × 160 × 16 mm, P1.86, 172 × 86 px, 450–500 cd/m², 300 W/m² max, 90 W/m² typical, 0.43 kg), from the Unilumin datasheet. Standard version: 3840 Hz refresh.</li></ul></div><div class="logv"><b>v92</b> <span>2026-11-02</span><ul><li>New "✍ Signature" button: when on, the Client PDF ends with a "Validation du client" page (project, reference, client, approval sentence, boxes for name, position, date, place, signature and stamp). The full export is unchanged.</li></ul></div><div class="logv"><b>v91</b> <span>2026-11-02</span><ul><li>Event uses the iKi com logo, on the page and in the PDFs. Click the logo to switch to Unilumin Tunisia and back; the PDFs follow. Sale and Conception keep Unilumin Tunisia.</li><li>Wide screens (16:9 desktop): the page uses the full width, with a panel fixed on the right showing the key figures (moved there from the top of the page), the points to check, shortcuts to every part of the page, and the PDF buttons.</li></ul></div><div class="logv"><b>v90</b> <span>2026-11-02</span><ul><li>Fix: the Digital desk and Digital fridge drawings of the power supplies work again (broken since v87).</li><li>Client PDF: new page "Resolutions for your visuals" with every product the client gets: quantity, size, the resolution to use and the format. Products played by a Taurus player under 500 px are given doubled, same ratio. Prints are given at real size in cm.</li></ul></div><div class="logv"><b>v89</b> <span>2026-11-02</span><ul><li>Clients list: a button under Client name opens all the clients, with search. Edit the name, phone or email (the client's projects follow), add a client, or delete one. Changes are shared on the cloud.</li></ul></div><div class="logv"><b>v88</b> <span>2026-11-02</span><ul><li>Event, other displays: new product "Square desk (old design)" with one LED front face 1 × 1 m, with its stock in Rental stock.</li></ul></div><div class="logv"><b>v87</b> <span>2026-10-28</span><ul><li>Sale: new products LC1.5 COB (module 320 × 160, P1.53) and Uslim III 1.5 (indoor cabinet P1.56, 500 × 1000 or 500 × 500 mm, power supply and receiving card inside each cabinet), from the Unilumin datasheets.</li><li>PDF export in French by default.</li><li>New button "Projects on the cloud": reads the cloud and lists the projects, each marked "cloud" or "this device only".</li></ul></div><div class="logv"><b>v86</b> <span>2026-10-28</span><ul><li>Dimensions drawing: the black cloth, white poly or printed bâche under a lifted screen is drawn, with its size and m².</li><li>In the Export PDF the front view now has a full page of its own, so it is bigger; the side view and the numbers follow on the next page.</li></ul></div><div class="logv"><b>v85</b> <span>2026-10-28</span><ul><li>Each screen chooses how it stands with the stage: from the stage top at its back edge, or from the ground behind the stage (with its own height).</li><li>Lighting: new choice "Lighting solution (no details)". Sound: "Sound solution" with only the number of speakers and microphones.</li><li>Microphones and cameras can be given as a total only, type to confirm.</li><li>Podiums always stand on the stage when there is one.</li><li>Print: new general type "Mur de presse" (press wall).</li></ul></div><div class="logv"><b>v84</b> <span>2026-10-28</span><ul><li>Event: new drawing after the event layout, "Screens and stage · dimensions". Front view and side view to scale, with each screen's width and height (in metres and cabinets), its bottom and top height from the ground, and the stage width, depth and height. It is added as a full landscape page after the layout in the Export PDF, for the technicians.</li></ul></div><div class="logv"><b>v83</b> <span>2026-10-27</span><ul><li>Client PDFs now have their own main colour (teal), so they are never confused with the full export (blue).</li><li>PDF file names start with the project name, then the reference without "UTA-".</li></ul></div><div class="logv"><b>v82</b> <span>2026-10-26</span><ul><li>Projects in the cloud: every project, with its locations, places, client details, "prepared by" and subcontractors, is shared online on GitHub, so anyone who opens the calculator sees them. Saving from a device needs a GitHub key, pasted once (Cloud button).</li><li>Sale: several places, each with its own screen, module, size, arch and power settings. The page shows all places and their total; the export starts with that summary, then one part per place.</li><li>The LED module and cabinet lists stay closed and show the chosen one; click to open them.</li><li>The top bar no longer moves when switching between Sale, Event and Conception.</li></ul></div><div class="logv"><b>v81</b> <span>2026-10-23</span><ul><li>Lighting: choose "Total number only" when the rig is big and the types are not needed, or "Detailed by type".</li><li>Light types in general terms, no model references: beam lights, moving heads BSW, wash and profile, LED PARs, LED PARs with zoom, LED bars.</li><li>The layout draws at most 24 lights so a big rig stays readable; the full number is in the summary.</li></ul></div><div class="logv"><b>v80</b> <span>2026-10-23</span><ul><li>Subcontractors: company, subcontractor name and phone, and a check "handles all of the lighting / sound / LED screens". If not ticked, write what they handle only (for example the beams only).</li><li>Screens on a stage are drawn at the back of the stage, not in the middle.</li><li>Lighting can stand on the ground, half on each side, beams going up and away from the screen.</li><li>New light type: moving head wash.</li></ul></div><div class="logv"><b>v79</b> <span>2026-10-23</span><ul><li>LED arch: black cloth is calculated (back, sides and passage, +10%). With double face you can cover only the inside of the passage. The 360° views show trusses or cloth on each side.</li><li>Event layout: the m² of the printed visual under the screen is shown on the drawing and in the summary.</li></ul></div><div class="logv"><b>v78</b> <span>2026-10-23</span><ul><li>Microphone types (wired, wireless handheld, lavalier, headset, podium) listed with their number in the event layout, the locations summary, the sound engineer line and the export.</li></ul></div><div class="logv"><b>v77</b> <span>2026-10-23</span><ul><li>Cameras in their own section; number and type of cameras shown in the event layout and the export.</li></ul></div><div class="logv"><b>v76</b> <span>2026-10-23</span><ul><li>LED totems: any cabinet size (width, height and pitch you enter).</li></ul></div><div class="logv"><b>v75</b> <span>2026-10-23</span><ul><li>Client name suggests clients already worked with and fills their phone and email.</li><li>Light / dark interface switch.</li><li>Event layout: m² of floor screens shown in the summary.</li></ul></div><div class="logv"><b>v74</b> <span>2026-10-23</span><ul><li>Log section with every version; each downloaded file is named with its version.</li></ul></div><div class="logv"><b>v73</b> <span>2026-10-23</span><ul><li>Event: subcontractors (sous-traitance) for LED screens, sound and lighting, saved list with phones, shown on the first page of the export.</li></ul></div><div class="logv"><b>v72</b> <span>2026-10-22</span><ul><li>Digital desk: Client PDF with shape, size ±10 cm, resolution, LED area, modules, diagonal and power.</li></ul></div><div class="logv"><b>v71</b> <span>2026-10-21</span><ul><li>Each project keeps its own locations and photos; New project starts clean.</li></ul></div><div class="logv"><b>v70</b> <span>2026-10-21</span><ul><li>Several locations: all locations together page; no régie diagram with Taurus playback or totems only; layout, arch, then reference photos.</li></ul></div><div class="logv"><b>v69</b> <span>2026-10-21</span><ul><li>Print: papier peint type, ? for size and quantity.</li></ul></div><div class="logv"><b>v67–68</b> <span>2026-10-21</span><ul><li>LED totems without a main screen, any count, on the ground; generic 500 × 500 cabinet.</li></ul></div><div class="logv"><b>v64–66</b> <span>2026-10-21</span><ul><li>Event locations (espaces) with own settings and photos; shared stock; total packing list; LED screens and régie checkboxes.</li></ul></div><div class="logv"><b>v62–63</b> <span>2026-10-21</span><ul><li>Printed walls (bâche, polyane); no-LED events; all-in-one 82", presentoirs, kiosk, digital desks; printed visual under totems.</li></ul></div><div class="logv"><b>v61</b> <span>2026-10-21</span><ul><li>Patente and placement photos kept per project; unique reference numbers.</li></ul></div><div class="logv"><b>v59–60</b> <span>2026-10-21</span><ul><li>Unknown quantities (?) in sound and lighting with ? buttons.</li></ul></div><div class="logv"><b>v56–58</b> <span>2026-10-21</span><ul><li>Intervention sheet PTP-FR-01 (one page); system references with versions; one-page packing list.</li></ul></div><div class="logv"><b>v53–55</b> <span>2026-10-21</span><ul><li>Export: landscape wiring and translation pages, bigger What to bring; supplier box; one three-phase breaker for all screens.</li></ul></div><div class="logv"><b>v48–52</b> <span>2026-10-21</span><ul><li>Event: Taurus simple playback, live translation, LED totems, arch 360° views, lighting placement, staff, old projects with references.</li></ul></div><div class="logv"><b>v43–47</b> <span>2026-10-19</span><ul><li>Sale: Usurface III 10 (10,000 nits); two buttons Client / Export PDF with all graphs; wide screens split in strips.</li></ul></div><div class="logv"><b>v1–42</b> <span>2026-10</span><ul><li>Sale, Event, Digital desk and Digital fridge calculators, PDFs, 3D views, arch, mounting options.</li></ul></div></div></dialog>
 <dialog id="projDlg" aria-labelledby="projDlgT">
   <div class="pd-h"><h2 id="projDlgT">Old projects</h2><button type="button" class="btn small" id="projClose" aria-label="Close">Close</button></div>
   <input type="search" id="projSearch" placeholder="Search name, client or reference" aria-label="Search projects">
@@ -2441,10 +2512,10 @@ function applyMode(){
   document.querySelectorAll("[data-for]").forEach(el=>el.hidden=!el.dataset.for.split(" ").includes(m));
   document.querySelectorAll(".noevent").forEach(el=>el.hidden=m==="event");
   $("exportBtn").hidden=false;
-  $("subtitle").textContent=m==="fridge"?"Digital fridge: glass-door fridge wrapped in Unilumin LC2.5P LED on the front, top and sides":m==="event"?"Event planning: screens from our rental stock, stage, control room, sound, lighting and everything to bring":m==="desk"?"Custom digital desk: live shape, size, power, PSUs, receiving cards, casters and weight":"Size, power, breaker, PSU blocks, receiving cards and ports for Unilumin LED modules";
+  $("subtitle").textContent=m==="totem"?"LED totem on 4 locking casters, NovaStar Taurus inside: size, power, PSUs, cards, weight and drawings":m==="fridge"?"Digital fridge: glass-door fridge wrapped in Unilumin LC2.5P LED on the front, top and sides":m==="event"?"Event planning: screens from our rental stock, stage, control room, sound, lighting and everything to bring":m==="desk"?"Custom digital desk: live shape, size, power, PSUs, receiving cards, casters and weight":"Size, power, breaker, PSU blocks, receiving cards and ports for Unilumin LED modules";
   rerender();
 }
-function rerender(){prodSummary();placeSync();const m=appMode();m==="event"?renderEvent():m==="desk"?renderDesk():m==="fridge"?renderFridge():render();}
+function rerender(){prodSummary();placeSync();const m=appMode();m==="event"?renderEvent():m==="desk"?renderDesk():m==="fridge"?renderFridge():m==="totem"?renderTotem():render();}
 document.querySelectorAll('input[name=app]').forEach(el=>el.addEventListener("change",applyMode));
 try{window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{if(appMode()==="desk")renderDesk();});}catch(e){}
 new MutationObserver(()=>{if(appMode()==="desk")renderDesk();}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
@@ -5546,12 +5617,12 @@ function mergeKits(rs,L){const m=new Map(),order=Object.keys(KIT_CATS);
   return a.sort((x,y)=>order.indexOf(x.cat)-order.indexOf(y.cat));}
 
 /* ---------- persistence (per viewer) ---------- */
-const FIELDS=["sUslSize","eCamMode","eCamN","eSoundMode","eMicMode","eMicN","pCid","sPlacesJSON","sPlaceCur","eCusW","eCusH","eCusP","eSub_led","eSub_sound","eSub_light","eLTotP","eLTotN","pStd","wStd","eLocsJSON","eLocCur","eLTotSk","ePrintsJSON","eAio","ePresF","ePresC","eKiosk","eDeskF","eDeskC","eDeskS","sDeskS","sAio","sPresF","sPresC","sKiosk","sDeskF","sDeskC","pVer","eLightPos","eLightTot","eTrBooths","eTrPer","aBack","eMicPod","eMicLav","eTrN","eTrHp","eLTotW","eLTotH","eLTotE","sMount","sLegs","sALW","sAH","sABH","sAOW","eFr360","eRet","sFr360","wFr360","sRet","wRet","aProd","aN","aLegW","aLegH","aBeamH","aOpenW","liftM","fOpenRad","fCorner","fLit","fModel","fW","fD","fH","fDoors","fPos","fPow","fKg","fCols","fTop","fSide","fBase","fVent","eDevis","eDevisT","eTrussStep","eLoc","eStart","eEnd","eIn","eInT","eOut","eOutT","eStW","eStD","eStH","eCarpet","eCarpetC","eCarpetN","eStCol","eStColC","eStColN","eCamFix","eCamPtz","eCamOp","eSpk","eMicW","eMicWl","eMicH","eBeam","ePar","eMov","eBsw","eProfile","eParZ","eBar","eLightN","eLightMode","eTotem","ePodium","sRcx2","sRcxRep","pRcx","wRcx","sUgm","pUgm","wUgm","sUgd","pUgd","wUgd","sTotem","wTotem","sPodium","wPodium","dRim","cArea","cPos","cModel","cSockets","cRjMode","cRj","cLan","cHdmi","cUsb","dN","dRows","dS","dBez","dRear","dWellH","dCasters","dFrameKg","dBoardKg","dPsuKg","cardSplit","cableLen","drop","pName","pClient","pPhone","pEmail","pRef","pDate","pBy","wM","hM","round","nC","nR","supply","pf","margin","curve","psuW","psuName","cardW","cardH","portPx","maxMods"];
-function save(){try{locStore();if(appMode()==="wall")sPlStore();const s={};FIELDS.forEach(f=>s[f]=$(f).value);s.rot=$("rot").checked;s.mode=document.querySelector('input[name=mode]:checked').value;s.prod=document.querySelector('input[name=prod]:checked').value;s.mount=document.querySelector('input[name=psuMount]:checked').value;s.app=appMode();s.dprod=(document.querySelector('input[name=dprod]:checked')||{}).value;["dShelf","dDrawer","dDoor","dLogo","cSwitch","cInlet","eStage","eBackup","eObs","ePres","eLight","fLeftOn","fRightOn","fAdsOn","fOpenRound","aOn","aPass","ePodMic","sAOn","sADbl","eSimple","eSoundOn","eTrOn","eTrEN","eTrFR","eTrZH","eTrAR","eLTot","eDispOn","eScreenOn","ePrintOn","eRegieOn","eCamOn","eStUnk"].forEach(k=>s[k]=$(k).checked);localStorage.setItem("ledcalc.v1",JSON.stringify(s));projKeep(s);}catch(e){}}
+const FIELDS=["tW","tH","tC","tR","tFaces","tModel","tBez","tBack","tCast","tBaseD","tFrameKg","sUslSize","eCamMode","eCamN","eSoundMode","eMicMode","eMicN","pCid","sPlacesJSON","sPlaceCur","eCusW","eCusH","eCusP","eSub_led","eSub_sound","eSub_light","eLTotP","eLTotN","pStd","wStd","eLocsJSON","eLocCur","eLTotSk","ePrintsJSON","eAio","ePresF","ePresC","eKiosk","eDeskF","eDeskC","eDeskS","sDeskS","sAio","sPresF","sPresC","sKiosk","sDeskF","sDeskC","pVer","eLightPos","eLightTot","eTrBooths","eTrPer","aBack","eMicPod","eMicLav","eTrN","eTrHp","eLTotW","eLTotH","eLTotE","sMount","sLegs","sALW","sAH","sABH","sAOW","eFr360","eRet","sFr360","wFr360","sRet","wRet","aProd","aN","aLegW","aLegH","aBeamH","aOpenW","liftM","fOpenRad","fCorner","fLit","fModel","fW","fD","fH","fDoors","fPos","fPow","fKg","fCols","fTop","fSide","fBase","fVent","eDevis","eDevisT","eTrussStep","eLoc","eStart","eEnd","eIn","eInT","eOut","eOutT","eStW","eStD","eStH","eCarpet","eCarpetC","eCarpetN","eStCol","eStColC","eStColN","eCamFix","eCamPtz","eCamOp","eSpk","eMicW","eMicWl","eMicH","eBeam","ePar","eMov","eBsw","eProfile","eParZ","eBar","eLightN","eLightMode","eTotem","ePodium","sRcx2","sRcxRep","pRcx","wRcx","sUgm","pUgm","wUgm","sUgd","pUgd","wUgd","sTotem","wTotem","sPodium","wPodium","dRim","cArea","cPos","cModel","cSockets","cRjMode","cRj","cLan","cHdmi","cUsb","dN","dRows","dS","dBez","dRear","dWellH","dCasters","dFrameKg","dBoardKg","dPsuKg","cardSplit","cableLen","drop","pName","pClient","pPhone","pEmail","pRef","pDate","pBy","wM","hM","round","nC","nR","supply","pf","margin","curve","psuW","psuName","cardW","cardH","portPx","maxMods"];
+function save(){try{locStore();if(appMode()==="wall")sPlStore();const s={};FIELDS.forEach(f=>s[f]=$(f).value);s.rot=$("rot").checked;s.mode=document.querySelector('input[name=mode]:checked').value;s.prod=document.querySelector('input[name=prod]:checked').value;s.mount=document.querySelector('input[name=psuMount]:checked').value;s.app=appMode();s.dprod=(document.querySelector('input[name=dprod]:checked')||{}).value;s.tprod=(document.querySelector('input[name=tprod]:checked')||{}).value;["dShelf","dDrawer","dDoor","dLogo","cSwitch","cInlet","eStage","eBackup","eObs","ePres","eLight","fLeftOn","fRightOn","fAdsOn","fOpenRound","aOn","aPass","ePodMic","sAOn","sADbl","eSimple","eSoundOn","eTrOn","eTrEN","eTrFR","eTrZH","eTrAR","eLTot","eDispOn","eScreenOn","ePrintOn","eRegieOn","eCamOn","eStUnk","tLan","tHdmi"].forEach(k=>s[k]=$(k).checked);localStorage.setItem("ledcalc.v1",JSON.stringify(s));projKeep(s);}catch(e){}}
 function load(){try{const s=JSON.parse(localStorage.getItem("ledcalc.v1")||"null");if(!s)return;
   if(s.pUgm==="3.91")s.pUgm="3.9";if(s.pUgd==="3.91")s.pUgd="3.9";FIELDS.forEach(f=>{if(s[f]!=null)$(f).value=s[f]});$("rot").checked=!!s.rot;
   const m=document.querySelector(`input[name=mode][value="${s.mode}"]`);if(m)m.checked=true;const pr=document.querySelector(`input[name=prod][value="${s.prod}"]`);if(pr)pr.checked=true;const mo=document.querySelector(`input[name=psuMount][value="${s.mount}"]`);if(mo)mo.checked=true;
-  const ap=document.querySelector(`input[name=app][value="${s.app}"]`);if(ap)ap.checked=true;const dp=document.querySelector(`input[name=dprod][value="${s.dprod}"]`);if(dp)dp.checked=true;["dShelf","dDrawer","dDoor","dLogo","cSwitch","cInlet","eStage","eBackup","eObs","ePres","eLight","fLeftOn","fRightOn","fAdsOn","fOpenRound","aOn","aPass","ePodMic","sAOn","sADbl","eSimple","eSoundOn","eTrOn","eTrEN","eTrFR","eTrZH","eTrAR","eLTot","eDispOn","eScreenOn","ePrintOn","eRegieOn","eCamOn","eStUnk"].forEach(k=>{if(s[k]!=null)$(k).checked=!!s[k];});
+  const ap=document.querySelector(`input[name=app][value="${s.app}"]`);if(ap)ap.checked=true;const dp=document.querySelector(`input[name=dprod][value="${s.dprod}"]`);if(dp)dp.checked=true;{const tp=s.tprod&&document.querySelector(`input[name=tprod][value="${s.tprod}"]`);if(tp)tp.checked=true;}["dShelf","dDrawer","dDoor","dLogo","cSwitch","cInlet","eStage","eBackup","eObs","ePres","eLight","fLeftOn","fRightOn","fAdsOn","fOpenRound","aOn","aPass","ePodMic","sAOn","sADbl","eSimple","eSoundOn","eTrOn","eTrEN","eTrFR","eTrZH","eTrAR","eLTot","eDispOn","eScreenOn","ePrintOn","eRegieOn","eCamOn","eStUnk","tLan","tHdmi"].forEach(k=>{if(s[k]!=null)$(k).checked=!!s[k];});
   if(s.eCamOn==null)$("eCamOn").checked=["eCamFix","eCamPtz","eCamOp"].some(k=>+$(k).value>0);
   if(s.eLocsJSON==null){$("eLocsJSON").value="";$("eLocCur").value="0";}
   if(s.sPlacesJSON==null){$("sPlacesJSON").value="";$("sPlaceCur").value="0";}
@@ -5716,6 +5787,291 @@ $("projImport").addEventListener("change",async e=>{const f=e.target.files[0];e.
     if(Array.isArray(j.subs)){const d=subDir();for(const x of j.subs)if(x&&(x.name||x.company)&&!d.some(y=>subKey(y)===subKey(x)))d.push(x);subDirPut(d);drawSubNames();}
     a.sort((x,y)=>(y.updated||0)-(x.updated||0));projPut(a);projDraw();toast(`${n} project${n===1?"":"s"} added from the backup.`);}
   catch(err){toast("This file is not a projects backup.");}});
+/* ---------- Conception: LED totem on 4 locking casters, NovaStar Taurus inside ---------- */
+const TOT_CABS={USL15a:{...USLIM,...USLIM_SIZES["500x1000"],key:"USL15a",id:"Uslim III 1.5 · 500 × 1000"},USL15b:{...USLIM,...USLIM_SIZES["500x500"],key:"USL15b",id:"Uslim III 1.5 · 500 × 500"},
+  ...Object.fromEntries(Object.values(CABS).map(c=>[c.key,{key:c.key,id:c.id,idFr:c.idFr,series:"Usurface III",kind:"Fixed",env:c.env,pitch:c.pitch,led:c.led,bright:c.bright,nits:c.nits,pMax:c.pMax,pTyp:c.pTyp,uw:c.w,uh:c.h,resW:c.resW,resH:c.resH,weight:c.kgM2*c.w*c.h/1e6,cab:true}]))};
+$("tprodList").innerHTML=`<details class="pgrp" data-g="mod"><summary><span class="pg-t">LED modules · 320 × 160 mm</span><span class="pg-cur"></span></summary><div class="prod-list">`+PRODUCTS.filter(p=>p.kind!=="Flexible").map(p=>`
+  <label class="prod"><input type="radio" name="tprod" value="${p.id}" ${p.id==="LC2.5P"?"checked":""}>
+    <span class="nm">${p.id}</span><span class="tag ${p.env==="Outdoor"?"out":"in"}">${p.env}</span>
+    <span class="sub">P${p.pitch} · ${p.resW}×${p.resH} px · ${p.pMax} W/m² max</span>
+  </label>`).join("")+`</div></details><details class="pgrp" data-g="cab"><summary><span class="pg-t">LED cabinets</span><span class="pg-cur"></span></summary><div class="prod-list">`+Object.values(TOT_CABS).map(c=>`
+  <label class="prod"><input type="radio" name="tprod" value="${c.key}">
+    <span class="nm">${c.id}</span><span class="tag ${c.env==="Outdoor"?"out":"in"}">${c.env}</span>
+    <span class="sub">P${c.pitch} · ${c.uw} × ${c.uh} mm · ${c.resW}×${c.resH} px · ${c.pMax} W/m² max · PSU and card inside</span>
+  </label>`).join("")+`</div></details>`;
+function tProdSummary(){for(const d of $("tprodList").querySelectorAll(".pgrp")){const c=d.querySelector("input:checked");
+  d.classList.toggle("has",!!c);d.querySelector(".pg-cur").textContent=c?c.closest(".prod").querySelector(".nm").textContent:(d.dataset.g==="cab"?"Choose a cabinet":"Choose a module");}}
+const tProd=()=>{const id=(document.querySelector('input[name=tprod]:checked')||{}).value||"LC2.5P";return TOT_CABS[id]||PRODUCTS.find(x=>x.id===id)||PRODUCTS[0];};
+// the size can be typed in metres or as columns × rows: each one follows the other
+function tFromM(){const p=tProd(),w=parseFloat($("tW").value),h=parseFloat($("tH").value);
+  if(isFinite(w)&&w>0)$("tC").value=Math.max(1,Math.round(w*1000/UW(p)));if(isFinite(h)&&h>0)$("tR").value=Math.max(1,Math.round(h*1000/UH(p)));}
+function tFromN(){const p=tProd();$("tW").value=(clampInt(+$("tC").value||1,1,40)*UW(p)/1000).toFixed(2);$("tH").value=(clampInt(+$("tR").value||1,1,60)*UH(p)/1000).toFixed(2);}
+for(const id of ["tW","tH"])$(id).addEventListener("input",tFromM);
+for(const id of ["tC","tR"])$(id).addEventListener("input",tFromN);
+$("tprodList").addEventListener("change",e=>{if(e.target.name==="tprod"){tFromM();tProdSummary();e.target.closest("details").open=false;}});
+try{const sv=JSON.parse(localStorage.getItem("ledcalc.v1")||"{}"),tp=sv.tprod&&document.querySelector(`input[name=tprod][value="${sv.tprod}"]`);if(tp)tp.checked=true;}catch(e){}
+tProdSummary();
+function readTotem(){const num=(id,d)=>{const v=parseFloat($(id).value);return isFinite(v)?v:d};
+  return {p:tProd(),C:clampInt(num("tC",2),1,40),R:clampInt(num("tR",12),1,60),nF:$("tFaces").value==="2"?2:1,bez:Math.max(0,num("tBez",20)),back:Math.max(40,num("tBack",90)),
+    cast:$("tCast").value,baseD:num("tBaseD",NaN),frameKg:Math.max(0,num("tFrameKg",12)),model:$("tModel").value,hdmi:$("tHdmi").checked,lan:$("tLan").checked};}
+function computeTotem(T,I){
+  const p=T.p,f=compute({...I,p,C:T.C,R:T.R,sArch:null,capped:false}),r={I,T,p,f,nF:T.nF,C:T.C,R:T.R};
+  r.LW=T.C*UW(p);r.LH=T.R*UH(p);r.units=T.C*T.R;r.modules=r.units*T.nF;
+  r.areaFace=r.LW*r.LH/1e6;r.area=r.areaFace*T.nF;r.resW=f.resW;r.resH=f.resH;r.pxFace=f.px;r.px=f.px*T.nF;
+  r.diag=Math.hypot(r.LW,r.LH)/25.4;
+  r.ledD=p.depth||(p.cab?90:20);r.ledDest=!p.depth;
+  r.Wout=r.LW+2*T.bez;r.Hbody=r.LH+2*T.bez;r.Dbody=T.nF===1?r.ledD+T.back+3:2*r.ledD+T.back;
+  r.psuCount=f.psuCount*T.nF;r.cardCount=(f.cardCount||0)*T.nF;r.portsFace=f.ports||1;r.ports=r.portsFace*T.nF;
+  r.player=playerFor({ports:r.ports,px:r.px},{model:T.model});
+  r.pLed=f.pMax*T.nF;r.pTypLed=f.pTyp*T.nF;r.pPlayer=20;r.pMax=r.pLed+r.pPlayer;r.pTyp=r.pTypLed+r.pPlayer;
+  r.E=feeder(r.pMax,1,{...I,cableLen:5});r.amps=r.pMax/(230*I.pf);
+  // base: a steel plate on a tube frame, 40 mm, under the body; deeper than the body so the totem stands well
+  const baseH=40,est=c=>c.h+baseH+r.Hbody;
+  r.baseAuto=!isFinite(T.baseD)||T.baseD<=0;
+  const baseFor=Ht=>Math.min(800,Math.max(r.Dbody+60,350,Math.ceil(Ht*0.25/10)*10));
+  r.baseD=r.baseAuto?baseFor(est(CASTERS[1])):Math.max(r.Dbody,T.baseD);r.baseH=baseH;
+  const kgOf=()=>{const w=[];
+    w.push(["led",r.modules*p.weight]);
+    w.push(["frame",T.frameKg*r.Wout*r.Hbody/1e6*(T.nF===2?1.3:1)]);
+    if(T.nF===1)w.push(["backp",5.5*r.Wout*r.Hbody/1e6]);
+    w.push(["base",78.5*r.Wout*r.baseD/1e6+3]);
+    if(!p.cab)w.push(["psu",r.psuCount*0.6+r.cardCount*0.1]);
+    w.push(["player",1.2*r.player.n]);w.push(["cables",2]);return w;};
+  let w=kgOf(),sub=w.reduce((a,x)=>a+x[1],0);
+  r.cNeed=(sub+4*CASTERS[1].w)/3;
+  r.cRec=CASTERS.find(c=>c.kg>=r.cNeed)||CASTERS[CASTERS.length-1];
+  r.cast=T.cast==="auto"?r.cRec:(CASTERS.find(c=>String(c.d)===T.cast)||r.cRec);
+  r.Htot=est(r.cast);
+  if(r.baseAuto){r.baseD=baseFor(r.Htot);w=kgOf();sub=w.reduce((a,x)=>a+x[1],0);}
+  w.push(["casters",4*r.cast.w]);r.kgParts=w;r.kg=sub+4*r.cast.w;
+  r.cNeed=r.kg/3;r.cRec=CASTERS.find(c=>c.kg>=r.cNeed)||CASTERS[CASTERS.length-1];
+  r.flags=[];
+  if(f.cardError)r.flags.push(["bad",f.cardError]);
+  if(f.vertPsus&&f.vertPsus.length)r.flags.push(["warn",`Install ${f.vertPsus.length} PSU${f.vertPsus.length>1?"s":""} vertically on each face so they reach 4 modules across.`]);
+  if(r.player.forced&&r.player.n>1)r.flags.push(["bad",`${r.player.m} is too small for ${fmt(r.px)} px on ${r.ports} port${r.ports>1?"s":""}: it would need ${r.player.n}. Choose a bigger Taurus.`]);
+  else if(r.player.n>1)r.flags.push(["bad",`Even a TB60 is too small (${fmt(r.px)} px, ${r.ports} ports): ${r.player.n} players would be needed.`]);
+  if(r.amps>16)r.flags.push(["bad",`${fmt(r.pMax)} W at peak is more than one 16 A socket (${fmt(r.amps,1)} A): the totem needs its own feed.`]);
+  else if(r.amps>10)r.flags.push(["warn",`${fmt(r.pMax)} W at peak (${fmt(r.amps,1)} A): use a 16 A socket, not a 10 A one.`]);
+  if(r.cast.kg<r.cNeed)r.flags.push(["warn",`The Ø ${r.cast.d} mm casters are small for ${fmt(r.kg)} kg (each must carry ${fmt(r.cNeed)} kg). Ø ${r.cRec.d} mm recommended.`]);
+  if(r.baseD<r.Htot/5)r.flags.push(["warn",`The base (${fmt(r.baseD)} mm deep) is short for a ${fmt(r.Htot)} mm totem: it can tip when pushed. Use at least ${fmt(Math.ceil(r.Htot/5/10)*10)} mm or add ballast.`]);
+  if(r.Wout<r.Htot/5)r.flags.push(["warn",`The totem is narrow (${fmt(r.Wout)} mm) for its height: brake the casters and do not move it when it is on.`]);
+  if(r.Htot>2400)r.flags.push(["warn",`${fmt(r.Htot)} mm high: check the door heights for transport (often 2,000 to 2,100 mm).`]);
+  if(p.env==="Outdoor")r.flags.push(["concept","Outdoor product: the totem body, the back door and the cable entry must be waterproof (IP65)."]);
+  if(r.ledDest)r.flags.push(["concept",`The depth of ${p.id} is not in the datasheet: ${r.ledD} mm used for the drawings.`]);
+  return r;
+}
+const TOT_KG={en:{led:"LED",frame:"Frame (aluminium)",backp:"Back panel",base:"Steel base",psu:"Power supplies and receiving cards",player:"Taurus player",cables:"Cables and fixings",casters:"4 casters"},
+  fr:{led:"LED",frame:"Structure (aluminium)",backp:"Panneau arrière",base:"Socle acier",psu:"Alimentations et cartes de réception",player:"Lecteur Taurus",cables:"Câbles et fixations",casters:"4 roulettes"}};
+const totLedName=(p,L)=>`Unilumin ${L==="fr"&&p.idFr?p.idFr:p.id}`;
+const totUnit=(p,L,n)=>p.cab?(L==="fr"?(n>1?"caissons":"caisson"):(n>1?"cabinets":"cabinet")):"modules";
+function totemRows(r,L){const fr=L==="fr",f=(n,d)=>fmtL(n,d,L),p=r.p,T=r.T;
+  return [[fr?"Dimensions hors tout":"Overall size",`${f(r.Wout)} × ${f(r.baseD)} × ${f(r.Htot)} mm (${fr?"L × P × H, socle compris":"W × D × H, base included"})`],
+    [fr?"Faces LED":"LED faces",T.nF===2?(fr?"2 faces, dos à dos":"2 faces, back to back"):(fr?"1 face, dos fermé":"1 face, closed back")],
+    [fr?"Écran (par face)":"Screen (per face)",`${f(r.LW)} × ${f(r.LH)} mm · ${f(r.areaFace,2)} m² · ${f(r.diag,0)}"`],
+    [fr?"Produit":"Product",`${totLedName(p,L)}, ${fr?"pas":"pitch"} ${f(p.pitch,2)} mm`],
+    [p.cab?(fr?"Caissons":"Cabinets"):"Modules",`${T.C} × ${T.R} = ${r.units}${T.nF>1?` × 2 = ${r.modules}`:""} ${totUnit(p,L,2)}${p.cab?` ${p.uw} × ${p.uh} mm`:""}`],
+    [fr?"Résolution (par face)":"Resolution (per face)",`${f(r.resW)} × ${f(r.resH)} px`],
+    [fr?"Corps":"Body",`${f(r.Wout)} × ${f(r.Dbody)} × ${f(r.Hbody)} mm · ${fr?"cadre":"frame edge"} ${f(T.bez)} mm`],
+    [fr?"Socle":"Base",`${f(r.Wout)} × ${f(r.baseD)} mm, ${fr?"acier":"steel"}${r.baseAuto?(fr?" (recommandé)":" (recommended)"):""}`],
+    [fr?"Roulettes":"Casters",`4 × Ø ${r.cast.d} mm ${fr?"avec frein":"with brakes"}, ${r.cast.kg} kg ${fr?"chacune":"each"}`],
+    [fr?"Lecteur":"Player",`NovaStar ${r.player.m}${r.player.n>1?` × ${r.player.n}`:""}, ${fr?(T.nF===2?"entre les deux faces":"derrière l'écran, porte d'accès au dos"):(T.nF===2?"between the two faces":"behind the screen, access door at the back")}`]];}
+function totemPowerRows(r,L){const fr=L==="fr",f=(n,d)=>fmtL(n,d,L);
+  return [[fr?"LED (max / typique)":"LED (max / typical)",`${f(r.pLed)} W / ${f(r.pTypLed)} W`],[fr?"Lecteur Taurus":"Taurus player",`${f(r.pPlayer)} W`],
+    [fr?"Total (max / typique)":"Total (max / typical)",`${f(r.pMax)} W / ${f(r.pTyp)} W`],
+    [fr?"Courant à 230 V":"Current at 230 V",`${f(r.amps,1)} A`],
+    [fr?"Alimentation":"Power supply",r.amps<=16?(fr?`230 V, une prise ${r.amps>10?"16":"10/16"} A, interrupteur au dos`:`230 V, one ${r.amps>10?"16":"10/16"} A socket, switch at the back`):(fr?"Ligne dédiée":"Dedicated feed")],
+    ...(r.p.cab?[[fr?"Alimentations / cartes":"PSUs / cards",fr?"dans chaque caisson":"inside each cabinet"]]:[[fr?"Alimentations":"Power supplies",`${f(r.psuCount)} (${r.f.perPsu} modules max ${fr?"chacune":"each"})`],[fr?"Cartes de réception":"Receiving cards",f(r.cardCount)]]),
+    [fr?"Ports LED":"LED ports",`${f(r.ports)} · ${f(r.px)} px`]];}
+function totemWeightRows(r,L){const fr=L==="fr",f=(n,d)=>fmtL(n,d,L);
+  return [...r.kgParts.map(([k,v])=>[TOT_KG[L][k],`≈ ${f(v,1)} kg`]),[fr?"Total":"Total",`≈ ${f(r.kg)} kg`]];}
+function totemBom(r,L){const fr=L==="fr",f=(n,d)=>fmtL(n,d,L),p=r.p,T=r.T;
+  const b=[[fr?"LED":"LED",`${totLedName(p,L)} ${p.cab?`${p.uw} × ${p.uh} mm`:"320 × 160 mm"}`,String(r.modules)]];
+  if(!p.cab){b.push([fr?"Alimentation":"Power supply",`${r.I.psuName} ${r.I.psuW} W`,String(r.psuCount)]);b.push([fr?"Carte de réception":"Receiving card","NovaStar",String(r.cardCount)]);}
+  b.push([fr?"Lecteur":"Player",`NovaStar ${r.player.m}`,String(r.player.n)]);
+  b.push([fr?"Structure":"Frame",fr?`Cadre aluminium noir ${T.nF===2?"double face":"simple face"}, ${f(r.Wout)} × ${f(r.Dbody)} × ${f(r.Hbody)} mm`:`Black aluminium frame, ${T.nF===2?"double":"single"} face, ${f(r.Wout)} × ${f(r.Dbody)} × ${f(r.Hbody)} mm`,"1"]);
+  if(T.nF===1)b.push([fr?"Panneau arrière":"Back panel",fr?"Composite aluminium 3 mm noir, porte d'accès avec serrure, grilles d'aération":"Black 3 mm aluminium composite, lockable access door, vent grilles","1"]);
+  else b.push([fr?"Trappe latérale":"Side hatch",fr?"Accès au lecteur et aux alimentations, avec serrure":"Access to the player and power supplies, lockable","1"]);
+  b.push([fr?"Socle":"Base",fr?`Plaque acier 10 mm sur cadre tube, ${f(r.Wout)} × ${f(r.baseD)} mm`:`10 mm steel plate on a tube frame, ${f(r.Wout)} × ${f(r.baseD)} mm`,"1"]);
+  b.push([fr?"Roulettes":"Casters",fr?`Ø ${r.cast.d} mm pivotantes avec frein, ${r.cast.kg} kg chacune`:`Ø ${r.cast.d} mm swivel with brake, ${r.cast.kg} kg each`,"4"]);
+  b.push([fr?"Panneau de connexion":"Connection panel",[fr?"embase secteur":"power inlet",fr?"interrupteur":"switch",...(T.lan?["RJ45 LAN"]:[]),...(T.hdmi&&r.player.m!=="TB30"?["HDMI"]:[])].join(", "),"1"]);
+  b.push([fr?"Câbles":"Cables",fr?"Alimentation et réseau internes, cordon secteur 3 m":"Internal power and data, 3 m mains cord","1"]);
+  return b;}
+function totemNotes(r,L){const fr=L==="fr";
+  return [fr?"Les visuels se chargent depuis un PC, une tablette ou un téléphone avec l'application NovaStar ViPlex, en Wi-Fi ou par câble réseau, ou depuis une clé USB.":"Content is loaded from a PC, tablet or phone with the NovaStar ViPlex app, over Wi-Fi or a network cable, or from a USB drive.",
+    r.T.nF===2?(fr?"Les deux faces peuvent montrer le même visuel ou deux visuels différents.":"The two faces can show the same visual or two different ones."):(fr?"Le lecteur et les alimentations sont derrière l'écran, accessibles par la porte au dos.":"The player and the power supplies are behind the screen, reached through the door at the back."),
+    fr?"Freiner les 4 roulettes en place. Déplacer le totem écran éteint, sur sol plat.":"Brake the 4 casters in place. Move the totem switched off, on a flat floor.",
+    FR_CONCEPT[L]];}
+// drawings
+function totemViewsSVG(r,pal,L="en"){const fr=L==="fr",T=r.T,p=r.p,u=Math.max(r.Htot,1200)/60,f=n=>fmtL(n,0,L);
+  const ink=pal.ink,mut=pal.muted,acc=pal.accent,font=pal.font;let s="";
+  const ln=(x1,y1,x2,y2,c=ink,w=1,da="")=>`<line x1="${f1(x1)}" y1="${f1(y1)}" x2="${f1(x2)}" y2="${f1(y2)}" stroke="${c}" stroke-width="${w}" ${da?`stroke-dasharray="${da}"`:""} vector-effect="non-scaling-stroke"/>`;
+  const rc=(x,y,w,h,fill,st=ink,sw=1)=>`<rect x="${f1(x)}" y="${f1(y)}" width="${f1(w)}" height="${f1(h)}" fill="${fill}" stroke="${st}" stroke-width="${sw}" vector-effect="non-scaling-stroke"/>`;
+  const tx=(x,y,t,o={})=>`<text x="${f1(x)}" y="${f1(y)}" font-family="${font}" font-size="${f1(o.fs||u)}" fill="${o.fill||ink}" text-anchor="${o.a||"middle"}" ${o.b?'font-weight="700"':""} ${o.rot?`transform="rotate(-90 ${f1(x)} ${f1(y)})"`:""}>${esc(t)}</text>`;
+  const dimH=(x1,x2,y,t)=>ln(x1,y,x2,y,acc)+ln(x1,y-u*0.5,x1,y+u*0.5,acc)+ln(x2,y-u*0.5,x2,y+u*0.5,acc)+tx((x1+x2)/2,y-u*0.45,t,{fill:acc,fs:u*0.9});
+  const dimV=(x,y1,y2,t)=>ln(x,y1,x,y2,acc)+ln(x-u*0.5,y1,x+u*0.5,y1,acc)+ln(x-u*0.5,y2,x+u*0.5,y2,acc)+tx(x-u*0.5,(y1+y2)/2,t,{fill:acc,fs:u*0.9,rot:true});
+  const cH=r.cast.h,bH=r.baseH,yB=-cH,yBody=yB-bH,yTop=yBody-r.Hbody,st=rgbs(pal.struct);
+  const casters=(x0,w)=>{let o="";for(const cx of [x0+w*0.1,x0+w*0.9]){o+=rc(cx-r.cast.d*0.18,-cH,r.cast.d*0.36,cH-r.cast.d*0.5,st,mut);o+=`<circle cx="${f1(cx)}" cy="${f1(-r.cast.d/2)}" r="${f1(r.cast.d/2)}" fill="#222" stroke="${mut}" stroke-width="1" vector-effect="non-scaling-stroke"/>`;}return o;};
+  const led=(x0,y0)=>{let o=rc(x0,y0,r.LW,r.LH,"#101624",pal.ledLine);for(let i=1;i<T.C;i++)o+=ln(x0+i*UW(p),y0,x0+i*UW(p),y0+r.LH,pal.ledLine,0.5);for(let j=1;j<T.R;j++)o+=ln(x0,y0+j*UH(p),x0+r.LW,y0+j*UH(p),pal.ledLine,0.5);return o;};
+  // front
+  let x=0;const W=r.Wout,gap=Math.max(600,r.Wout*0.9);
+  s+=rc(x,yB-bH,W,bH,st)+casters(x,W)+rc(x,yTop,W,r.Hbody,st)+led(x+T.bez,yTop+T.bez);
+  s+=tx(x+W/2,yTop+T.bez+r.LH/2,`${f(r.LW)} × ${f(r.LH)}`,{fill:"#cfd8ff",fs:u*0.95,b:true});
+  s+=tx(x+W/2,yTop+T.bez+r.LH/2+u*1.3,`${T.C} × ${T.R} ${totUnit(p,L,2)}`,{fill:"#9aa6cc",fs:u*0.8});
+  s+=dimH(x,x+W,yTop-u*1.6,f(r.Wout))+dimV(x-u*1.6,yTop,0,f(r.Htot))+dimV(x+W+u*1.6,yTop+T.bez,yTop+T.bez+r.LH,`LED ${f(r.LH)}`);
+  s+=tx(x+W/2,u*2.2,fr?"FACE AVANT":"FRONT",{b:true,fs:u});
+  // side
+  x=W+gap;const bx=x,bd=r.baseD,dx=bx+(bd-r.Dbody)/2;
+  s+=rc(bx,yB-bH,bd,bH,st)+casters(bx,bd)+rc(dx,yTop,r.Dbody,r.Hbody,st);
+  s+=rc(dx,yTop+T.bez,Math.min(r.ledD,r.Dbody),r.LH,"#101624",pal.ledLine);
+  if(T.nF===2)s+=rc(dx+r.Dbody-r.ledD,yTop+T.bez,r.ledD,r.LH,"#101624",pal.ledLine);
+  // player inside, dashed
+  const pw=Math.min(T.back-10,60),px=T.nF===2?dx+r.ledD+(T.back-pw)/2:dx+r.ledD+5,py=yBody-T.bez-260;
+  s+=`<rect x="${f1(px)}" y="${f1(py)}" width="${f1(pw)}" height="200" fill="none" stroke="${acc}" stroke-width="1.2" stroke-dasharray="6 4" vector-effect="non-scaling-stroke"/>`;
+  s+=tx(px+pw/2,py-u*0.5,r.player.m,{fill:acc,fs:u*0.75,b:true});
+  if(T.nF===2){const hy=yBody-T.bez-320;s+=`<rect x="${f1(dx+r.ledD)}" y="${f1(hy)}" width="${f1(T.back)}" height="300" fill="none" stroke="${mut}" stroke-width="1" vector-effect="non-scaling-stroke"/>`;}
+  s+=dimH(dx,dx+r.Dbody,yTop-u*1.6,f(r.Dbody))+dimH(bx,bx+bd,u*1.4,`${fr?"socle":"base"} ${f(bd)}`);
+  s+=dimV(bx+bd+u*1.6,yBody,0,f(cH+bH));
+  s+=tx(bx+bd/2,u*3.6,fr?"CÔTÉ":"SIDE",{b:true,fs:u});
+  // back
+  x=bx+bd+gap;const kx=x;
+  s+=rc(kx,yB-bH,W,bH,st)+casters(kx,W)+rc(kx,yTop,W,r.Hbody,st);
+  if(T.nF===2){s+=led(kx+T.bez,yTop+T.bez);s+=tx(kx+W/2,yTop+T.bez+r.LH/2,fr?"FACE ARRIÈRE (LED)":"BACK FACE (LED)",{fill:"#cfd8ff",fs:u*0.85,b:true});}
+  else{s+=rc(kx+T.bez,yTop+T.bez,r.LW,r.LH,rgbs(pal.panel),mut);
+    for(const gy of [yTop+T.bez+u*1.2,yBody-T.bez-u*2.6])for(let i=0;i<6;i++)s+=ln(kx+W*0.25,gy+i*u*0.25,kx+W*0.75,gy+i*u*0.25,mut,0.6);
+    const dh=Math.min(r.LH*0.45,700),dy=yBody-T.bez-u*3.4-dh,dw=r.LW*0.7,dxx=kx+(W-dw)/2;
+    s+=rc(dxx,dy,dw,dh,"none",ink,1.2)+`<circle cx="${f1(dxx+dw-u*0.9)}" cy="${f1(dy+dh/2)}" r="${f1(u*0.35)}" fill="${pal.knob}"/>`;
+    s+=tx(kx+W/2,dy+dh/2,fr?"PORTE":"DOOR",{fill:mut,fs:u*0.8,b:true});
+    s+=`<rect x="${f1(kx+W/2-pw*1.5)}" y="${f1(dy+dh*0.15)}" width="${f1(pw*3)}" height="${f1(dh*0.3)}" fill="none" stroke="${acc}" stroke-width="1.2" stroke-dasharray="6 4" vector-effect="non-scaling-stroke"/>`;
+    s+=tx(kx+W/2,dy+dh*0.15-u*0.4,r.player.m,{fill:acc,fs:u*0.7,b:true});}
+  // connection panel, low on the back (on the side for a double face)
+  {const cy=yBody-T.bez-u*1.6,items=[fr?"Secteur":"Power","I/O",...(T.lan?["LAN"]:[]),...(T.hdmi&&r.player.m!=="TB30"?["HDMI"]:[])];
+    const cx0=T.nF===2?dx+r.Dbody/2:kx+W/2;const pwid=Math.min((T.nF===2?r.Dbody:W)*0.9,items.length*u*2.6);
+    s+=rc(cx0-pwid/2,cy-u*0.7,pwid,u*1.4,"#2c2e35",mut);items.forEach((t,i)=>{s+=tx(cx0-pwid/2+(i+0.5)*pwid/items.length,cy+u*0.3,t,{fill:"#e8eaf0",fs:u*0.55,b:true});});}
+  s+=tx(kx+W/2,u*2.2,fr?"DOS":"BACK",{b:true,fs:u});
+  const R=kx+W+u*3;
+  s+=ln(-u*4,0,R,0,mut,1);
+  return {vb:[-u*5,yTop-u*4,R+u*6,-yTop+u*9],body:`<rect x="${f1(-u*5)}" y="${f1(yTop-u*4)}" width="${f1(R+u*11)}" height="${f1(-yTop+u*9)}" fill="${pal.bg}"/>`+s};}
+// 3D view: front and side, or back and side
+function totemIsoSVG(r,pal,back=false,L="en"){const T=r.T,KX2=0.5,KY2=0.32;
+  const P=(x,y,z)=>[x+y*KX2,-z-y*KY2];
+  const poly=(pts,fill,st="#5b6070")=>`<polygon points="${pts.map(q=>{const [a,b]=P(...q);return f1(a)+","+f1(b);}).join(" ")}" fill="${fill}" stroke="${st}" stroke-width="1" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>`;
+  const W=r.Wout,bd=r.baseD,D=r.Dbody,y0=(bd-D)/2,cH=r.cast.h,bH=r.baseH,z0=cH+bH,H=r.Hbody,st=pal.struct;let s="";
+  // casters
+  for(const [cx,cy] of [[W*0.1,bd*0.15],[W*0.9,bd*0.15],[W*0.1,bd*0.85],[W*0.9,bd*0.85]].sort((a,b)=>b[1]-a[1])){const [a,b]=P(cx,cy,r.cast.d/2);s+=`<ellipse cx="${f1(a)}" cy="${f1(b)}" rx="${f1(r.cast.d*0.22)}" ry="${f1(r.cast.d/2)}" fill="#1a1a1e" stroke="#555" stroke-width="1" vector-effect="non-scaling-stroke"/>`;}
+  // base
+  s+=poly([[0,0,cH],[W,0,cH],[W,0,z0],[0,0,z0]],rgbs(st,0.9))+poly([[W,0,cH],[W,bd,cH],[W,bd,z0],[W,0,z0]],rgbs(st,0.7))+poly([[0,0,z0],[W,0,z0],[W,bd,z0],[0,bd,z0]],rgbs(st,1.25));
+  // body
+  s+=poly([[W,y0,z0],[W,y0+D,z0],[W,y0+D,z0+H],[W,y0,z0+H]],rgbs(st,0.75))+poly([[0,y0,z0+H],[W,y0,z0+H],[W,y0+D,z0+H],[0,y0+D,z0+H]],rgbs(st,1.3))+poly([[0,y0,z0],[W,y0,z0],[W,y0,z0+H],[0,y0,z0+H]],rgbs(st,1));
+  const x1=T.bez,x2=W-T.bez,za=z0+T.bez,zb=z0+H-T.bez,yy=y0;
+  const showLed=!back||T.nF===2;
+  if(showLed){const id="tg"+(back?"b":"f");
+    s+=`<defs><linearGradient id="${id}" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#2b5bff"/><stop offset="0.55" stop-color="#7a3fe0"/><stop offset="1" stop-color="#0fa8b0"/></linearGradient></defs>`;
+    s+=poly([[x1,yy,za],[x2,yy,za],[x2,yy,zb],[x1,yy,zb]],`url(#${id})`,pal.ledLine);
+    const [ax,ay]=P((x1+x2)/2,yy,za+(zb-za)*0.62),fs=Math.max(40,(x2-x1)*0.13);
+    s+=`<text x="${f1(ax)}" y="${f1(ay)}" font-family="${LOGO_FONT}" font-size="${f1(fs)}" font-weight="700" fill="#fff" text-anchor="middle">${back?"AD":"LED"}</text>`;
+    const [bx2,by2]=P((x1+x2)/2,yy,za+(zb-za)*0.5);s+=`<text x="${f1(bx2)}" y="${f1(by2)}" font-family="${LOGO_FONT}" font-size="${f1(fs*0.55)}" fill="#e8ecff" text-anchor="middle">${L==="fr"?"VOTRE VISUEL":"YOUR VISUAL"}</text>`;}
+  else{s+=poly([[x1,yy,za],[x2,yy,za],[x2,yy,zb],[x1,yy,zb]],rgbs(pal.panel,1));
+    const dh=Math.min((zb-za)*0.45,700),dw=(x2-x1)*0.7,dx0=x1+((x2-x1)-dw)/2,dz=za+180;
+    s+=poly([[dx0,yy,dz],[dx0+dw,yy,dz],[dx0+dw,yy,dz+dh],[dx0,yy,dz+dh]],"none",pal.knob);
+    const [kx,ky]=P(dx0+dw-50,yy,dz+dh/2);s+=`<circle cx="${f1(kx)}" cy="${f1(ky)}" r="12" fill="${pal.knob}"/>`;
+    for(let i=0;i<5;i++){const z=zb-60-i*22;s+=poly([[x1+(x2-x1)*0.25,yy,z],[x1+(x2-x1)*0.75,yy,z],[x1+(x2-x1)*0.75,yy,z-6],[x1+(x2-x1)*0.25,yy,z-6]],"#15161a","none");}}
+  const pts=[[0,0,0],[W,0,0],[W,bd,0],[0,bd,0],[0,y0,z0+H],[W,y0+D,z0+H],[W,bd,z0+H]].map(q=>P(...q));
+  const xs=pts.map(q=>q[0]),ys=pts.map(q=>q[1]),mx=Math.min(...xs),Mx=Math.max(...xs),my=Math.min(...ys),My=Math.max(...ys),pad=(Mx-mx)*0.12+60;
+  let body=s;if(back)body=`<g transform="translate(${f1(mx+Mx)} 0) scale(-1 1)">${s.replace(/<text([^>]*)>([^<]*)<\/text>/g,(m0,a,t)=>{const xm=/x="([-\d.]+)"/.exec(a);return xm?`<text${a.replace(/x="[-\d.]+"/,`x="${f1(-(+xm[1]))}"`)} transform="scale(-1 1)">${t}</text>`:m0;})}</g>`;
+  return {vb:[mx-pad,my-pad,Mx-mx+2*pad,My-my+2*pad],body:`<rect x="${f1(mx-pad)}" y="${f1(my-pad)}" width="${f1(Mx-mx+2*pad)}" height="${f1(My-my+2*pad)}" fill="${pal.bg}"/>`+body};}
+let LASTT=null;
+function renderTotem(){
+  const I=readInputs(),T=readTotem(),r=computeTotem(T,I);LASTT=r;const f=(n,d)=>fmt(n,d),p=r.p;
+  $("tSizeHint").innerHTML=`LED <b>${f(r.LW)} × ${f(r.LH)} mm</b> per face (${T.C} × ${T.R} ${totUnit(p,"en",2)}) · overall <b>${f(r.Wout)} × ${f(r.baseD)} × ${f(r.Htot)} mm</b>`;
+  $("tCastHint").innerHTML=`Each caster must carry ≈ ${f(r.cNeed)} kg (total on 3 casters): <b>Ø ${r.cRec.d} mm</b> recommended. Base ${r.baseAuto?"auto":"set"}: <b>${f(r.baseD)} mm</b> deep.`;
+  $("tflags").innerHTML=r.flags.map(([t,m])=>`<div class="flag ${t}">${esc(m)}</div>`).join("");
+  const kp=[["Overall size",`${f(r.Wout)} × ${f(r.Htot)}`,"mm",`depth ${f(r.baseD)} mm with the base`],["LED per face",`${fmt(r.LW/1000,2)} × ${fmt(r.LH/1000,2)}`,"m",`${f(r.areaFace,2)} m² · ${f(r.diag)}" · ${T.nF} face${T.nF>1?"s":""}`],
+    ["Resolution",`${f(r.resW)} × ${f(r.resH)}`,"",`per face · P${p.pitch}`],[p.cab?"Cabinets":"LED modules",f(r.modules),"",`${T.C} × ${T.R}${T.nF>1?" × 2":""}`],
+    ["Max power",f(r.pMax),"W",`typical ${f(r.pTyp)} W · ${f(r.amps,1)} A`,true],["Player",r.player.m+(r.player.n>1?` × ${r.player.n}`:""),"",`${r.ports} port${r.ports>1?"s":""} · ${f(r.px)} px`,true],
+    ["PSU / cards",p.cab?"in cabinets":`${r.psuCount} / ${r.cardCount}`,"",p.cab?"one each":`${r.f.perPsu} modules max per PSU`,true],["Weight",`≈ ${f(r.kg)}`,"kg",`4 casters Ø ${r.cast.d} mm`,true]];
+  $("tkpis").innerHTML=kp.map(([k,v,u,s,hl])=>`<div class="kpi ${hl?"hl":""}"><div class="k">${k}</div><div class="v">${v}${u?`<small>${u}</small>`:""}</div><div class="s">${esc(s)}</div></div>`).join("");
+  const pal=deskPal(false);
+  $("tIsoF").innerHTML=svgWrap(totemIsoSVG(r,pal,false),`role="img" aria-label="3D view of the totem, front"`);
+  $("tIsoB").innerHTML=svgWrap(totemIsoSVG(r,pal,true),`role="img" aria-label="3D view of the totem, back"`);
+  $("tIsoMeta").textContent=`${totLedName(p,"en")} · ${f(r.Wout)} × ${f(r.baseD)} × ${f(r.Htot)} mm`;
+  $("tViews").innerHTML=svgWrap(totemViewsSVG(r,pal,"en"),`role="img" aria-label="Front, side and back views with dimensions"`);
+  $("tPsu").innerHTML=drawSVG(r.f,"psu");$("tCard").innerHTML=r.f.cards?drawSVG(r.f,"card"):"";
+  $("tPsuMeta").textContent=`one face${T.nF>1?" (the back face is the same)":""} · ${r.f.psuCount} PSU · ${r.f.cardCount||0} cards · ${r.portsFace} port${r.portsFace>1?"s":""}`;
+  $("tTot").innerHTML=kv(totemRows(r,"en"));
+  $("tTPower").innerHTML=kv(totemPowerRows(r,"en").map((x,i)=>i===2?[...x,"strong"]:x));
+  $("tTWeight").innerHTML=kv(totemWeightRows(r,"en").map((x,i,a)=>i===a.length-1?[...x,"strong"]:x));
+  $("tTBom").innerHTML=`<thead><tr><th>Item</th><th>Description</th><th class="q">Qty</th></tr></thead><tbody>${totemBom(r,"en").map(b=>`<tr><td>${esc(b[0])}</td><td>${esc(b[1])}</td><td class="q">${esc(b[2])}</td></tr>`).join("")}</tbody>`;
+  $("tnotes").innerHTML=totemNotes(r,"en").map(n=>`<p>${esc(n)}</p>`).join("");
+  save();
+}
+function resRowsTotem(r,L){const fr=L==="fr",f=(n,d)=>fmtL(n,d,L);
+  return [resRow(`${fr?"Totem LED":"LED totem"}${r.nF>1?(fr?" · chaque face":" · each face"):""}`,r.nF,`${f(r.LW/1000,2)} × ${f(r.LH/1000,2)} m`,r.resW,r.resH,L,true)];}
+function totemPdfBase(r,L,sub){const {jsPDF}=window.jspdf,fr=L==="fr",I=r.I,doc=new jsPDF({unit:"mm",format:"a4",orientation:"portrait"}),PW=210,PH=297,M=14;
+  const header=()=>{pdfLogo(doc,M,10,58,58*148/900);doc.setFont("helvetica","bold");doc.setFontSize(9);doc.setTextColor(...MUTED);
+    doc.text(pdfTxt(sub),PW-M,13.5,{align:"right"});doc.setFont("helvetica","normal");
+    doc.text(pdfTxt([I.proj.client,I.proj.ref,I.proj.date].filter(Boolean).join("  ·  ")),PW-M,18.5,{align:"right"});
+    doc.setDrawColor(...BLUE);doc.setLineWidth(0.7);doc.line(M,24,PW-M,24);};
+  const box=(y,label,text,col=BLUE)=>{doc.setFont("helvetica","normal");doc.setFontSize(8.6);const lines=doc.splitTextToSize(pdfTxt(text),PW-2*M-8);const h=7+lines.length*3.9;
+    if(y+h>PH-17){doc.addPage();header();y=32;}
+    doc.setFillColor(...tint(col,0.08));doc.setDrawColor(...tint(col,0.45));doc.setLineWidth(0.3);doc.rect(M,y,PW-2*M,h,"FD");
+    doc.setFont("helvetica","bold");doc.setFontSize(8.4);doc.setTextColor(...col);doc.text(pdfTxt(label),M+4,y+5);
+    doc.setFont("helvetica","normal");doc.setFontSize(8.6);doc.setTextColor(...INK);doc.text(lines,M+4,y+9.4);return y+h;};
+  const st={font:"helvetica",fontSize:8.8,cellPadding:{top:1.5,bottom:1.5,left:2,right:2},textColor:INK,lineColor:LINE,lineWidth:{bottom:0.2}};
+  const tbl=(y,rows,opt={})=>{doc.autoTable({startY:y,margin:{left:M,right:M,top:30},theme:"plain",styles:st,body:rows.map(x=>x.map(pdfTxt)),columnStyles:{0:{textColor:MUTED,cellWidth:58}},didDrawPage:d=>{if(d.pageNumber>1)header();},...opt});return doc.lastAutoTable.finalY;};
+  const section=(t,y)=>{if(y>PH-40){doc.addPage();header();y=34;}doc.setFont("helvetica","bold");doc.setFontSize(10.5);doc.setTextColor(...BLUE);doc.text(pdfTxt(t.toUpperCase()),M,y);doc.setTextColor(...INK);doc.setFont("helvetica","normal");return y+2;};
+  const footer=()=>{const n=doc.getNumberOfPages();for(let i=1;i<=n;i++){doc.setPage(i);doc.setDrawColor(...LINE);doc.setLineWidth(0.2);doc.line(M,PH-11,PW-M,PH-11);
+    doc.setFontSize(7.5);doc.setTextColor(...MUTED);doc.text(pdfTxt(`${brandOffice()}${I.proj.by?"  ·  "+I.proj.by:""}`),M,PH-6.5);doc.text(`${i} / ${n}`,PW-M,PH-6.5,{align:"right"});}};
+  return {doc,PW,PH,M,header,box,tbl,section,footer,fr};}
+async function buildTotemClientPDF(r,L="en"){const pal={...deskPal(true),lang:L};
+  const [isoF,isoB,views]=await Promise.all([svgToImg(totemIsoSVG(r,pal,false,L),1500),svgToImg(totemIsoSVG(r,pal,true,L),1500),svgToImg(totemViewsSVG(r,pal,L),2800)]);
+  const fr=L==="fr",f=(n,d)=>fmtL(n,d,L),T=r.T,B=totemPdfBase(r,L,fr?"TOTEM LED - PROPOSITION":"LED TOTEM - PROPOSAL"),{doc,PW,PH,M}=B;
+  B.header();doc.setFont("helvetica","bold");doc.setFontSize(18);doc.setTextColor(...INK);doc.text(pdfTxt(r.I.proj.name||(fr?"Totem LED":"LED totem")),M,35);
+  doc.setFont("helvetica","normal");doc.setFontSize(9.5);doc.setTextColor(...MUTED);
+  doc.text(pdfTxt(fr?`Totem LED ${T.nF===2?"double face":"simple face"} sur 4 roulettes avec frein, lecteur intégré`:`${T.nF===2?"Double-face":"Single-face"} LED totem on 4 locking casters, built-in player`),M,41);
+  const half=(PW-2*M-6)/2;let y=46;const s=Math.min(half/isoF.w,100/isoF.h),iw=isoF.w*s,ih=isoF.h*s;
+  doc.addImage(isoF.src,"JPEG",M+(half-iw)/2,y,iw,ih);doc.addImage(isoB.src,"JPEG",M+half+6+(half-iw)/2,y,iw,ih);y+=ih+4;
+  const kf=[[fr?"DIMENSIONS (mm)":"SIZE (mm)",`${f(r.Wout)} × ${f(r.Htot)}`],[fr?"RÉSOLUTION":"RESOLUTION",`${f(r.resW)} × ${f(r.resH)}`],[fr?"SURFACE LED":"LED SURFACE",`${f(r.area,2)} m²`],[fr?"CONSOMMATION":"POWER USE",`${f(r.pTyp)} W`]];
+  const bw=(PW-2*M)/kf.length;doc.setFillColor(...tint(BLUE,0.07));doc.rect(M,y,PW-2*M,17,"F");
+  kf.forEach(([k,v],i)=>{const x=M+i*bw+4;doc.setFont("helvetica","normal");doc.setFontSize(7.3);doc.setTextColor(...MUTED);doc.text(pdfTxt(k),x,y+5.8);
+    doc.setFont("helvetica","bold");doc.setFontSize(12);doc.setTextColor(...BLUE);doc.text(pdfTxt(v),x,y+13);if(i){doc.setDrawColor(...LINE);doc.setLineWidth(0.2);doc.line(M+i*bw,y+2.5,M+i*bw,y+14.5);}});
+  y+=23;
+  const rows=[[fr?"Dimensions hors tout":"Overall size",`${f(r.Wout)} × ${f(r.baseD)} × ${f(r.Htot)} mm (${fr?"L × P × H":"W × D × H"})`],
+    [fr?"Faces":"Faces",T.nF===2?(fr?"2 faces LED, dos à dos":"2 LED faces, back to back"):(fr?"1 face LED, dos fermé":"1 LED face, closed back")],
+    [fr?"Écran (par face)":"Screen (per face)",`${f(r.LW)} × ${f(r.LH)} mm · ${f(r.areaFace,2)} m² · ${fr?"diagonale":"diagonal"} ${f(r.diag)}"`],
+    [fr?"Produit":"Product",`${totLedName(r.p,L)}, ${fr?"pas":"pitch"} ${f(r.p.pitch,2)} mm${r.p.bright?`, ${r.p.bright}`:""}`],
+    [fr?"Résolution (par face)":"Resolution (per face)",`${f(r.resW)} × ${f(r.resH)} px`],
+    [fr?"Lecteur intégré":"Built-in player",`NovaStar ${r.player.m}`],
+    [fr?"Mobilité":"Mobility",fr?`4 roulettes Ø ${r.cast.d} mm avec frein`:`4 casters Ø ${r.cast.d} mm with brakes`],
+    [fr?"Consommation (typique / max)":"Power (typical / max)",`${f(r.pTyp)} W / ${f(r.pMax)} W`],
+    [fr?"Alimentation":"Power supply",r.amps<=16?(fr?"230 V, une prise":"230 V, one socket"):(fr?"Ligne dédiée":"Dedicated feed")],
+    [fr?"Poids":"Weight",`≈ ${f(r.kg)} kg`]];
+  y=B.tbl(y,rows,{columnStyles:{0:{textColor:MUTED,cellWidth:58}}})+5;
+  y=B.box(y,fr?"CONTENU":"CONTENT",totemNotes(r,L)[0],[16,140,80])+3;
+  doc.addPage();B.header();doc.setFont("helvetica","bold");doc.setFontSize(10.5);doc.setTextColor(...BLUE);doc.text(pdfTxt(fr?"FACE, CÔTÉ ET DOS (MM)":"FRONT, SIDE AND BACK (MM)"),M,32);
+  const sv=Math.min((PW-2*M)/views.w,(PH-37-42)/views.h);doc.addImage(views.src,"JPEG",M+(PW-2*M-views.w*sv)/2,37,views.w*sv,views.h*sv);
+  B.box(37+views.h*sv+6,fr?"CONCEPTION INDICATIVE":"CONCEPTUAL DESIGN",FR_CONCEPT[L]);
+  resPagePDF(doc,resRowsTotem(r,L),L);B.footer();return doc;}
+async function buildTotemPDF(r,L="en",tech=false){const pal={...deskPal(true),lang:L};
+  const [isoF,isoB,views]=await Promise.all([svgToImg(totemIsoSVG(r,pal,false,L),1300),svgToImg(totemIsoSVG(r,pal,true,L),1300),svgToImg(totemViewsSVG(r,pal,L),2800)]);
+  const fr=L==="fr",f=(n,d)=>fmtL(n,d,L),B=totemPdfBase(r,L,fr?(tech?"TOTEM LED - FICHE TECHNIQUE":"TOTEM LED - NOTE DE CALCUL"):(tech?"LED TOTEM - TECHNICAL SHEET":"LED TOTEM - CALCULATION")),{doc,PW,PH,M}=B;
+  B.header();doc.setFont("helvetica","bold");doc.setFontSize(17);doc.setTextColor(...INK);doc.text(pdfTxt(r.I.proj.name||(fr?"Totem LED":"LED totem")),M,35);
+  doc.setFont("helvetica","normal");doc.setFontSize(9.5);doc.setTextColor(...MUTED);
+  doc.text(pdfTxt(`${totLedName(r.p,L)}  ·  ${f(r.Wout)} × ${f(r.baseD)} × ${f(r.Htot)} mm  ·  ${f(r.modules)} ${totUnit(r.p,L,2)}  ·  NovaStar ${r.player.m}`),M,41);
+  let y=B.box(45,fr?"CONCEPTION INDICATIVE":"CONCEPTUAL DESIGN",FR_CONCEPT[L])+4;
+  const fl=r.flags.filter(x=>x[0]!=="concept");if(fl.length)y=B.box(y,fr?"POINTS À VÉRIFIER":"POINTS TO CHECK",fl.map(x=>x[1]).join("  "),[200,120,0])+4;
+  const half=(PW-2*M-6)/2,s=Math.min(half/isoF.w,78/isoF.h),iw=isoF.w*s,ih=isoF.h*s;
+  doc.addImage(isoF.src,"JPEG",M+(half-iw)/2,y,iw,ih);doc.addImage(isoB.src,"JPEG",M+half+6+(half-iw)/2,y,iw,ih);y+=ih+6;
+  y=B.section(fr?"1. Totem":"1. Totem",y);y=B.tbl(y,totemRows(r,L))+6;
+  doc.addPage();B.header();doc.setFont("helvetica","bold");doc.setFontSize(10.5);doc.setTextColor(...BLUE);doc.text(pdfTxt(fr?"2. FACE, CÔTÉ ET DOS (MM)":"2. FRONT, SIDE AND BACK (MM)"),M,32);
+  const sv=Math.min((PW-2*M)/views.w,120/views.h);doc.addImage(views.src,"JPEG",M+(PW-2*M-views.w*sv)/2,37,views.w*sv,views.h*sv);y=37+views.h*sv+8;
+  y=B.section(fr?"3. Alimentation":"3. Power",y);y=B.tbl(y,totemPowerRows(r,L))+6;
+  y=B.section(fr?"4. Poids estimé":"4. Weight estimate",y);y=B.tbl(y,totemWeightRows(r,L))+6;
+  y=B.section(fr?"5. Nomenclature":"5. Bill of materials",y);
+  doc.autoTable({startY:y,margin:{left:M,right:M,top:30},theme:"plain",styles:{font:"helvetica",fontSize:8.4,cellPadding:{top:1.4,bottom:1.4,left:2,right:2},textColor:INK,lineColor:LINE,lineWidth:{bottom:0.2}},
+    headStyles:{textColor:MUTED,fontStyle:"bold",fontSize:7.5,lineWidth:{bottom:0.4},lineColor:BLUE},head:[(fr?["Élément","Description","Qté"]:["Item","Description","Qty"]).map(pdfTxt)],
+    body:totemBom(r,L).map(b=>b.map(pdfTxt)),columnStyles:{0:{cellWidth:40},2:{halign:"right",fontStyle:"bold",cellWidth:16}},didDrawPage:d=>{if(d.pageNumber>1)B.header();}});
+  y=doc.lastAutoTable.finalY+6;y=B.box(y,fr?"NOTES":"NOTES",totemNotes(r,L).slice(0,3).join("  "));
+  B.footer();return doc;}
 document.querySelector(".rail").addEventListener("input",()=>rerender());
 $("connSheet").addEventListener("input",()=>renderDesk());$("connSheet").addEventListener("change",()=>renderDesk());
 document.querySelector(".rail").addEventListener("change",()=>rerender());
@@ -6166,28 +6522,28 @@ $("eSaveImg").addEventListener("click",async()=>{
   toast("Saving is not available in this view. Open the page in Claude to save the file.");
 });
 async function runExport(tech){
-  const desk=appMode()==="desk",ev=appMode()==="event",fz=appMode()==="fridge";
-  const R0=fz?LASTF:ev?LASTE:desk?LASTD:LAST;
+  const desk=appMode()==="desk",ev=appMode()==="event",fz=appMode()==="fridge",tz=appMode()==="totem";
+  const R0=tz?LASTT:fz?LASTF:ev?LASTE:desk?LASTD:LAST;
   if(!R0)return;
   if(!window.jspdf){toast("The PDF library did not load. Check the connection and reload the page.");return;}
   if([...FILES.patente,...FILES.place].some(x=>!x.pages)){toast("Wait until the client files finish loading.");return;}
   const lang=document.querySelector('input[name=lang]:checked').value;
   const langs=lang==="both"?["en","fr"]:[lang];
   const m2s=v=>(v/1000).toFixed(2).replace(/\.?0+$/,"");
-  const dims=fz?`${Math.round(R0.Wout)}x${Math.round(R0.D)}x${Math.round(R0.H)}mm_LC2.5P`:ev?(locsRead().length>1?`${locsRead().length}_locations`:R0.main?`${m2s(R0.main.W)}x${m2s(R0.main.H)}m_${R0.main.P.name}`:(R0.prints&&R0.prints.length?`print_${m2s(R0.printM2*1000)}m2`:"no_screen"))
+  const dims=tz?`${Math.round(R0.Wout)}x${Math.round(R0.Htot)}mm_${R0.p.id}`:fz?`${Math.round(R0.Wout)}x${Math.round(R0.D)}x${Math.round(R0.H)}mm_LC2.5P`:ev?(locsRead().length>1?`${locsRead().length}_locations`:R0.main?`${m2s(R0.main.W)}x${m2s(R0.main.H)}m_${R0.main.P.name}`:(R0.prints&&R0.prints.length?`print_${m2s(R0.printM2*1000)}m2`:"no_screen"))
     :desk?`${Math.round(R0.W)}x${Math.round(R0.Dp)}x${Math.round(R0.Htot)}mm_${R0.p.id}`:R0.arch?`arch_${m2s(R0.arch.W)}x${m2s(R0.arch.H)}m_${R0.arch.u.cab?R0.arch.u.spec.file:R0.p.id}`:`${m2s(R0.wMm)}x${m2s(R0.hMm)}m_${R0.p.id}`;
-  const multiSale=!fz&&!ev&&!desk&&sPlRead().length>1;
+  const multiSale=!tz&&!fz&&!ev&&!desk&&sPlRead().length>1;
   // file name: the project name first, then its reference without "UTA-"
-  const refS=String(R0.I.proj.ref||"").replace(/^UTA-/,""),nameS=R0.I.proj.name||(fz?`Digital_fridge`:ev?`Event`:desk?`Desk`:`LED`);
+  const refS=String(R0.I.proj.ref||"").replace(/^UTA-/,""),nameS=R0.I.proj.name||(tz?`LED_totem`:fz?`Digital_fridge`:ev?`Event`:desk?`Desk`:`LED`);
   const base=((nameS+(refS&&!nameS.includes(refS)?"_"+refS:""))+"_"+(multiSale?sPlRead().length+"_places":dims)).replace(/[^\w.\- ]+/g,"").trim().replace(/\s+/g,"_")||"LED_screen";
   for(const L of langs){
     let doc;
     if(tech==="client"){BLUE=CLIENT_RGB;PDF_ACC="#008070";}
-    try{doc=multiSale?await salePlacesPDF(tech,L):(tech==="client"&&desk)?await buildDeskClientPDF(LASTD,L):(tech==="client"&&!fz&&!ev&&LAST.arch)?await buildArchClientPDF(LAST,L):(tech==="client"&&!fz&&!ev)?await buildWallClientPDF(LAST,L):(!fz&&!ev&&!desk&&LAST.arch)?await buildSaleArchPDF(LAST,L,tech):fz?(tech==="client"?await buildFridgeClientPDF(LASTF,L):await buildFridgePDF(LASTF,L,tech)):ev?await buildEventPDF(LASTE,L,tech):desk?await buildDeskPDF(LASTD,L,tech):(tech?buildTechPDF(LAST,L):buildPDF(LAST,L,await svgToImg(wallIsoSVG(LAST,evPal(true),L),2200)));}catch(e){console.error(e);toast("Could not build the PDF: "+e.message);return;}
+    try{doc=tz?(tech==="client"?await buildTotemClientPDF(LASTT,L):await buildTotemPDF(LASTT,L,tech)):multiSale?await salePlacesPDF(tech,L):(tech==="client"&&desk)?await buildDeskClientPDF(LASTD,L):(tech==="client"&&!fz&&!ev&&LAST.arch)?await buildArchClientPDF(LAST,L):(tech==="client"&&!fz&&!ev)?await buildWallClientPDF(LAST,L):(!fz&&!ev&&!desk&&LAST.arch)?await buildSaleArchPDF(LAST,L,tech):fz?(tech==="client"?await buildFridgeClientPDF(LASTF,L):await buildFridgePDF(LASTF,L,tech)):ev?await buildEventPDF(LASTE,L,tech):desk?await buildDeskPDF(LASTD,L,tech):(tech?buildTechPDF(LAST,L):buildPDF(LAST,L,await svgToImg(wallIsoSVG(LAST,evPal(true),L),2200)));}catch(e){console.error(e);toast("Could not build the PDF: "+e.message);return;}
     finally{BLUE=BLUE_MAIN;PDF_ACC="#0040ff";}
     if(tech==="client"&&!multiSale&&signOn()){BLUE=CLIENT_RGB;try{sigPagePDF(doc,L);}finally{BLUE=BLUE_MAIN;}}
     if(tech==="client"&&!multiSale)clientBand(doc);
-    const res=await saveOne(doc,`${base}_${fz?"fridge_":ev?"event_":desk?"desk_":""}${tech==="client"?(L==="fr"?"client_FR":"client_EN"):tech?(L==="fr"?"fiche_technique_FR":"technical_EN"):ev?(L==="fr"?"complet_FR":"export_EN"):(L==="fr"?"note_de_calcul_FR":"calculation_EN")}.pdf`);
+    const res=await saveOne(doc,`${base}_${tz?"totem_":fz?"fridge_":ev?"event_":desk?"desk_":""}${tech==="client"?(L==="fr"?"client_FR":"client_EN"):tech?(L==="fr"?"fiche_technique_FR":"technical_EN"):ev?(L==="fr"?"complet_FR":"export_EN"):(L==="fr"?"note_de_calcul_FR":"calculation_EN")}.pdf`);
     if(res==="cancel"){toast("Export cancelled.");return;}
     if(res==="busy"){toast("A save prompt is already open.");return;}
     if(res==="na"){toast("PDF export is not available in this view. Open the page in Claude to save the file.");return;}
