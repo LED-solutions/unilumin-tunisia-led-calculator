@@ -1,5 +1,9 @@
 # Changelog
 
+## v97 — 2026-11-06
+- LED totem: Neutrik powerCON (16 A) power inlet that feeds everything inside, from the LED to the player. Above 16 A it switches to an industrial CEE 32 A inlet (three-phase when needed), with a warning.
+- RJ45 socket so the player goes online by cable, and a USB socket for the screen configuration cable. Both on the back panel, in the drawings, the bill of materials and the PDFs.
+
 ## v96 — 2026-11-06
 - Conception: new "LED totem". Made of LED modules or cabinets (all the Sale products), single face or double face, size in metres or columns × rows. 4 swivel casters with brakes, a steel base, and a NovaStar Taurus inside (TB30, TB50 or TB60, picked for the pixels and ports, or chosen by hand).
 - It shows the 3D views front and back, the front, side and back drawings with dimensions, power, PSUs, receiving cards, weight and casters, the bill of materials, and checks (socket, stability, casters, player size). Client PDF and Export PDF, with the resolutions page.
