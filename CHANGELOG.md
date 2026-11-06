@@ -1,5 +1,9 @@
 # Changelog
 
+## v98 — 2026-11-06
+- Sale: new cabinet Unilumin LST6 (outdoor, P6.67, 6,000 cd/m², 640 W/m² max, IP66 front and rear) in 4 sizes: 960 × 960, 960 × 640, 1440 × 960 and 1440 × 640 mm. Also in the LED totem.
+- Sale: screens next to each other. "+ Add a screen next to this one" starts a new screen at one end of the screen before. Each screen has where it faces (north, east… or any angle) and which end it starts from. A plan view (top view) shows the screens, where they face and the angle between them, on the page and in the PDFs.
+
 ## v97 — 2026-11-06
 - LED totem: Neutrik powerCON (16 A) power inlet that feeds everything inside, from the LED to the player. Above 16 A it switches to an industrial CEE 32 A inlet (three-phase when needed), with a warning.
 - RJ45 socket so the player goes online by cable, and a USB socket for the screen configuration cable. Both on the back panel, in the drawings, the bill of materials and the PDFs.
