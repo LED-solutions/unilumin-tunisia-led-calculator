@@ -1,5 +1,10 @@
 # Changelog
 
+## v100 — 2026-11-11
+- Sale: removed the screen orientation and plan view.
+- Sale: a place can now have several screens. "+ Add another place" in Screens and places, "+ Add another screen" at the top of Screen size: each screen has its own name, product and size.
+- Cabinets (power supply and adapted receiving card inside): no more card load or PSU layout. New "Power cabling" view with the IN/OUT power chains on 16 A circuits, in 2 cases: single-phase entry (cable section and breaker, not recommended for big screens) and three-phase entry with the recommended cable and the L1/L2/L3 split. Data cabling shows the RJ45 chain per port. Also in the Export and Technical PDFs.
+
 ## v99 — 2026-11-11
 - Sale: the LST cabinet is now the full LST series: LST4.44, LST6, LST8 and LST10, each in 960 × 960, 960 × 640, 1440 × 960 and 1440 × 640 mm (Unilumin LST series datasheet).
 - Sale: new look for the screen view: light wall and floor, soft glow of the screen, a better person for scale with a shadow.
