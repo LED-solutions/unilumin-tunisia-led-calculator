@@ -1,5 +1,8 @@
 # Changelog
 
+## v101 — 2026-11-11
+- Cabinets: the power cabling view now looks like the receiving cards view. Each cabinet is coloured by phase (L1, L2, L3), numbered by circuit (1.1, 1.2…), with the IN point and a dashed IN/OUT chain per 16 A circuit, a legend per circuit, and the 2 cases (single-phase and three-phase) side by side with current, breaker and main cable.
+
 ## v100 — 2026-11-11
 - Sale: removed the screen orientation and plan view.
 - Sale: a place can now have several screens. "+ Add another place" in Screens and places, "+ Add another screen" at the top of Screen size: each screen has its own name, product and size.
