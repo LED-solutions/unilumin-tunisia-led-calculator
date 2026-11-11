@@ -1,5 +1,11 @@
 # Changelog
 
+## v99 — 2026-11-11
+- Sale: the LST cabinet is now the full LST series: LST4.44, LST6, LST8 and LST10, each in 960 × 960, 960 × 640, 1440 × 960 and 1440 × 640 mm (Unilumin LST series datasheet).
+- Sale: new look for the screen view: light wall and floor, soft glow of the screen, a better person for scale with a shadow.
+- Sale: the modules wide / high fields are now right under Meters / Modules, with the size result under them.
+- Sale: "Places" is now "Screens and places", with "+ Add another screen": each screen has its own size and product.
+
 ## v98 — 2026-11-06
 - Sale: new cabinet Unilumin LST6 (outdoor, P6.67, 6,000 cd/m², 640 W/m² max, IP66 front and rear) in 4 sizes: 960 × 960, 960 × 640, 1440 × 960 and 1440 × 640 mm. Also in the LED totem.
 - Sale: screens next to each other. "+ Add a screen next to this one" starts a new screen at one end of the screen before. Each screen has where it faces (north, east… or any angle) and which end it starts from. A plan view (top view) shows the screens, where they face and the angle between them, on the page and in the PDFs.
