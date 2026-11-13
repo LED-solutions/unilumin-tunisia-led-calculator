@@ -1,5 +1,8 @@
 # Changelog
 
+## v105 — 2026-11-13
+- Screens and places: hold a place tab (or a screen tab in Screen size) and move it to change the order. The table and the PDFs follow the new order.
+
 ## v104 — 2026-11-13
 - LST6, LST8 and LST10: 7,500 cd/m² added to the brightness choices.
 
