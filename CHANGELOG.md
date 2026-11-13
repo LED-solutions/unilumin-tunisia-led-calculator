@@ -1,5 +1,8 @@
 # Changelog
 
+## v106 — 2026-11-13
+- ULW III 1.2 Pro: curve per cabinet joint, 0° to +5° maximum, concave only (datasheet). Shows the total angle, radius, chord width and depth of the curved screen, warns above 5°, and appears in the specs and the client PDF.
+
 ## v105 — 2026-11-13
 - Screens and places: hold a place tab (or a screen tab in Screen size) and move it to change the order. The table and the PDFs follow the new order.
 
