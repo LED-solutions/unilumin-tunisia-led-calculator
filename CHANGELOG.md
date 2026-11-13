@@ -1,5 +1,8 @@
 # Changelog
 
+## v104 — 2026-11-13
+- LST6, LST8 and LST10: 7,500 cd/m² added to the brightness choices.
+
 ## v103 — 2026-11-13
 - LST: choose the brightness (LST4.44: 5,500 / 6,000 / 6,500 cd/m²; LST6, LST8, LST10: 6,000 to 10,000 cd/m²). It shows in the specs and the PDFs.
 - LST power always uses the minimum of the datasheet range: LST4.44 650 / 213 W/m², LST6 640 / 213 W/m², LST8 and LST10 600 / 200 W/m² (max / typical).
