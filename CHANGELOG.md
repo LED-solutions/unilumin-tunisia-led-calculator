@@ -1,5 +1,9 @@
 # Changelog
 
+## v103 — 2026-11-13
+- LST: choose the brightness (LST4.44: 5,500 / 6,000 / 6,500 cd/m²; LST6, LST8, LST10: 6,000 to 10,000 cd/m²). It shows in the specs and the PDFs.
+- LST power always uses the minimum of the datasheet range: LST4.44 650 / 213 W/m², LST6 640 / 213 W/m², LST8 and LST10 600 / 200 W/m² (max / typical).
+
 ## v102 — 2026-11-12
 - Sale: new cabinet Unilumin ULW III 1.2 Pro (indoor, P1.25, 16:9 cabinet 600 × 337.5 × 47.8 mm, 480 × 270 px, 800 cd/m², 125 W max / 41 W typical per cabinet, 5 kg, 7680 Hz). 8 × 8 cabinets give a 4.8 × 2.7 m 4K screen. Also in the LED totem.
 - Export PDFs: much more contrast in the receiving card, power supply and power cabling drawings: darker module and cabinet outlines, thicker block borders and chains, stronger colours, so they stay visible when printed.
