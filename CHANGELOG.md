@@ -1,5 +1,8 @@
 # Changelog
 
+## v107 — 2026-11-13
+- Client PDF (Sale): small reference image(s) of the place under the product photo, with "Reference image for "place name"" under them.
+
 ## v106 — 2026-11-13
 - ULW III 1.2 Pro: curve per cabinet joint, 0° to +5° maximum, concave only (datasheet). Shows the total angle, radius, chord width and depth of the curved screen, warns above 5°, and appears in the specs and the client PDF.
 
