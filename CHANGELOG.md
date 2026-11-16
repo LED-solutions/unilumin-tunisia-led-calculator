@@ -1,5 +1,8 @@
 # Changelog
 
+## v109 — 2026-11-16
+- Sale: new outdoor module Unilumin LC2.5PO (P2.5, SMD1415, 320 × 160 mm, 128 × 64 px, 4,000 – 4,500 cd/m², 879 / 293 W/m², 3840 Hz, 0.46 kg, front gluing waterproof).
+
 ## v108 — 2026-11-13
 - Fix: each screen's part now shows its own place name and its own reference photos (it showed the open screen's name everywhere).
 - Client PDF with several screens: the resolutions table now goes under the screens table on the first page (a new page only if it does not fit).
