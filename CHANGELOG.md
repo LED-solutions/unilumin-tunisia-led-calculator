@@ -1,5 +1,8 @@
 # Changelog
 
+## v111 — 2026-11-17
+- LED totem: every totem is ventilated on its 2 sides (a closed structure keeps the heat in). New "Ventilation" choice: fans (extraction at the top, intake at the bottom) or natural vent grilles. Recommended: fans for outdoor, natural vents for indoor, and you can choose fans for indoor too. Fans add 20 W.
+
 ## v110 — 2026-11-17
 - LED totem, double face: the Taurus and the connections now go in a technical box under the structure (no room between the faces). New "Totem thickness" field: 200 mm by default, 160 mm minimum, shown in the drawings as a value to confirm on the final product.
 - LED totem with outdoor modules: ventilation on the 2 sides, top vents push the hot air out, bottom vents bring fresh air in. Drawn with arrows on the side view, and in the bill of materials (2 exhaust fans, 2 intake grilles with filter).
