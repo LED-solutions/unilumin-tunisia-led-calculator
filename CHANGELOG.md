@@ -1,5 +1,9 @@
 # Changelog
 
+## v112 — 2026-11-17
+- Fix: the digital desk view could stop with an error (cabinet check on the desk faces).
+- Conception (desk, fridge, totem): new "Versions of this product". "+ Add another version" makes a similar product with its own size, module and options. Hold a tab to reorder, rename or delete. With 2 versions or more, the PDFs start with a comparison page (product, size, resolution, power), then one part per version.
+
 ## v111 — 2026-11-17
 - LED totem: every totem is ventilated on its 2 sides (a closed structure keeps the heat in). New "Ventilation" choice: fans (extraction at the top, intake at the bottom) or natural vent grilles. Recommended: fans for outdoor, natural vents for indoor, and you can choose fans for indoor too. Fans add 20 W.
 
