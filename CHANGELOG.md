@@ -1,5 +1,9 @@
 # Changelog
 
+## v110 — 2026-11-17
+- LED totem, double face: the Taurus and the connections now go in a technical box under the structure (no room between the faces). New "Totem thickness" field: 200 mm by default, 160 mm minimum, shown in the drawings as a value to confirm on the final product.
+- LED totem with outdoor modules: ventilation on the 2 sides, top vents push the hot air out, bottom vents bring fresh air in. Drawn with arrows on the side view, and in the bill of materials (2 exhaust fans, 2 intake grilles with filter).
+
 ## v109 — 2026-11-16
 - Sale: new outdoor module Unilumin LC2.5PO (P2.5, SMD1415, 320 × 160 mm, 128 × 64 px, 4,000 – 4,500 cd/m², 879 / 293 W/m², 3840 Hz, 0.46 kg, front gluing waterproof).
 
