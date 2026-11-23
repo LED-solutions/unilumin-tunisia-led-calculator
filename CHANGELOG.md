@@ -1,5 +1,10 @@
 # Changelog
 
+## v113 — 2026-11-23
+- Event layout: return TVs are now drawn in front of the people on the stage or the floor screen, turned toward them (seen from the back, "screen faces the stage").
+- LED arch: the arch can stand on the ground or be lifted (height in m): the legs under the LED are covered, the drawing shows the lift, the clear height of the passage and the total height, and the truss leg extensions are in the material list.
+- LED arch: choose the covering type: black cloth (molleton), white lycra, printed fabric or black aluminium composite panels. Used in the drawings, the 360° views, the areas and the material list.
+
 ## v112 — 2026-11-17
 - Fix: the digital desk view could stop with an error (cabinet check on the desk faces).
 - Conception (desk, fridge, totem): new "Versions of this product". "+ Add another version" makes a similar product with its own size, module and options. Hold a tab to reorder, rename or delete. With 2 versions or more, the PDFs start with a comparison page (product, size, resolution, power), then one part per version.
