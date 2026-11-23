@@ -1,7 +1,7 @@
 # Changelog
 
 ## v113 — 2026-11-23
-- Event layout: return TVs are now drawn in front of the people on the stage or the floor screen, turned toward them (seen from the back, "screen faces the stage").
+- Event layout: return TVs are now drawn on the ground in front of the people on the stage or the floor screen, turned toward them (seen from the back, "screen faces the stage").
 - LED arch: the arch can stand on the ground or be lifted (height in m): the legs under the LED are covered, the drawing shows the lift, the clear height of the passage and the total height, and the truss leg extensions are in the material list.
 - LED arch: choose the covering type: black cloth (molleton), white lycra, printed fabric or black aluminium composite panels. Used in the drawings, the 360° views, the areas and the material list.
 
